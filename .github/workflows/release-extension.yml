@@ -1,0 +1,148 @@
+name: Release Extension
+
+on:
+  release:
+    types:
+      - published
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish-extension:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Locate extension manifest
+        id: locate
+        shell: bash
+        run: |
+          if [[ -f extension/package.json ]]; then
+            echo "path=extension" >> "$GITHUB_OUTPUT"
+            echo "manifest=extension/package.json" >> "$GITHUB_OUTPUT"
+          elif [[ -f package.json ]]; then
+            echo "path=." >> "$GITHUB_OUTPUT"
+            echo "manifest=package.json" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::No extension manifest was found at package.json or extension/package.json."
+            exit 1
+          fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        working-directory: ${{ steps.locate.outputs.path }}
+        shell: bash
+        run: |
+          if [[ -f pnpm-lock.yaml ]]; then
+            pnpm install --frozen-lockfile
+          elif [[ -f yarn.lock ]]; then
+            yarn install --immutable
+          elif [[ -f package-lock.json ]]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Validate marketplace manifest
+        working-directory: ${{ steps.locate.outputs.path }}
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          const missing = ['name', 'publisher', 'version', 'engines'].filter((key) => !(key in pkg));
+          if (!pkg.engines || !pkg.engines.vscode) {
+            missing.push('engines.vscode');
+          }
+          if (missing.length) {
+            console.error(`Missing required marketplace fields: ${missing.join(', ')}`);
+            process.exit(1);
+          }
+          if (Array.isArray(pkg.enabledApiProposals) && pkg.enabledApiProposals.length > 0) {
+            console.error('Marketplace releases cannot include enabledApiProposals.');
+            process.exit(1);
+          }
+          NODE
+
+      - name: Enforce tag matches package version
+        if: github.event_name == 'release'
+        working-directory: ${{ steps.locate.outputs.path }}
+        shell: bash
+        run: |
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          RELEASE_TAG="${{ github.event.release.tag_name }}"
+          if [[ "$RELEASE_TAG" != "v$PACKAGE_VERSION" && "$RELEASE_TAG" != "$PACKAGE_VERSION" ]]; then
+            echo "::error::Release tag $RELEASE_TAG does not match package.json version $PACKAGE_VERSION."
+            exit 1
+          fi
+
+      - name: Run lint
+        working-directory: ${{ steps.locate.outputs.path }}
+        run: npm run lint --if-present
+
+      - name: Run tests
+        working-directory: ${{ steps.locate.outputs.path }}
+        run: npm test --if-present
+
+      - name: Build extension
+        working-directory: ${{ steps.locate.outputs.path }}
+        shell: bash
+        run: |
+          npm run compile --if-present
+          npm run build --if-present
+
+      - name: Package VSIX
+        id: package
+        working-directory: ${{ steps.locate.outputs.path }}
+        shell: bash
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/artifacts"
+          VSIX_NAME=$(node -e "const p=require('./package.json'); process.stdout.write(`${p.publisher}.${p.name}-${p.version}.vsix`)")
+          npx @vscode/vsce package --out "$GITHUB_WORKSPACE/artifacts/$VSIX_NAME"
+          echo "vsix_name=$VSIX_NAME" >> "$GITHUB_OUTPUT"
+          echo "vsix_path=$GITHUB_WORKSPACE/artifacts/$VSIX_NAME" >> "$GITHUB_OUTPUT"
+
+      - name: Upload VSIX workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.package.outputs.vsix_name }}
+          path: ${{ steps.package.outputs.vsix_path }}
+          if-no-files-found: error
+
+      - name: Attach VSIX to GitHub release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ github.event.release.tag_name }}" "${{ steps.package.outputs.vsix_path }}" --clobber
+
+      - name: Publish to Visual Studio Marketplace
+        if: ${{ secrets.VSCE_PAT != '' }}
+        working-directory: ${{ steps.locate.outputs.path }}
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        shell: bash
+        run: |
+          if npm run | grep -q " deploy"; then
+            npm run deploy
+          else
+            npx @vscode/vsce publish
+          fi
+
+      - name: Marketplace publish summary
+        if: ${{ secrets.VSCE_PAT == '' }}
+        run: |
+          {
+            echo "### Marketplace publish skipped"
+            echo
+            echo "Set the \`VSCE_PAT\` repository secret before the final release if you want this workflow to publish the extension to the Visual Studio Marketplace."
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -1,0 +1,97 @@
+{
+  "name": "architecture-studio",
+  "displayName": "Architecture Studio",
+  "description": "A VS Code extension for architecture generation, repository analysis, compliance validation, and project scaffolding.",
+  "version": "0.1.0",
+  "publisher": "tmassey1979",
+  "private": true,
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/tmassey1979/ARCHITECTURE_STUDIO",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tmassey1979/ARCHITECTURE_STUDIO.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tmassey1979/ARCHITECTURE_STUDIO/issues"
+  },
+  "type": "commonjs",
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:architectureStudio.openDashboard",
+    "onCommand:architectureStudio.composeStandards",
+    "onCommand:architectureStudio.analyzeRepository",
+    "onCommand:architectureStudio.validateRegulations",
+    "onCommand:architectureStudio.generateArchitecture",
+    "onCommand:architectureStudio.generateProject",
+    "onCommand:architectureStudio.generateReports",
+    "onCommand:architectureStudio.generateAiInstructions"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "architectureStudio.openDashboard",
+        "title": "Architecture Studio: Open Dashboard",
+        "category": "Architecture Studio"
+      },
+      {
+        "command": "architectureStudio.composeStandards",
+        "title": "Architecture Studio: Compose Standards",
+        "category": "Architecture Studio"
+      },
+      {
+        "command": "architectureStudio.analyzeRepository",
+        "title": "Architecture Studio: Analyze Repository",
+        "category": "Architecture Studio"
+      },
+      {
+        "command": "architectureStudio.validateRegulations",
+        "title": "Architecture Studio: Validate Regulations",
+        "category": "Architecture Studio"
+      },
+      {
+        "command": "architectureStudio.generateArchitecture",
+        "title": "Architecture Studio: Generate Architecture",
+        "category": "Architecture Studio"
+      },
+      {
+        "command": "architectureStudio.generateProject",
+        "title": "Architecture Studio: Generate Project",
+        "category": "Architecture Studio"
+      },
+      {
+        "command": "architectureStudio.generateReports",
+        "title": "Architecture Studio: Generate Reports",
+        "category": "Architecture Studio"
+      },
+      {
+        "command": "architectureStudio.generateAiInstructions",
+        "title": "Architecture Studio: Generate AI Instructions",
+        "category": "Architecture Studio"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "npm run compile",
+    "compile": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "package:extension": "vsce package",
+    "test": "node --test",
+    "verify": "npm run lint && npm test && npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/vscode": "^1.95.0",
+    "@typescript-eslint/eslint-plugin": "^8.39.0",
+    "@typescript-eslint/parser": "^8.39.0",
+    "@vscode/vsce": "^3.6.2",
+    "eslint": "^9.34.0",
+    "globals": "^16.3.0",
+    "typescript": "^5.9.2"
+  }
+}

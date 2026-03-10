@@ -1,0 +1,145 @@
+name: Extension CI
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/extension-ci.yml"
+      - "extension/**"
+      - "src/**"
+      - "package.json"
+      - "package-lock.json"
+      - "pnpm-lock.yaml"
+      - "yarn.lock"
+      - "tsconfig*.json"
+      - ".vscodeignore"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/extension-ci.yml"
+      - "extension/**"
+      - "src/**"
+      - "package.json"
+      - "package-lock.json"
+      - "pnpm-lock.yaml"
+      - "yarn.lock"
+      - "tsconfig*.json"
+      - ".vscodeignore"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-extension:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Locate extension manifest
+        id: locate
+        shell: bash
+        run: |
+          if [[ -f extension/package.json ]]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+            echo "path=extension" >> "$GITHUB_OUTPUT"
+            echo "manifest=extension/package.json" >> "$GITHUB_OUTPUT"
+          elif [[ -f package.json ]]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+            echo "path=." >> "$GITHUB_OUTPUT"
+            echo "manifest=package.json" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Skip until extension scaffold exists
+        if: steps.locate.outputs.found != 'true'
+        run: |
+          {
+            echo "### Extension CI skipped"
+            echo
+            echo "No extension manifest was found at \`package.json\` or \`extension/package.json\`."
+            echo "This workflow is ready and will activate once the VS Code extension scaffold exists."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Setup Node.js
+        if: steps.locate.outputs.found == 'true'
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: Enable Corepack
+        if: steps.locate.outputs.found == 'true'
+        run: corepack enable
+
+      - name: Install dependencies
+        if: steps.locate.outputs.found == 'true'
+        working-directory: ${{ steps.locate.outputs.path }}
+        shell: bash
+        run: |
+          if [[ -f pnpm-lock.yaml ]]; then
+            pnpm install --frozen-lockfile
+          elif [[ -f yarn.lock ]]; then
+            yarn install --immutable
+          elif [[ -f package-lock.json ]]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Validate extension manifest
+        if: steps.locate.outputs.found == 'true'
+        working-directory: ${{ steps.locate.outputs.path }}
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          const missing = ['name', 'version', 'engines'].filter((key) => !(key in pkg));
+          if (!pkg.engines || !pkg.engines.vscode) {
+            missing.push('engines.vscode');
+          }
+          if (missing.length) {
+            console.error(`Missing required extension manifest fields: ${missing.join(', ')}`);
+            process.exit(1);
+          }
+          NODE
+
+      - name: Run lint
+        if: steps.locate.outputs.found == 'true'
+        working-directory: ${{ steps.locate.outputs.path }}
+        run: npm run lint --if-present
+
+      - name: Run tests
+        if: steps.locate.outputs.found == 'true'
+        working-directory: ${{ steps.locate.outputs.path }}
+        run: npm test --if-present
+
+      - name: Build extension
+        if: steps.locate.outputs.found == 'true'
+        working-directory: ${{ steps.locate.outputs.path }}
+        shell: bash
+        run: |
+          npm run compile --if-present
+          npm run build --if-present
+
+      - name: Package extension
+        if: steps.locate.outputs.found == 'true'
+        id: package
+        working-directory: ${{ steps.locate.outputs.path }}
+        shell: bash
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/artifacts"
+          VSIX_NAME=$(node -e "const p=require('./package.json'); process.stdout.write(`${p.publisher || 'local'}.${p.name}-${p.version}.vsix`)")
+          npx @vscode/vsce package --out "$GITHUB_WORKSPACE/artifacts/$VSIX_NAME"
+          echo "vsix_name=$VSIX_NAME" >> "$GITHUB_OUTPUT"
+          echo "vsix_path=$GITHUB_WORKSPACE/artifacts/$VSIX_NAME" >> "$GITHUB_OUTPUT"
+
+      - name: Upload VSIX artifact
+        if: steps.locate.outputs.found == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.package.outputs.vsix_name }}
+          path: ${{ steps.package.outputs.vsix_path }}
+          if-no-files-found: error

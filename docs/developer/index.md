@@ -18,6 +18,7 @@ Target content:
 Key documents:
 
 - [Release And Publishing](./release-and-publishing.md)
+- [Shared Contracts](./shared-contracts.md)
 
 Documentation in this section should:
 

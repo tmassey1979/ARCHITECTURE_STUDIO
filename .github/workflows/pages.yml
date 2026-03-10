@@ -25,23 +25,49 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      ready: ${{ steps.pages-state.outputs.ready }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-
       - name: Ensure static site metadata
         run: touch docs/.nojekyll
 
+      - name: Configure GitHub Pages
+        if: github.event_name != 'pull_request'
+        id: pages
+        continue-on-error: true
+        uses: actions/configure-pages@v5
+
+      - name: Capture Pages readiness
+        id: pages-state
+        if: always()
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" != "pull_request" && "${{ steps.pages.outcome }}" == "success" ]]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Upload Pages artifact
+        if: steps.pages-state.outputs.ready == 'true'
         uses: actions/upload-pages-artifact@v4
         with:
           path: docs
 
+      - name: Summarize skipped Pages deployment
+        if: github.event_name != 'pull_request' && steps.pages-state.outputs.ready != 'true'
+        run: |
+          {
+            echo "### Pages deployment skipped"
+            echo
+            echo "Enable GitHub Pages for this repository and choose GitHub Actions as the source to activate deployment."
+          } >> "$GITHUB_STEP_SUMMARY"
+
   deploy:
-    if: github.event_name != 'pull_request'
+    if: needs.build.outputs.ready == 'true'
     needs: build
     runs-on: ubuntu-latest
     environment:

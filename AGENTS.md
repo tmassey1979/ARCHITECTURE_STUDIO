@@ -99,6 +99,17 @@ Use story format:
 - Call out dependencies in `Dev Notes`.
 - Use issue comments to show TDD progress, not just final status.
 
+## Git Workflow
+
+- Push code after each completed story.
+- Use a dedicated feature branch for each story after the initial repository baseline is established.
+- Prefer branch names in the form `feature/issue-<number>-<short-slug>`.
+- Open a pull request for each story branch instead of merging work directly into `main`.
+- Keep story branches stacked when later stories depend on earlier unmerged work.
+- Rebase stacked branches regularly so they stay current with `main` as pull requests merge in different orders.
+- Keep pull requests focused on a single story whenever practical.
+- Do not squash away meaningful story history locally unless explicitly requested.
+
 ## Coding Standards
 
 - Follow Clean Code, SOLID, and modular architecture.

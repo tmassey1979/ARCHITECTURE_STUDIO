@@ -131,7 +131,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p "$GITHUB_WORKSPACE/artifacts"
-          VSIX_NAME=$(node -e "const p=require('./package.json'); process.stdout.write(`${p.publisher || 'local'}.${p.name}-${p.version}.vsix`)")
+          VSIX_NAME=$(node -p "const p=require('./package.json'); (p.publisher || 'local') + '.' + p.name + '-' + p.version + '.vsix'")
           npx @vscode/vsce package --out "$GITHUB_WORKSPACE/artifacts/$VSIX_NAME"
           echo "vsix_name=$VSIX_NAME" >> "$GITHUB_OUTPUT"
           echo "vsix_path=$GITHUB_WORKSPACE/artifacts/$VSIX_NAME" >> "$GITHUB_OUTPUT"

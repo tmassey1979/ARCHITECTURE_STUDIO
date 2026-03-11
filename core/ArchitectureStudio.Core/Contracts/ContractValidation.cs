@@ -41,6 +41,7 @@ public static class ContractValidation
         errors.AddRange(GetDuplicateIdErrors(payload.Regulations.Select(item => item.Id), "regulation"));
         errors.AddRange(GetDuplicateIdErrors(payload.Controls.Select(item => item.Id), "control"));
         errors.AddRange(GetDuplicateIdErrors(payload.GraphNodes.Select(item => item.Id), "graph node"));
+        errors.AddRange(GetDuplicateIdErrors(payload.ComplianceSummaries.Select(item => item.RegulationId), "compliance summary"));
         errors.AddRange(GetDuplicateIdErrors(payload.Findings.Select(item => item.Id), "finding"));
         errors.AddRange(GetDuplicateIdErrors(payload.Reports.Select(item => item.Id), "report artifact"));
         errors.AddRange(GetDuplicateIdErrors(payload.GeneratedArtifacts.Select(item => item.Id), "generated artifact"));

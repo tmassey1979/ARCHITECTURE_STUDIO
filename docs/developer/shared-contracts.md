@@ -41,6 +41,7 @@ The shared-contract layer is the canonical schema for Architecture Studio.
 - controls
 - graph nodes and edges
 - findings and remediations
+- compliance summaries
 - report artifacts
 - generated artifacts
 - project-selection profile

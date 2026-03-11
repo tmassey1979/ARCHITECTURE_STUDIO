@@ -98,6 +98,14 @@ export type GeneratedArtifact = {
   readonly relativePath: string;
 };
 
+export type ComplianceSummary = {
+  readonly regulationId: string;
+  readonly regulationTitle: string;
+  readonly scorePercentage: number;
+  readonly coveredControls: number;
+  readonly totalControls: number;
+};
+
 export type ProjectSelectionProfile = {
   readonly frontend: string;
   readonly backend: string;
@@ -113,6 +121,7 @@ export type SharedContractPayload = {
   readonly controls: readonly ControlDefinition[];
   readonly graphNodes: readonly GraphNodeDefinition[];
   readonly graphEdges: readonly GraphEdgeDefinition[];
+  readonly complianceSummaries: readonly ComplianceSummary[];
   readonly findings: readonly FindingDefinition[];
   readonly reports: readonly ReportArtifact[];
   readonly generatedArtifacts: readonly GeneratedArtifact[];

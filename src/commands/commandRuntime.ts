@@ -1,5 +1,6 @@
 import { architectureStudioCommands, type ArchitectureStudioCommand } from "./commandDefinitions";
 import type { RepositoryAnalysisResult } from "../analysis/repositoryAnalysis";
+import type { ComplianceEvaluationResult } from "../compliance/complianceEvaluation";
 
 export interface StudioCommandHost {
   showInformationMessage(message: string): PromiseLike<unknown> | unknown;
@@ -14,6 +15,7 @@ export interface StudioCommandServices {
   showDashboard?(): Promise<void> | void;
   getWorkspaceFolder?(): Promise<string | undefined> | string | undefined;
   runRepositoryAnalysis?(workspacePath: string): Promise<RepositoryAnalysisResult> | RepositoryAnalysisResult;
+  runComplianceEvaluation?(workspacePath: string): Promise<ComplianceEvaluationResult> | ComplianceEvaluationResult;
 }
 
 export interface StudioCommandExecutionContext {

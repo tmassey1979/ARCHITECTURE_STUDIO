@@ -88,6 +88,15 @@ public class SharedContractsTests
                     TargetId: "cqrs",
                     Relationship: GraphRelationship.RecommendedWith)
             ],
+            ComplianceSummaries:
+            [
+                new ComplianceSummary(
+                    RegulationId: "hipaa",
+                    RegulationTitle: "HIPAA",
+                    ScorePercentage: 72,
+                    CoveredControls: 5,
+                    TotalControls: 7)
+            ],
             Findings:
             [
                 new FindingDefinition(
@@ -129,6 +138,7 @@ public class SharedContractsTests
 
         Assert.NotNull(roundTrip);
         Assert.Equal("solid", roundTrip.Standards.Single().Id);
+        Assert.Equal(72, roundTrip.ComplianceSummaries.Single().ScorePercentage);
         Assert.Equal(SeverityLevel.High, roundTrip.Findings.Single().Severity);
         Assert.Equal(ArtifactFormat.Markdown, roundTrip.Reports.Single().Format);
     }

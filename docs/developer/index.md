@@ -18,6 +18,7 @@ Target content:
 Key documents:
 
 - [Command Surface](./command-surface.md)
+- [Compliance Engine](./compliance-engine.md)
 - [Dashboard Webview](./dashboard-webview.md)
 - [Release And Publishing](./release-and-publishing.md)
 - [Repository Analysis](./repository-analysis.md)

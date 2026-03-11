@@ -30,6 +30,15 @@ test("dashboard state exposes the required top-level sections with placeholder c
 
 test("dashboard state can project live shared-contract payloads into compliance and report sections", () => {
   const payload = createPlaceholderSharedContractPayload({
+    complianceSummaries: [
+      {
+        regulationId: "hipaa",
+        regulationTitle: "HIPAA",
+        scorePercentage: 72,
+        coveredControls: 5,
+        totalControls: 7
+      }
+    ],
     findings: [
       {
         id: "finding-live-1",
@@ -51,6 +60,7 @@ test("dashboard state can project live shared-contract payloads into compliance 
 
   assert.ok(compliance);
   assert.ok(reports);
+  assert.ok(compliance.cards.some((card) => card.title === "HIPAA" && card.value === "72%"));
   assert.ok(compliance.panels.some((panel) => panel.items.some((item) => item.includes("Secrets committed"))));
   assert.ok(reports.panels.some((panel) => panel.items.some((item) => item.includes(payload.reports[0].title))));
 });

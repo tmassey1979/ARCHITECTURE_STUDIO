@@ -1,4 +1,5 @@
 import type {
+  ComplianceSummary,
   FindingDefinition,
   GeneratedArtifact,
   GraphEdgeDefinition,
@@ -153,6 +154,22 @@ const placeholderPayload: SharedContractPayload = {
       evidence: ["controls/coverage-map.json"]
     }
   ],
+  complianceSummaries: [
+    {
+      regulationId: "soc2",
+      regulationTitle: "SOC 2",
+      scorePercentage: 68,
+      coveredControls: 2,
+      totalControls: 3
+    },
+    {
+      regulationId: "security-baseline",
+      regulationTitle: "Security Baseline",
+      scorePercentage: 75,
+      coveredControls: 3,
+      totalControls: 4
+    }
+  ],
   reports: [
     {
       id: "report-architecture-overview",
@@ -218,6 +235,7 @@ export function createPlaceholderSharedContractPayload(
     controls: overrides.controls ?? placeholderPayload.controls,
     graphNodes: overrides.graphNodes ?? placeholderPayload.graphNodes,
     graphEdges: overrides.graphEdges ?? placeholderPayload.graphEdges,
+    complianceSummaries: overrides.complianceSummaries ?? placeholderPayload.complianceSummaries,
     findings: overrides.findings ?? placeholderPayload.findings,
     reports: overrides.reports ?? placeholderPayload.reports,
     generatedArtifacts: overrides.generatedArtifacts ?? placeholderPayload.generatedArtifacts,
@@ -314,26 +332,44 @@ function createStandardsSection(
 }
 
 function createComplianceSection(
+  complianceSummaries: readonly ComplianceSummary[],
   findings: readonly FindingDefinition[],
   generatedArtifacts: readonly GeneratedArtifact[]
 ): DashboardSection {
+  const summaryCards =
+    complianceSummaries.length > 0
+      ? complianceSummaries.map((summary) => ({
+          title: summary.regulationTitle,
+          value: `${summary.scorePercentage}%`,
+          detail: `${summary.coveredControls}/${summary.totalControls} controls covered.`,
+          tone:
+            summary.scorePercentage >= 85
+              ? ("positive" as const)
+              : summary.scorePercentage >= 70
+                ? ("warning" as const)
+                : ("critical" as const)
+        }))
+      : [
+          {
+            title: "Critical Findings",
+            value: String(severityCount(findings, "Critical")),
+            detail: "Immediate attention items in the current analysis set.",
+            tone: "critical" as const
+          },
+          {
+            title: "High Findings",
+            value: String(severityCount(findings, "High")),
+            detail: "Important issues that should be remediated early in delivery.",
+            tone: "warning" as const
+          }
+        ];
+
   return {
     id: "compliance",
     title: "Compliance",
     description: "Summarize findings, control coverage, and remediation work from the compliance engine.",
     cards: [
-      {
-        title: "Critical Findings",
-        value: String(severityCount(findings, "Critical")),
-        detail: "Immediate attention items in the current analysis set.",
-        tone: "critical"
-      },
-      {
-        title: "High Findings",
-        value: String(severityCount(findings, "High")),
-        detail: "Important issues that should be remediated early in delivery.",
-        tone: "warning"
-      },
+      ...summaryCards,
       {
         title: "Generated Guidance",
         value: String(generatedArtifacts.length),
@@ -437,7 +473,7 @@ export function createDashboardState(payload: SharedContractPayload = createPlac
     sections: [
       createArchitectureSection(payload.graphNodes, payload.graphEdges, payload.projectSelection),
       createStandardsSection(payload.standards, payload.projectSelection),
-      createComplianceSection(payload.findings, payload.generatedArtifacts),
+      createComplianceSection(payload.complianceSummaries, payload.findings, payload.generatedArtifacts),
       createReportsSection(payload.reports, payload.generatedArtifacts),
       createRepositoryAnalysisSection(payload.findings)
     ]

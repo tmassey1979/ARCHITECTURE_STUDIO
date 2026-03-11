@@ -26,6 +26,7 @@ Documentation in this section should:
 Key documents:
 
 - [Architecture Reasoning](./architecture-reasoning.md)
+- [Compliance Validation](./compliance-validation.md)
 - [Dashboard](./dashboard.md)
 - [Repository Analysis](./repository-analysis.md)
 - [Standards Composition](./standards-composition.md)

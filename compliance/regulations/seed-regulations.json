@@ -1,0 +1,111 @@
+[
+  {
+    "id": "coppa",
+    "title": "COPPA",
+    "category": "Privacy",
+    "jurisdiction": "US",
+    "summary": "Child-directed services require parental consent and stronger handling controls.",
+    "requiredControls": [
+      "access-control",
+      "consent-management"
+    ],
+    "applicability": {
+      "systemCharacteristics": [
+        "kids-app"
+      ],
+      "detectedTechnologies": [],
+      "sensitiveDataCategories": [
+        "ChildData"
+      ]
+    }
+  },
+  {
+    "id": "gdpr",
+    "title": "GDPR",
+    "category": "Privacy",
+    "jurisdiction": "EU",
+    "summary": "Personal data processing requires clear legal basis, retention controls, and user-rights support.",
+    "requiredControls": [
+      "audit-logging",
+      "consent-management",
+      "data-retention"
+    ],
+    "applicability": {
+      "systemCharacteristics": [
+        "public-web"
+      ],
+      "detectedTechnologies": [],
+      "sensitiveDataCategories": [
+        "Personal"
+      ]
+    }
+  },
+  {
+    "id": "hipaa",
+    "title": "HIPAA",
+    "category": "Healthcare",
+    "jurisdiction": "US",
+    "summary": "Protected health information requires administrative, technical, and physical safeguards.",
+    "requiredControls": [
+      "encryption-at-rest",
+      "audit-logging",
+      "access-control",
+      "incident-response"
+    ],
+    "applicability": {
+      "systemCharacteristics": [
+        "patient-portal"
+      ],
+      "detectedTechnologies": [
+        "aspnet-core"
+      ],
+      "sensitiveDataCategories": [
+        "Health"
+      ]
+    }
+  },
+  {
+    "id": "pci-dss",
+    "title": "PCI DSS",
+    "category": "Financial",
+    "jurisdiction": "Global",
+    "summary": "Payment systems require stronger access, encryption, logging, and verification controls.",
+    "requiredControls": [
+      "encryption-at-rest",
+      "access-control",
+      "audit-logging",
+      "security-testing"
+    ],
+    "applicability": {
+      "systemCharacteristics": [
+        "payments"
+      ],
+      "detectedTechnologies": [],
+      "sensitiveDataCategories": [
+        "Financial"
+      ]
+    }
+  },
+  {
+    "id": "soc2",
+    "title": "SOC 2",
+    "category": "Security",
+    "jurisdiction": "Global",
+    "summary": "Operational systems need repeatable security controls, testing, and auditability.",
+    "requiredControls": [
+      "audit-logging",
+      "access-control",
+      "security-testing"
+    ],
+    "applicability": {
+      "systemCharacteristics": [
+        "saas"
+      ],
+      "detectedTechnologies": [
+        "github-actions",
+        "jenkins"
+      ],
+      "sensitiveDataCategories": []
+    }
+  }
+]

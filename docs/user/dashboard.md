@@ -32,6 +32,8 @@ This view is the foundation for the product experience and the GitHub Pages stor
 - summarize reports
 - inspect repository analysis evidence
 
+The compliance section can now render score cards in the same style the product vision calls for, such as `HIPAA 72%`.
+
 ## Current Status
 
 The current dashboard story delivers the shell, message bridge, and packaged assets. Repository analysis is now backed by a real workspace-aware command, while rich screenshots and deeper engine-backed dashboard visuals will continue to land in downstream stories.

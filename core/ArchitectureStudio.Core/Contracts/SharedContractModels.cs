@@ -55,6 +55,13 @@ public sealed record GeneratedArtifact(
     GeneratedArtifactKind Kind,
     string RelativePath);
 
+public sealed record ComplianceSummary(
+    string RegulationId,
+    string RegulationTitle,
+    int ScorePercentage,
+    int CoveredControls,
+    int TotalControls);
+
 public sealed record ProjectSelectionProfile(
     string Frontend,
     string Backend,
@@ -69,6 +76,7 @@ public sealed record SharedContractPayload(
     IReadOnlyList<ControlDefinition> Controls,
     IReadOnlyList<GraphNodeDefinition> GraphNodes,
     IReadOnlyList<GraphEdgeDefinition> GraphEdges,
+    IReadOnlyList<ComplianceSummary> ComplianceSummaries,
     IReadOnlyList<FindingDefinition> Findings,
     IReadOnlyList<ReportArtifact> Reports,
     IReadOnlyList<GeneratedArtifact> GeneratedArtifacts,

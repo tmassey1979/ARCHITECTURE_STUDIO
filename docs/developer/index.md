@@ -17,6 +17,7 @@ Target content:
 
 Key documents:
 
+- [Command Surface](./command-surface.md)
 - [Release And Publishing](./release-and-publishing.md)
 - [Shared Contracts](./shared-contracts.md)
 

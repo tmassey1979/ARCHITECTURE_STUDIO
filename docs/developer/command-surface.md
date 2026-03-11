@@ -13,7 +13,7 @@ This document defines the stable command entry points exposed by the VS Code ext
 | --- | --- | --- | --- |
 | `architectureStudio.openDashboard` | `Architecture Studio: Open Dashboard` | `./handlers/openDashboardHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
 | `architectureStudio.composeStandards` | `Architecture Studio: Compose Standards` | `./handlers/composeStandardsHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
-| `architectureStudio.analyzeRepository` | `Architecture Studio: Analyze Repository` | `./handlers/analyzeRepositoryHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
+| `architectureStudio.analyzeRepository` | `Architecture Studio: Analyze Repository` | `./handlers/analyzeRepositoryHandler` | Resolves the active workspace, invokes the repository-analysis service boundary, and reports structured result counts |
 | `architectureStudio.validateRegulations` | `Architecture Studio: Validate Regulations` | `./handlers/validateRegulationsHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
 | `architectureStudio.generateArchitecture` | `Architecture Studio: Generate Architecture` | `./handlers/generateArchitectureHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
 | `architectureStudio.generateProject` | `Architecture Studio: Generate Project` | `./handlers/generateProjectHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |

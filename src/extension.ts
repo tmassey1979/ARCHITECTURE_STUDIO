@@ -31,6 +31,11 @@ export function activate(context: vscode.ExtensionContext): void {
                 options as vscode.WebviewPanelOptions & vscode.WebviewOptions
               );
             }
+          },
+          workspace: {
+            getFirstWorkspaceFolderPath() {
+              return vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+            }
           }
         })
     }

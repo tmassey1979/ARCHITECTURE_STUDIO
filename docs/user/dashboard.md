@@ -34,4 +34,4 @@ This view is the foundation for the product experience and the GitHub Pages stor
 
 ## Current Status
 
-The current dashboard story delivers the shell, message bridge, and packaged assets. Rich screenshots and engine-backed visuals will be added as the downstream stories land.
+The current dashboard story delivers the shell, message bridge, and packaged assets. Repository analysis is now backed by a real workspace-aware command, while rich screenshots and deeper engine-backed dashboard visuals will continue to land in downstream stories.

@@ -27,4 +27,5 @@ Key documents:
 
 - [Architecture Reasoning](./architecture-reasoning.md)
 - [Dashboard](./dashboard.md)
+- [Repository Analysis](./repository-analysis.md)
 - [Standards Composition](./standards-composition.md)

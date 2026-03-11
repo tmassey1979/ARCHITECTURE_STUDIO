@@ -9,6 +9,9 @@ export type DashboardServiceFactoryContext = {
   readonly uri: DashboardUriApi;
   readonly viewColumn: unknown;
   readonly window: DashboardWindowApi;
+  readonly workspace: {
+    getFirstWorkspaceFolderPath(): string | undefined;
+  };
 };
 
 export function createStudioCommandServices({
@@ -17,7 +20,8 @@ export function createStudioCommandServices({
   output,
   uri,
   viewColumn,
-  window
+  window,
+  workspace
 }: DashboardServiceFactoryContext): StudioCommandServices {
   const dashboard = new ArchitectureStudioDashboardController({
     commands,
@@ -31,6 +35,9 @@ export function createStudioCommandServices({
   return {
     async showDashboard() {
       await dashboard.show();
+    },
+    getWorkspaceFolder() {
+      return workspace.getFirstWorkspaceFolderPath();
     }
   };
 }

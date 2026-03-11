@@ -20,6 +20,7 @@ Key documents:
 - [Command Surface](./command-surface.md)
 - [Dashboard Webview](./dashboard-webview.md)
 - [Release And Publishing](./release-and-publishing.md)
+- [Repository Analysis](./repository-analysis.md)
 - [Standards Engine](./standards-engine.md)
 - [Shared Contracts](./shared-contracts.md)
 - [Technology Graph](./technology-graph.md)

@@ -26,3 +26,4 @@ Documentation in this section should:
 Key documents:
 
 - [Dashboard](./dashboard.md)
+- [Standards Composition](./standards-composition.md)

@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\standards\packages\architecture-studio.seed.json">
+      <LogicalName>ArchitectureStudio.Core.Standards.Packages.architecture-studio.seed.json</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

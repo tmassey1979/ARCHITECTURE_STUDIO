@@ -20,6 +20,7 @@ Key documents:
 - [Command Surface](./command-surface.md)
 - [Dashboard Webview](./dashboard-webview.md)
 - [Release And Publishing](./release-and-publishing.md)
+- [Standards Engine](./standards-engine.md)
 - [Shared Contracts](./shared-contracts.md)
 
 Documentation in this section should:

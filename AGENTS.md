@@ -102,12 +102,10 @@ Use story format:
 ## Git Workflow
 
 - Push code after each completed story.
-- Use a dedicated feature branch for each story after the initial repository baseline is established.
-- Prefer branch names in the form `feature/issue-<number>-<short-slug>`.
-- Open a pull request for each story branch instead of merging work directly into `main`.
-- Keep story branches stacked when later stories depend on earlier unmerged work.
-- Rebase stacked branches regularly so they stay current with `main` as pull requests merge in different orders.
-- Keep pull requests focused on a single story whenever practical.
+- For the current delivery phase, work directly on `main` unless a future instruction explicitly restores feature branches.
+- Commit each story as a focused change set before pushing.
+- A pull request is optional for now and should only be used when explicitly requested.
+- If feature-branch delivery returns later, prefer branch names in the form `feature/issue-<number>-<short-slug>`.
 - Do not squash away meaningful story history locally unless explicitly requested.
 
 ## Coding Standards

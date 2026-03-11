@@ -1,0 +1,14 @@
+{
+  "id": "backend-spring-boot",
+  "selection_key": "backend",
+  "selection_values": ["spring-boot"],
+  "description": "Spring Boot backend starter.",
+  "files": [
+    {
+      "relative_path": "services/backend/README.md",
+      "artifact_kind": "ProjectScaffold",
+      "title": "Spring Boot Backend",
+      "content": "# Spring Boot Backend\\n\\nBackend starter for {{architecturePattern}}."
+    }
+  ]
+}

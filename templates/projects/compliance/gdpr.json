@@ -1,0 +1,14 @@
+{
+  "id": "compliance-gdpr",
+  "selection_key": "complianceTargets",
+  "selection_values": ["gdpr"],
+  "description": "GDPR-oriented documentation stub.",
+  "files": [
+    {
+      "relative_path": "docs/compliance/gdpr.md",
+      "artifact_kind": "Documentation",
+      "title": "GDPR Compliance Stub",
+      "content": "# GDPR\\n\\nCompliance starter for {{complianceTargets}}."
+    }
+  ]
+}

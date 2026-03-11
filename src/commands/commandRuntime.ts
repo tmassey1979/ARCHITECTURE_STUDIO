@@ -1,6 +1,8 @@
 import { architectureStudioCommands, type ArchitectureStudioCommand } from "./commandDefinitions";
 import type { RepositoryAnalysisResult } from "../analysis/repositoryAnalysis";
 import type { ComplianceEvaluationResult } from "../compliance/complianceEvaluation";
+import type { ProjectGenerationResult } from "../generators/projectGeneration";
+import type { ProjectSelectionProfile } from "../contracts/sharedContracts";
 
 export interface StudioCommandHost {
   showInformationMessage(message: string): PromiseLike<unknown> | unknown;
@@ -16,6 +18,10 @@ export interface StudioCommandServices {
   getWorkspaceFolder?(): Promise<string | undefined> | string | undefined;
   runRepositoryAnalysis?(workspacePath: string): Promise<RepositoryAnalysisResult> | RepositoryAnalysisResult;
   runComplianceEvaluation?(workspacePath: string): Promise<ComplianceEvaluationResult> | ComplianceEvaluationResult;
+  getProjectSelection?(): Promise<ProjectSelectionProfile | undefined> | ProjectSelectionProfile | undefined;
+  runProjectGeneration?(
+    selection: ProjectSelectionProfile
+  ): Promise<ProjectGenerationResult> | ProjectGenerationResult;
 }
 
 export interface StudioCommandExecutionContext {

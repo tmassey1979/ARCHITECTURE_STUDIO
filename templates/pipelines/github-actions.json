@@ -1,0 +1,14 @@
+{
+  "id": "pipeline-github-actions",
+  "selection_key": "ciCd",
+  "selection_values": ["github-actions"],
+  "description": "GitHub Actions pipeline template.",
+  "files": [
+    {
+      "relative_path": ".github/workflows/ci.yml",
+      "artifact_kind": "Pipeline",
+      "title": "GitHub Actions Pipeline",
+      "content": "name: ci\\non: [push]\\njobs:\\n  build:\\n    runs-on: ubuntu-latest"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "pipeline-gitlab-ci",
+  "selection_key": "ciCd",
+  "selection_values": ["gitlab-ci"],
+  "description": "GitLab CI pipeline template.",
+  "files": [
+    {
+      "relative_path": ".gitlab-ci.yml",
+      "artifact_kind": "Pipeline",
+      "title": "GitLab CI Pipeline",
+      "content": "stages:\\n  - build"
+    }
+  ]
+}

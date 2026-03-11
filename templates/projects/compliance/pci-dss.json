@@ -1,0 +1,14 @@
+{
+  "id": "compliance-pci-dss",
+  "selection_key": "complianceTargets",
+  "selection_values": ["pci-dss"],
+  "description": "PCI DSS-oriented documentation stub.",
+  "files": [
+    {
+      "relative_path": "docs/compliance/pci-dss.md",
+      "artifact_kind": "Documentation",
+      "title": "PCI DSS Compliance Stub",
+      "content": "# PCI DSS\\n\\nCompliance starter for {{complianceTargets}}."
+    }
+  ]
+}

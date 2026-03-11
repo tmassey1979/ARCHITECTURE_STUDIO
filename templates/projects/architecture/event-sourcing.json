@@ -1,0 +1,14 @@
+{
+  "id": "architecture-event-sourcing",
+  "selection_key": "architecturePattern",
+  "selection_values": ["event-sourcing"],
+  "description": "Event Sourcing documentation stub.",
+  "files": [
+    {
+      "relative_path": "docs/architecture/event-sourcing.md",
+      "artifact_kind": "Documentation",
+      "title": "Event Sourcing Stub",
+      "content": "# Event Sourcing\\n\\nGenerated starter for {{frontend}} and {{backend}}."
+    }
+  ]
+}

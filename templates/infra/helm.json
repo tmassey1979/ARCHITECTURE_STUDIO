@@ -1,0 +1,14 @@
+{
+  "id": "infra-helm",
+  "selection_key": "infrastructure",
+  "selection_values": ["helm"],
+  "description": "Helm infrastructure template.",
+  "files": [
+    {
+      "relative_path": "k8s/helm/Chart.yaml",
+      "artifact_kind": "Infrastructure",
+      "title": "Helm Chart",
+      "content": "apiVersion: v2\\nname: {{backend}}"
+    }
+  ]
+}

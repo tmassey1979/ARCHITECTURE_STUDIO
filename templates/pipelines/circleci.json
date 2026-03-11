@@ -1,0 +1,14 @@
+{
+  "id": "pipeline-circleci",
+  "selection_key": "ciCd",
+  "selection_values": ["circleci"],
+  "description": "CircleCI pipeline template.",
+  "files": [
+    {
+      "relative_path": ".circleci/config.yml",
+      "artifact_kind": "Pipeline",
+      "title": "CircleCI Pipeline",
+      "content": "version: 2.1\\nworkflows:\\n  build:\\n    jobs: []"
+    }
+  ]
+}

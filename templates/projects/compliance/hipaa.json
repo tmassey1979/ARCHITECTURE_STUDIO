@@ -1,0 +1,14 @@
+{
+  "id": "compliance-hipaa",
+  "selection_key": "complianceTargets",
+  "selection_values": ["hipaa"],
+  "description": "HIPAA-oriented documentation stub.",
+  "files": [
+    {
+      "relative_path": "docs/compliance/hipaa.md",
+      "artifact_kind": "Documentation",
+      "title": "HIPAA Compliance Stub",
+      "content": "# HIPAA\\n\\nCompliance starter for {{complianceTargets}}."
+    }
+  ]
+}

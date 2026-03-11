@@ -16,7 +16,7 @@ This document defines the stable command entry points exposed by the VS Code ext
 | `architectureStudio.analyzeRepository` | `Architecture Studio: Analyze Repository` | `./handlers/analyzeRepositoryHandler` | Resolves the active workspace, invokes the repository-analysis service boundary, and reports structured result counts |
 | `architectureStudio.validateRegulations` | `Architecture Studio: Validate Regulations` | `./handlers/validateRegulationsHandler` | Resolves the active workspace, invokes the compliance service boundary, and reports regulation score summaries plus finding counts |
 | `architectureStudio.generateArchitecture` | `Architecture Studio: Generate Architecture` | `./handlers/generateArchitectureHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
-| `architectureStudio.generateProject` | `Architecture Studio: Generate Project` | `./handlers/generateProjectHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
+| `architectureStudio.generateProject` | `Architecture Studio: Generate Project` | `./handlers/generateProjectHandler` | Consumes a selected project profile, invokes the generation service boundary, and reports generated artifact counts plus the applied template set |
 | `architectureStudio.generateReports` | `Architecture Studio: Generate Reports` | `./handlers/generateReportsHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
 | `architectureStudio.generateAiInstructions` | `Architecture Studio: Generate AI Instructions` | `./handlers/generateAiInstructionsHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
 

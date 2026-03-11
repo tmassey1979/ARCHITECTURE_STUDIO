@@ -1,0 +1,32 @@
+{
+  "id": "foundation-base",
+  "selection_key": "always",
+  "selection_values": [],
+  "description": "Base solution structure shared by all generated project selections.",
+  "files": [
+    {
+      "relative_path": "src/README.md",
+      "artifact_kind": "ProjectScaffold",
+      "title": "Source Layout",
+      "content": "# Source\\n\\nGenerated source structure for {{frontend}} + {{backend}}."
+    },
+    {
+      "relative_path": "services/README.md",
+      "artifact_kind": "ProjectScaffold",
+      "title": "Services Layout",
+      "content": "# Services\\n\\nService composition for {{architecturePattern}}."
+    },
+    {
+      "relative_path": "infrastructure/README.md",
+      "artifact_kind": "Infrastructure",
+      "title": "Infrastructure Layout",
+      "content": "# Infrastructure\\n\\nTargets: {{infrastructure}}."
+    },
+    {
+      "relative_path": "docs/README.md",
+      "artifact_kind": "Documentation",
+      "title": "Documentation Layout",
+      "content": "# Documentation\\n\\nGenerated docs for {{architecturePattern}}."
+    }
+  ]
+}

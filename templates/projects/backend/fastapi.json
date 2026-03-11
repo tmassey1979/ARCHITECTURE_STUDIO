@@ -1,0 +1,14 @@
+{
+  "id": "backend-fastapi",
+  "selection_key": "backend",
+  "selection_values": ["fastapi"],
+  "description": "FastAPI backend starter.",
+  "files": [
+    {
+      "relative_path": "services/backend/README.md",
+      "artifact_kind": "ProjectScaffold",
+      "title": "FastAPI Backend",
+      "content": "# FastAPI Backend\\n\\nBackend starter for {{architecturePattern}}."
+    }
+  ]
+}

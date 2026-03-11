@@ -1,0 +1,14 @@
+{
+  "id": "pipeline-jenkins",
+  "selection_key": "ciCd",
+  "selection_values": ["jenkins"],
+  "description": "Jenkins pipeline template.",
+  "files": [
+    {
+      "relative_path": "Jenkinsfile",
+      "artifact_kind": "Pipeline",
+      "title": "Jenkins Pipeline",
+      "content": "pipeline {\\n  agent any\\n}"
+    }
+  ]
+}

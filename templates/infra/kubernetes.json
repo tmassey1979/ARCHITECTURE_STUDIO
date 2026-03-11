@@ -1,0 +1,14 @@
+{
+  "id": "infra-kubernetes",
+  "selection_key": "infrastructure",
+  "selection_values": ["kubernetes"],
+  "description": "Kubernetes infrastructure template.",
+  "files": [
+    {
+      "relative_path": "k8s/base/deployment.yaml",
+      "artifact_kind": "Infrastructure",
+      "title": "Kubernetes Deployment",
+      "content": "apiVersion: apps/v1\\nkind: Deployment\\nmetadata:\\n  name: {{backend}}"
+    }
+  ]
+}

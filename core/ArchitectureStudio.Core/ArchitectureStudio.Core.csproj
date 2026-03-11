@@ -14,6 +14,7 @@
     <None Include="..\..\compliance\controls\*.json" Link="Compliance\Controls\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\..\compliance\regulations\*.json" Link="Compliance\Regulations\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\..\graph\datasets\*.yml" Link="Graph\Datasets\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\templates\**\*.json" Link="Templates\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
     <EmbeddedResource Include="..\..\standards\packages\architecture-studio.seed.json">
       <LogicalName>ArchitectureStudio.Core.Standards.Packages.architecture-studio.seed.json</LogicalName>
     </EmbeddedResource>

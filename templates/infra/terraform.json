@@ -1,0 +1,14 @@
+{
+  "id": "infra-terraform",
+  "selection_key": "infrastructure",
+  "selection_values": ["terraform"],
+  "description": "Terraform infrastructure template.",
+  "files": [
+    {
+      "relative_path": "infrastructure/terraform/main.tf",
+      "artifact_kind": "Infrastructure",
+      "title": "Terraform Starter",
+      "content": "terraform {\\n  required_version = \">= 1.8.0\"\\n}"
+    }
+  ]
+}

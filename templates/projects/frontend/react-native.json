@@ -1,0 +1,14 @@
+{
+  "id": "frontend-react-native",
+  "selection_key": "frontend",
+  "selection_values": ["react-native"],
+  "description": "React Native frontend starter.",
+  "files": [
+    {
+      "relative_path": "frontend/README.md",
+      "artifact_kind": "ProjectScaffold",
+      "title": "React Native Frontend",
+      "content": "# React Native Frontend\\n\\nMobile starter for {{architecturePattern}}."
+    }
+  ]
+}

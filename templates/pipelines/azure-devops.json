@@ -1,0 +1,14 @@
+{
+  "id": "pipeline-azure-devops",
+  "selection_key": "ciCd",
+  "selection_values": ["azure-devops"],
+  "description": "Azure DevOps pipeline template.",
+  "files": [
+    {
+      "relative_path": "azure-pipelines.yml",
+      "artifact_kind": "Pipeline",
+      "title": "Azure DevOps Pipeline",
+      "content": "trigger:\\n- main"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "architecture-hexagonal-architecture",
+  "selection_key": "architecturePattern",
+  "selection_values": ["hexagonal-architecture"],
+  "description": "Hexagonal Architecture documentation stub.",
+  "files": [
+    {
+      "relative_path": "docs/architecture/hexagonal-architecture.md",
+      "artifact_kind": "Documentation",
+      "title": "Hexagonal Architecture Stub",
+      "content": "# Hexagonal Architecture\\n\\nGenerated starter for {{frontend}} and {{backend}}."
+    }
+  ]
+}

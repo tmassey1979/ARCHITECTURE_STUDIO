@@ -21,6 +21,7 @@ Key documents:
 - [Compliance Engine](./compliance-engine.md)
 - [Compliance Library](./compliance-library.md)
 - [Dashboard Webview](./dashboard-webview.md)
+- [Generation Engine](./generation-engine.md)
 - [Release And Publishing](./release-and-publishing.md)
 - [Repository Analysis](./repository-analysis.md)
 - [Standards Engine](./standards-engine.md)

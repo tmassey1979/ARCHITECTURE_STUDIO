@@ -1,0 +1,14 @@
+{
+  "id": "compliance-soc2",
+  "selection_key": "complianceTargets",
+  "selection_values": ["soc2"],
+  "description": "SOC 2-oriented documentation stub.",
+  "files": [
+    {
+      "relative_path": "docs/compliance/soc2.md",
+      "artifact_kind": "Documentation",
+      "title": "SOC 2 Compliance Stub",
+      "content": "# SOC 2\\n\\nCompliance starter for {{complianceTargets}}."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "architecture-microservices",
+  "selection_key": "architecturePattern",
+  "selection_values": ["microservices"],
+  "description": "Microservices documentation stub.",
+  "files": [
+    {
+      "relative_path": "docs/architecture/microservices.md",
+      "artifact_kind": "Documentation",
+      "title": "Microservices Stub",
+      "content": "# Microservices\\n\\nGenerated starter for {{frontend}} and {{backend}}."
+    }
+  ]
+}

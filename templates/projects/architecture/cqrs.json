@@ -1,0 +1,14 @@
+{
+  "id": "architecture-cqrs",
+  "selection_key": "architecturePattern",
+  "selection_values": ["cqrs"],
+  "description": "CQRS documentation stub.",
+  "files": [
+    {
+      "relative_path": "docs/architecture/cqrs.md",
+      "artifact_kind": "Documentation",
+      "title": "CQRS Stub",
+      "content": "# CQRS\\n\\nGenerated starter for {{frontend}} and {{backend}}."
+    }
+  ]
+}

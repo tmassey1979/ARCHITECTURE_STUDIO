@@ -1,0 +1,14 @@
+{
+  "id": "frontend-react",
+  "selection_key": "frontend",
+  "selection_values": ["react"],
+  "description": "React frontend starter.",
+  "files": [
+    {
+      "relative_path": "frontend/README.md",
+      "artifact_kind": "ProjectScaffold",
+      "title": "React Frontend",
+      "content": "# React Frontend\\n\\nFrontend starter for {{architecturePattern}}."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "architecture-clean-architecture",
+  "selection_key": "architecturePattern",
+  "selection_values": ["clean-architecture"],
+  "description": "Clean Architecture documentation stub.",
+  "files": [
+    {
+      "relative_path": "docs/architecture/clean-architecture.md",
+      "artifact_kind": "Documentation",
+      "title": "Clean Architecture Stub",
+      "content": "# Clean Architecture\\n\\nGenerated starter for {{frontend}} and {{backend}}."
+    }
+  ]
+}

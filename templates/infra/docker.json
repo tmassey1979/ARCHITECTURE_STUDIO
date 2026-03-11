@@ -1,0 +1,14 @@
+{
+  "id": "infra-docker",
+  "selection_key": "infrastructure",
+  "selection_values": ["docker"],
+  "description": "Docker infrastructure template.",
+  "files": [
+    {
+      "relative_path": "docker/docker-compose.yml",
+      "artifact_kind": "Infrastructure",
+      "title": "Docker Compose",
+      "content": "services:\\n  app:\\n    image: {{backend}}"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "frontend-angular",
+  "selection_key": "frontend",
+  "selection_values": ["angular"],
+  "description": "Angular frontend starter.",
+  "files": [
+    {
+      "relative_path": "frontend/README.md",
+      "artifact_kind": "ProjectScaffold",
+      "title": "Angular Frontend",
+      "content": "# Angular Frontend\\n\\nFrontend starter for {{architecturePattern}}."
+    }
+  ]
+}

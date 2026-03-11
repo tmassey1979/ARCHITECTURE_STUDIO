@@ -1,0 +1,14 @@
+{
+  "id": "infra-bicep",
+  "selection_key": "infrastructure",
+  "selection_values": ["bicep"],
+  "description": "Bicep infrastructure template.",
+  "files": [
+    {
+      "relative_path": "infrastructure/bicep/main.bicep",
+      "artifact_kind": "Infrastructure",
+      "title": "Bicep Starter",
+      "content": "targetScope = 'resourceGroup'"
+    }
+  ]
+}

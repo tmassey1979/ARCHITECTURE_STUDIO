@@ -1,0 +1,14 @@
+{
+  "id": "frontend-blazor",
+  "selection_key": "frontend",
+  "selection_values": ["blazor"],
+  "description": "Blazor frontend starter.",
+  "files": [
+    {
+      "relative_path": "frontend/README.md",
+      "artifact_kind": "ProjectScaffold",
+      "title": "Blazor Frontend",
+      "content": "# Blazor Frontend\\n\\nFrontend starter for {{architecturePattern}}."
+    }
+  ]
+}

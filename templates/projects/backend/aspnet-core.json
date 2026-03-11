@@ -1,0 +1,14 @@
+{
+  "id": "backend-aspnet-core",
+  "selection_key": "backend",
+  "selection_values": ["aspnet-core"],
+  "description": "ASP.NET Core backend starter.",
+  "files": [
+    {
+      "relative_path": "services/backend/README.md",
+      "artifact_kind": "ProjectScaffold",
+      "title": "ASP.NET Core Backend",
+      "content": "# ASP.NET Core Backend\\n\\nBackend starter for {{architecturePattern}}."
+    }
+  ]
+}

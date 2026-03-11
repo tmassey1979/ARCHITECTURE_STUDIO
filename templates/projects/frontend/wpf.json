@@ -1,0 +1,14 @@
+{
+  "id": "frontend-wpf",
+  "selection_key": "frontend",
+  "selection_values": ["wpf"],
+  "description": "WPF frontend starter.",
+  "files": [
+    {
+      "relative_path": "frontend/README.md",
+      "artifact_kind": "ProjectScaffold",
+      "title": "WPF Frontend",
+      "content": "# WPF Frontend\\n\\nDesktop starter for {{architecturePattern}}."
+    }
+  ]
+}

@@ -25,5 +25,6 @@ Documentation in this section should:
 
 Key documents:
 
+- [Architecture Reasoning](./architecture-reasoning.md)
 - [Dashboard](./dashboard.md)
 - [Standards Composition](./standards-composition.md)

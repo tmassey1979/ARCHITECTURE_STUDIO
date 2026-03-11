@@ -1,0 +1,40 @@
+nodes:
+  - id: gdpr
+    label: GDPR
+    category: Regulation
+    requires: ["access-control", "audit-logging", "encryption-at-rest", "encryption-in-transit"]
+
+  - id: hipaa
+    label: HIPAA
+    category: Regulation
+    requires: ["access-control", "audit-logging", "encryption-at-rest", "encryption-in-transit"]
+
+  - id: pci-dss
+    label: PCI DSS
+    category: Regulation
+    requires: ["access-control", "audit-logging", "encryption-at-rest"]
+
+  - id: soc2
+    label: SOC 2
+    category: Regulation
+    requires: ["access-control", "audit-logging"]
+
+  - id: audit-logging
+    label: Audit Logging
+    category: Control
+    recommended_with: ["opentelemetry"]
+
+  - id: access-control
+    label: Access Control
+    category: Control
+    recommended_with: ["oauth", "keycloak"]
+
+  - id: encryption-at-rest
+    label: Encryption At Rest
+    category: Control
+    recommended_with: ["vault"]
+
+  - id: encryption-in-transit
+    label: Encryption In Transit
+    category: Control
+    recommended_with: ["oauth"]

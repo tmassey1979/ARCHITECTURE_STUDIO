@@ -1,0 +1,50 @@
+nodes:
+  - id: aws
+    label: AWS
+    category: Technology
+    recommended_with: ["terraform", "prometheus"]
+
+  - id: azure
+    label: Azure
+    category: Technology
+    recommended_with: ["azure-pipelines", "terraform"]
+
+  - id: gcp
+    label: GCP
+    category: Technology
+    recommended_with: ["terraform", "grafana"]
+
+  - id: sql-server
+    label: SQL Server
+    category: Technology
+    pairs_with: ["aspnet-core"]
+
+  - id: postgresql
+    label: PostgreSQL
+    category: Technology
+    pairs_with: ["aspnet-core", "spring-boot", "django", "fastapi"]
+
+  - id: mongodb
+    label: MongoDB
+    category: Technology
+    pairs_with: ["nodejs-api"]
+
+  - id: mysql
+    label: MySQL
+    category: Technology
+    pairs_with: ["spring-boot"]
+
+  - id: redis
+    label: Redis
+    category: Technology
+    recommended_with: ["graphql", "kafka"]
+
+  - id: cosmosdb
+    label: Cosmos DB
+    category: Technology
+    pairs_with: ["azure"]
+
+  - id: dynamodb
+    label: DynamoDB
+    category: Technology
+    pairs_with: ["aws"]

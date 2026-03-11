@@ -1,0 +1,100 @@
+nodes:
+  - id: docker
+    label: Docker
+    category: Technology
+    pairs_with: ["kubernetes", "jenkins"]
+    recommended_with: ["helm"]
+
+  - id: kubernetes
+    label: Kubernetes
+    category: Technology
+    requires: ["docker"]
+    pairs_with: ["helm", "prometheus"]
+
+  - id: helm
+    label: Helm
+    category: Technology
+    requires: ["kubernetes"]
+    pairs_with: ["docker"]
+
+  - id: terraform
+    label: Terraform
+    category: Technology
+    pairs_with: ["aws", "azure", "gcp"]
+
+  - id: github-actions
+    label: GitHub Actions
+    category: Technology
+    pairs_with: ["docker"]
+    recommended_with: ["terraform"]
+
+  - id: gitlab-ci
+    label: GitLab CI
+    category: Technology
+    pairs_with: ["docker"]
+
+  - id: jenkins
+    label: Jenkins
+    category: Technology
+    pairs_with: ["docker", "kubernetes"]
+
+  - id: bamboo
+    label: Bamboo
+    category: Technology
+    pairs_with: ["docker"]
+
+  - id: circleci
+    label: CircleCI
+    category: Technology
+    pairs_with: ["docker"]
+
+  - id: azure-pipelines
+    label: Azure Pipelines
+    category: Technology
+    pairs_with: ["azure", "docker"]
+
+  - id: kafka
+    label: Kafka
+    category: Technology
+    recommended_with: ["event-driven-architecture", "opentelemetry"]
+
+  - id: rabbitmq
+    label: RabbitMQ
+    category: Technology
+    pairs_with: ["go-service"]
+    recommended_with: ["event-driven-architecture"]
+
+  - id: prometheus
+    label: Prometheus
+    category: Technology
+    pairs_with: ["grafana", "kubernetes"]
+
+  - id: grafana
+    label: Grafana
+    category: Technology
+    pairs_with: ["prometheus"]
+
+  - id: opentelemetry
+    label: OpenTelemetry
+    category: Technology
+    recommended_with: ["prometheus", "grafana"]
+
+  - id: vault
+    label: Vault
+    category: Technology
+    recommended_with: ["kubernetes", "oauth"]
+
+  - id: keycloak
+    label: Keycloak
+    category: Technology
+    pairs_with: ["aspnet-core", "oauth"]
+
+  - id: oauth
+    label: OAuth
+    category: Technology
+    pairs_with: ["keycloak"]
+
+  - id: cdn
+    label: CDN
+    category: Technology
+    recommended_with: ["react", "angular", "vue"]

@@ -1,0 +1,59 @@
+nodes:
+  - id: clean-architecture
+    label: Clean Architecture
+    category: ArchitecturePattern
+    pairs_with: ["aspnet-core", "blazor"]
+    recommended_with: ["domain-driven-design"]
+
+  - id: hexagonal-architecture
+    label: Hexagonal Architecture
+    category: ArchitecturePattern
+    pairs_with: ["domain-driven-design"]
+    recommended_with: ["rest-api"]
+
+  - id: onion-architecture
+    label: Onion Architecture
+    category: ArchitecturePattern
+    pairs_with: ["domain-driven-design"]
+    recommended_with: ["cqrs"]
+
+  - id: layered-architecture
+    label: Layered Architecture
+    category: ArchitecturePattern
+    pairs_with: ["django", "wpf"]
+    conflicts: ["microservices"]
+
+  - id: vertical-slice-architecture
+    label: Vertical Slice Architecture
+    category: ArchitecturePattern
+    pairs_with: ["aspnet-core"]
+    recommended_with: ["cqrs"]
+
+  - id: microservices
+    label: Microservices
+    category: ArchitecturePattern
+    pairs_with: ["docker", "kubernetes"]
+    recommended_with: ["event-driven-architecture"]
+    conflicts: ["layered-architecture"]
+
+  - id: event-driven-architecture
+    label: Event Driven Architecture
+    category: ArchitecturePattern
+    pairs_with: ["kafka", "rabbitmq"]
+    recommended_with: ["event-sourcing"]
+
+  - id: cqrs
+    label: CQRS
+    category: ArchitecturePattern
+    requires: ["event-sourcing"]
+    pairs_with: ["aspnet-core", "vertical-slice-architecture"]
+
+  - id: event-sourcing
+    label: Event Sourcing
+    category: ArchitecturePattern
+    pairs_with: ["cqrs", "event-driven-architecture"]
+
+  - id: domain-driven-design
+    label: Domain Driven Design
+    category: ArchitecturePattern
+    recommended_with: ["clean-architecture", "hexagonal-architecture", "onion-architecture"]

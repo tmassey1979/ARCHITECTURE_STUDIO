@@ -1,0 +1,81 @@
+nodes:
+  - id: csharp
+    label: C#
+    category: Technology
+    pairs_with: ["dotnet"]
+
+  - id: dotnet
+    label: .NET
+    category: Technology
+    pairs_with: ["csharp", "aspnet-core", "blazor", "wpf"]
+
+  - id: java
+    label: Java
+    category: Technology
+
+  - id: python
+    label: Python
+    category: Technology
+
+  - id: go
+    label: Go
+    category: Technology
+
+  - id: aspnet-core
+    label: ASP.NET Core
+    category: Framework
+    requires: ["csharp", "dotnet"]
+    pairs_with: ["postgresql", "keycloak"]
+    recommended_with: ["cqrs", "clean-architecture", "oauth"]
+
+  - id: spring-boot
+    label: Spring Boot
+    category: Framework
+    requires: ["java"]
+    pairs_with: ["postgresql"]
+    recommended_with: ["microservices", "oauth"]
+
+  - id: django
+    label: Django
+    category: Framework
+    requires: ["python"]
+    pairs_with: ["postgresql"]
+    recommended_with: ["layered-architecture"]
+
+  - id: fastapi
+    label: FastAPI
+    category: Framework
+    requires: ["python"]
+    pairs_with: ["postgresql"]
+    recommended_with: ["oauth", "grpc"]
+
+  - id: nodejs-api
+    label: Node.js API
+    category: Framework
+    requires: ["javascript", "npm"]
+    pairs_with: ["mongodb"]
+    recommended_with: ["graphql"]
+
+  - id: go-service
+    label: Go Service
+    category: Framework
+    requires: ["go"]
+    pairs_with: ["rabbitmq"]
+    recommended_with: ["grpc"]
+
+  - id: rest-api
+    label: REST API
+    category: Technology
+    pairs_with: ["oauth"]
+
+  - id: graphql
+    label: GraphQL
+    category: Technology
+    pairs_with: ["oauth"]
+    recommended_with: ["redis"]
+
+  - id: grpc
+    label: gRPC
+    category: Technology
+    pairs_with: ["go-service", "fastapi"]
+    recommended_with: ["event-driven-architecture"]

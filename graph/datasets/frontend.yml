@@ -1,0 +1,71 @@
+nodes:
+  - id: javascript
+    label: JavaScript
+    category: Technology
+    recommended_with: ["npm"]
+
+  - id: typescript
+    label: TypeScript
+    category: Technology
+    requires: ["javascript"]
+    recommended_with: ["npm"]
+
+  - id: npm
+    label: npm
+    category: Technology
+    pairs_with: ["javascript", "typescript"]
+
+  - id: react
+    label: React
+    category: Framework
+    requires: ["javascript", "npm"]
+    pairs_with: ["typescript"]
+    recommended_with: ["rest-api", "graphql", "oauth"]
+    conflicts: ["wpf"]
+
+  - id: angular
+    label: Angular
+    category: Framework
+    requires: ["typescript", "npm"]
+    pairs_with: ["rest-api"]
+    recommended_with: ["oauth"]
+
+  - id: vue
+    label: Vue
+    category: Framework
+    requires: ["javascript", "npm"]
+    pairs_with: ["typescript"]
+    recommended_with: ["rest-api"]
+
+  - id: blazor
+    label: Blazor
+    category: Framework
+    requires: ["csharp", "dotnet"]
+    pairs_with: ["aspnet-core"]
+    recommended_with: ["clean-architecture"]
+
+  - id: wpf
+    label: WPF
+    category: Framework
+    requires: ["csharp", "dotnet"]
+    recommended_with: ["layered-architecture"]
+    conflicts: ["react", "react-native"]
+
+  - id: react-native
+    label: React Native
+    category: Framework
+    requires: ["react", "javascript", "npm"]
+    pairs_with: ["oauth"]
+    conflicts: ["wpf"]
+
+  - id: flutter
+    label: Flutter
+    category: Framework
+    requires: ["dart"]
+    pairs_with: ["graphql"]
+    recommended_with: ["oauth"]
+
+  - id: dart
+    label: Dart
+    category: Technology
+    recommended_with: ["flutter"]

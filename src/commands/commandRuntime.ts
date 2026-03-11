@@ -3,6 +3,7 @@ import type { RepositoryAnalysisResult } from "../analysis/repositoryAnalysis";
 import type { ComplianceEvaluationResult } from "../compliance/complianceEvaluation";
 import type { ProjectGenerationResult } from "../generators/projectGeneration";
 import type { ProjectSelectionProfile } from "../contracts/sharedContracts";
+import type { ReportGenerationResult } from "../reports/reportGeneration";
 
 export interface StudioCommandHost {
   showInformationMessage(message: string): PromiseLike<unknown> | unknown;
@@ -22,6 +23,7 @@ export interface StudioCommandServices {
   runProjectGeneration?(
     selection: ProjectSelectionProfile
   ): Promise<ProjectGenerationResult> | ProjectGenerationResult;
+  runReportGeneration?(workspacePath: string): Promise<ReportGenerationResult> | ReportGenerationResult;
 }
 
 export interface StudioCommandExecutionContext {

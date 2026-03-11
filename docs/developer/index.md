@@ -24,6 +24,7 @@ Key documents:
 - [Generation Engine](./generation-engine.md)
 - [Release And Publishing](./release-and-publishing.md)
 - [Repository Analysis](./repository-analysis.md)
+- [Report Generation](./report-generation.md)
 - [Standards Engine](./standards-engine.md)
 - [Shared Contracts](./shared-contracts.md)
 - [Technology Graph](./technology-graph.md)

@@ -31,4 +31,5 @@ Key documents:
 - [Project Generation](./project-generation.md)
 - [Regulation Library](./regulation-library.md)
 - [Repository Analysis](./repository-analysis.md)
+- [Report Export](./report-export.md)
 - [Standards Composition](./standards-composition.md)

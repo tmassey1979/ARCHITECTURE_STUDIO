@@ -56,6 +56,8 @@ lcov.info
 [Tt]est[Rr]esults/
 artifacts/
 packages/
+!standards/packages/
+!standards/packages/*.json
 .nuget/packages/
 *.nupkg
 *.snupkg

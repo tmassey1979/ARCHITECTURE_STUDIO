@@ -1,0 +1,514 @@
+{
+  "id": "architecture-studio.seed",
+  "version": "1.0.0",
+  "sourcePath": "standards/packages/architecture-studio.seed.json",
+  "standards": [
+    {
+      "definition": {
+        "id": "clean-code",
+        "title": "Clean Code",
+        "category": "Principles",
+        "summary": "Prefer readable, well-named, low-complexity code.",
+        "tags": ["maintainability", "readability", "quality"]
+      },
+      "appliesToCategories": ["Principles"],
+      "appliesToSelections": ["clean code"],
+      "appliesToTags": ["maintainability", "quality"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "solid",
+        "title": "SOLID",
+        "category": "Principles",
+        "summary": "Use stable object-oriented design principles to preserve flexibility.",
+        "tags": ["maintainability", "design", "quality"]
+      },
+      "appliesToCategories": ["Principles"],
+      "appliesToSelections": ["solid"],
+      "appliesToTags": ["maintainability", "quality"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "dry",
+        "title": "DRY",
+        "category": "Principles",
+        "summary": "Avoid duplicated knowledge and repeated implementation.",
+        "tags": ["maintainability", "quality"]
+      },
+      "appliesToCategories": ["Principles"],
+      "appliesToSelections": ["dry"],
+      "appliesToTags": ["maintainability"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "kiss",
+        "title": "KISS",
+        "category": "Principles",
+        "summary": "Keep designs and implementations intentionally simple.",
+        "tags": ["simplicity", "maintainability"]
+      },
+      "appliesToCategories": ["Principles"],
+      "appliesToSelections": ["kiss"],
+      "appliesToTags": ["simplicity"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "yagni",
+        "title": "YAGNI",
+        "category": "Principles",
+        "summary": "Do not implement speculative features before demand is proven.",
+        "tags": ["scope", "simplicity", "delivery"]
+      },
+      "appliesToCategories": ["Principles"],
+      "appliesToSelections": ["yagni"],
+      "appliesToTags": ["delivery", "simplicity"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "cqrs",
+        "title": "CQRS",
+        "category": "Architecture",
+        "summary": "Separate command and query responsibilities where the domain benefits.",
+        "tags": ["architecture", "patterns", "scalability"]
+      },
+      "appliesToCategories": ["Architecture"],
+      "appliesToSelections": ["cqrs"],
+      "appliesToTags": ["architecture"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "event-sourcing",
+        "title": "Event Sourcing",
+        "category": "Architecture",
+        "summary": "Persist state transitions as append-only event streams when auditability matters.",
+        "tags": ["architecture", "auditability", "events"]
+      },
+      "appliesToCategories": ["Architecture"],
+      "appliesToSelections": ["event sourcing"],
+      "appliesToTags": ["architecture", "auditability"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "microservices",
+        "title": "Microservices",
+        "category": "Architecture",
+        "summary": "Split systems into independently deployable services when domain boundaries justify the cost.",
+        "tags": ["architecture", "distributed-systems"]
+      },
+      "appliesToCategories": ["Architecture"],
+      "appliesToSelections": ["microservices"],
+      "appliesToTags": ["architecture", "distributed-systems"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "domain-driven-design",
+        "title": "Domain Driven Design",
+        "category": "Architecture",
+        "summary": "Model software around business language, bounded contexts, and explicit domain boundaries.",
+        "tags": ["architecture", "ddd", "domain"]
+      },
+      "appliesToCategories": ["Architecture"],
+      "appliesToSelections": ["domain driven design", "ddd"],
+      "appliesToTags": ["architecture", "domain"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "react",
+        "title": "React",
+        "category": "Frontend",
+        "summary": "Use component-driven UI composition with strong state boundary discipline.",
+        "tags": ["frontend", "javascript", "typescript"]
+      },
+      "appliesToCategories": ["Frontend"],
+      "appliesToSelections": ["react"],
+      "appliesToTags": ["frontend"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "angular",
+        "title": "Angular",
+        "category": "Frontend",
+        "summary": "Favor a structured, dependency-injected SPA architecture for large client applications.",
+        "tags": ["frontend", "typescript", "spa"]
+      },
+      "appliesToCategories": ["Frontend"],
+      "appliesToSelections": ["angular"],
+      "appliesToTags": ["frontend"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "vue",
+        "title": "Vue",
+        "category": "Frontend",
+        "summary": "Apply incremental component-based UI development with approachable conventions.",
+        "tags": ["frontend", "javascript", "spa"]
+      },
+      "appliesToCategories": ["Frontend"],
+      "appliesToSelections": ["vue"],
+      "appliesToTags": ["frontend"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "wpf",
+        "title": "WPF",
+        "category": "Frontend",
+        "summary": "Use MVVM-driven desktop UI composition for Windows-native experiences.",
+        "tags": ["frontend", "desktop", ".net"]
+      },
+      "appliesToCategories": ["Frontend"],
+      "appliesToSelections": ["wpf"],
+      "appliesToTags": ["frontend", "desktop"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "react-native",
+        "title": "React Native",
+        "category": "Frontend",
+        "summary": "Reuse React conventions for mobile-first cross-platform UI delivery.",
+        "tags": ["frontend", "mobile", "react"]
+      },
+      "appliesToCategories": ["Frontend"],
+      "appliesToSelections": ["react native"],
+      "appliesToTags": ["frontend", "mobile"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "rest",
+        "title": "REST",
+        "category": "Backend",
+        "summary": "Expose resource-oriented APIs with explicit contracts and versioning discipline.",
+        "tags": ["backend", "api", "http"]
+      },
+      "appliesToCategories": ["Backend"],
+      "appliesToSelections": ["rest"],
+      "appliesToTags": ["backend", "api"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "graphql",
+        "title": "GraphQL",
+        "category": "Backend",
+        "summary": "Use queryable APIs when clients need flexible data shaping across domains.",
+        "tags": ["backend", "api", "graphql"]
+      },
+      "appliesToCategories": ["Backend"],
+      "appliesToSelections": ["graphql"],
+      "appliesToTags": ["backend", "api", "graphql"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "grpc",
+        "title": "gRPC",
+        "category": "Backend",
+        "summary": "Prefer contract-first binary RPC for internal service communication with strong typing.",
+        "tags": ["backend", "api", "rpc", "grpc"]
+      },
+      "appliesToCategories": ["Backend"],
+      "appliesToSelections": ["grpc"],
+      "appliesToTags": ["backend", "api", "rpc"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "docker",
+        "title": "Docker",
+        "category": "DevOps",
+        "summary": "Package application workloads into consistent container images.",
+        "tags": ["devops", "containers", "infrastructure"]
+      },
+      "appliesToCategories": ["DevOps"],
+      "appliesToSelections": ["docker"],
+      "appliesToTags": ["devops", "containers"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "kubernetes",
+        "title": "Kubernetes",
+        "category": "DevOps",
+        "summary": "Orchestrate container workloads with declarative deployment and scaling control.",
+        "tags": ["devops", "containers", "orchestration"]
+      },
+      "appliesToCategories": ["DevOps"],
+      "appliesToSelections": ["kubernetes"],
+      "appliesToTags": ["devops", "orchestration"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "terraform",
+        "title": "Terraform",
+        "category": "DevOps",
+        "summary": "Manage infrastructure as code with repeatable, reviewable plans.",
+        "tags": ["devops", "iac", "infrastructure"]
+      },
+      "appliesToCategories": ["DevOps"],
+      "appliesToSelections": ["terraform"],
+      "appliesToTags": ["devops", "iac"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "helm",
+        "title": "Helm",
+        "category": "DevOps",
+        "summary": "Template and version Kubernetes deployments through reusable charts.",
+        "tags": ["devops", "kubernetes", "packaging"]
+      },
+      "appliesToCategories": ["DevOps"],
+      "appliesToSelections": ["helm"],
+      "appliesToTags": ["devops", "kubernetes"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "github-actions",
+        "title": "GitHub Actions",
+        "category": "DevOps",
+        "summary": "Automate builds, tests, packaging, and delivery through repository-native workflows.",
+        "tags": ["devops", "ci-cd", "github"]
+      },
+      "appliesToCategories": ["DevOps", "Process"],
+      "appliesToSelections": ["github actions"],
+      "appliesToTags": ["ci-cd", "automation"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "gitlab-ci",
+        "title": "GitLab CI",
+        "category": "DevOps",
+        "summary": "Manage CI/CD pipelines from a GitLab-native delivery platform.",
+        "tags": ["devops", "ci-cd", "gitlab"]
+      },
+      "appliesToCategories": ["DevOps", "Process"],
+      "appliesToSelections": ["gitlab ci"],
+      "appliesToTags": ["ci-cd", "automation"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "jenkins",
+        "title": "Jenkins",
+        "category": "DevOps",
+        "summary": "Automate complex pipeline topologies through a mature plugin-driven CI server.",
+        "tags": ["devops", "ci-cd", "automation"]
+      },
+      "appliesToCategories": ["DevOps", "Process"],
+      "appliesToSelections": ["jenkins"],
+      "appliesToTags": ["ci-cd", "automation"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "bamboo",
+        "title": "Bamboo",
+        "category": "DevOps",
+        "summary": "Coordinate CI/CD flows in Atlassian-centric delivery environments.",
+        "tags": ["devops", "ci-cd", "automation"]
+      },
+      "appliesToCategories": ["DevOps", "Process"],
+      "appliesToSelections": ["bamboo"],
+      "appliesToTags": ["ci-cd", "automation"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "circleci",
+        "title": "CircleCI",
+        "category": "DevOps",
+        "summary": "Run cloud-first CI/CD workflows with parallelized job execution.",
+        "tags": ["devops", "ci-cd", "automation"]
+      },
+      "appliesToCategories": ["DevOps", "Process"],
+      "appliesToSelections": ["circleci", "circle ci"],
+      "appliesToTags": ["ci-cd", "automation"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "azure-pipelines",
+        "title": "Azure Pipelines",
+        "category": "DevOps",
+        "summary": "Define multi-stage delivery workflows in Microsoft-centric delivery stacks.",
+        "tags": ["devops", "ci-cd", "azure"]
+      },
+      "appliesToCategories": ["DevOps", "Process"],
+      "appliesToSelections": ["azure pipelines"],
+      "appliesToTags": ["ci-cd", "automation"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "test-pyramid",
+        "title": "Test Pyramid",
+        "category": "Testing",
+        "summary": "Balance unit, integration, and end-to-end tests to keep feedback fast and reliable.",
+        "tags": ["testing", "quality", "tdd"]
+      },
+      "appliesToCategories": ["Testing"],
+      "appliesToSelections": ["test pyramid"],
+      "appliesToTags": ["testing", "quality", "tdd"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "contract-testing",
+        "title": "Contract Testing",
+        "category": "Testing",
+        "summary": "Validate API and service boundaries with explicit consumer-provider contracts.",
+        "tags": ["testing", "api", "integration"]
+      },
+      "appliesToCategories": ["Testing"],
+      "appliesToSelections": ["contract testing"],
+      "appliesToTags": ["testing", "api"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "integration-testing",
+        "title": "Integration Testing",
+        "category": "Testing",
+        "summary": "Exercise real process and data boundaries to catch orchestration regressions.",
+        "tags": ["testing", "integration", "quality"]
+      },
+      "appliesToCategories": ["Testing"],
+      "appliesToSelections": ["integration testing"],
+      "appliesToTags": ["testing", "integration"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "threat-modeling",
+        "title": "Threat Modeling",
+        "category": "Security",
+        "summary": "Identify abuse paths early and design controls before implementation hardens risk in place.",
+        "tags": ["security", "risk", "architecture"]
+      },
+      "appliesToCategories": ["Security"],
+      "appliesToSelections": ["threat modeling"],
+      "appliesToTags": ["security", "risk"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "secret-scanning",
+        "title": "Secret Scanning",
+        "category": "Security",
+        "summary": "Continuously detect secrets and credentials before they are promoted or published.",
+        "tags": ["security", "secrets", "compliance"]
+      },
+      "appliesToCategories": ["Security"],
+      "appliesToSelections": ["secret scanning"],
+      "appliesToTags": ["security", "secrets", "compliance"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "least-privilege",
+        "title": "Least Privilege",
+        "category": "Security",
+        "summary": "Scope identities, secrets, and service access to the minimum required permissions.",
+        "tags": ["security", "identity", "access"]
+      },
+      "appliesToCategories": ["Security"],
+      "appliesToSelections": ["least privilege"],
+      "appliesToTags": ["security", "identity", "access"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "opentelemetry",
+        "title": "OpenTelemetry",
+        "category": "Observability",
+        "summary": "Emit consistent traces, metrics, and logs through open instrumentation standards.",
+        "tags": ["observability", "telemetry", "monitoring"]
+      },
+      "appliesToCategories": ["Observability"],
+      "appliesToSelections": ["opentelemetry", "open telemetry"],
+      "appliesToTags": ["observability", "telemetry", "monitoring"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "prometheus",
+        "title": "Prometheus",
+        "category": "Observability",
+        "summary": "Collect time-series metrics with alertable operational visibility.",
+        "tags": ["observability", "metrics", "monitoring"]
+      },
+      "appliesToCategories": ["Observability"],
+      "appliesToSelections": ["prometheus"],
+      "appliesToTags": ["observability", "metrics", "monitoring"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "grafana",
+        "title": "Grafana",
+        "category": "Observability",
+        "summary": "Present operational data through consolidated dashboards and alerts.",
+        "tags": ["observability", "metrics", "dashboards"]
+      },
+      "appliesToCategories": ["Observability"],
+      "appliesToSelections": ["grafana"],
+      "appliesToTags": ["observability", "dashboards", "metrics"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "trunk-based-development",
+        "title": "Trunk Based Development",
+        "category": "Process",
+        "summary": "Integrate frequently into a shared branch to reduce merge risk and stale work.",
+        "tags": ["process", "delivery", "git"]
+      },
+      "appliesToCategories": ["Process"],
+      "appliesToSelections": ["trunk based development"],
+      "appliesToTags": ["delivery", "git"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "code-review-discipline",
+        "title": "Code Review Discipline",
+        "category": "Process",
+        "summary": "Use structured reviews to maintain quality, traceability, and knowledge sharing.",
+        "tags": ["process", "quality", "collaboration"]
+      },
+      "appliesToCategories": ["Process"],
+      "appliesToSelections": ["code review"],
+      "appliesToTags": ["quality", "collaboration"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    },
+    {
+      "definition": {
+        "id": "documentation-as-deliverable",
+        "title": "Documentation As Deliverable",
+        "category": "Process",
+        "summary": "Ship user and developer documentation as part of the feature itself.",
+        "tags": ["process", "documentation", "delivery"]
+      },
+      "appliesToCategories": ["Process"],
+      "appliesToSelections": ["documentation"],
+      "appliesToTags": ["documentation", "delivery"],
+      "sourceTitle": "Architecture Studio Seed Library"
+    }
+  ]
+}

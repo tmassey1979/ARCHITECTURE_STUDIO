@@ -1,0 +1,27 @@
+# Command Surface
+
+This document defines the stable command entry points exposed by the VS Code extension host.
+
+## Output Channel
+
+- Name: `Architecture Studio`
+- Purpose: shared logging surface for command routing, placeholder execution, and future engine diagnostics
+
+## Command Routes
+
+| Command ID | Title | Handler Module | Current Behavior |
+| --- | --- | --- | --- |
+| `architectureStudio.openDashboard` | `Architecture Studio: Open Dashboard` | `./handlers/openDashboardHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
+| `architectureStudio.composeStandards` | `Architecture Studio: Compose Standards` | `./handlers/composeStandardsHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
+| `architectureStudio.analyzeRepository` | `Architecture Studio: Analyze Repository` | `./handlers/analyzeRepositoryHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
+| `architectureStudio.validateRegulations` | `Architecture Studio: Validate Regulations` | `./handlers/validateRegulationsHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
+| `architectureStudio.generateArchitecture` | `Architecture Studio: Generate Architecture` | `./handlers/generateArchitectureHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
+| `architectureStudio.generateProject` | `Architecture Studio: Generate Project` | `./handlers/generateProjectHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
+| `architectureStudio.generateReports` | `Architecture Studio: Generate Reports` | `./handlers/generateReportsHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
+| `architectureStudio.generateAiInstructions` | `Architecture Studio: Generate AI Instructions` | `./handlers/generateAiInstructionsHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
+
+## Design Notes
+
+- `src/commands/commandRuntime.ts` owns route discovery, lazy handler loading, and error reporting.
+- `src/commands/registerCommands.ts` stays thin and only wires VS Code APIs to the runtime.
+- Handler modules are separate so downstream stories can replace placeholders without changing activation flow.

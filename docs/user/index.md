@@ -22,3 +22,7 @@ Documentation in this section should:
 - explain value and outcomes clearly
 - include screenshots where they improve clarity
 - use task-focused walkthroughs
+
+Key documents:
+
+- [Dashboard](./dashboard.md)

@@ -9,11 +9,16 @@ export interface StudioCommandOutput {
   appendLine(line: string): void;
 }
 
+export interface StudioCommandServices {
+  showDashboard?(): Promise<void> | void;
+}
+
 export interface StudioCommandExecutionContext {
   readonly route: StudioCommandRoute;
   readonly host: StudioCommandHost;
   readonly output: StudioCommandOutput;
   readonly arguments: readonly unknown[];
+  readonly services: StudioCommandServices;
 }
 
 export type StudioCommandHandler = (
@@ -55,7 +60,8 @@ function normalizeError(error: unknown): string {
 export function createCommandExecutor(
   route: StudioCommandRoute,
   host: StudioCommandHost,
-  output: StudioCommandOutput
+  output: StudioCommandOutput,
+  services: StudioCommandServices = {}
 ): (...commandArguments: unknown[]) => Promise<void> {
   return async (...commandArguments: unknown[]) => {
     output.appendLine(`[Architecture Studio] Command invoked: ${route.id}`);
@@ -67,7 +73,8 @@ export function createCommandExecutor(
         route,
         host,
         output,
-        arguments: commandArguments
+        arguments: commandArguments,
+        services
       });
     } catch (error) {
       const message = normalizeError(error);

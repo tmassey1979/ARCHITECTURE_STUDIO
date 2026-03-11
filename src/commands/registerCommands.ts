@@ -4,6 +4,7 @@ import {
   createCommandExecutor,
   type StudioCommandHost,
   type StudioCommandOutput,
+  type StudioCommandServices,
   studioCommandRoutes
 } from "./commandRuntime";
 
@@ -20,6 +21,7 @@ export interface StudioCommandsApi {
     id: string,
     handler: (...commandArguments: unknown[]) => Promise<void>
   ): DisposableLike;
+  executeCommand?(commandId: string, ...commandArguments: unknown[]): PromiseLike<unknown> | unknown;
 }
 
 export interface StudioVscodeApi {
@@ -29,17 +31,24 @@ export interface StudioVscodeApi {
 
 export const architectureStudioOutputChannelName = "Architecture Studio";
 
+export interface RegisterArchitectureStudioCommandsOptions {
+  readonly services?: StudioCommandServices;
+  readonly createServices?: (outputChannel: StudioOutputChannel) => StudioCommandServices;
+}
+
 export function registerArchitectureStudioCommands(
   context: ExtensionContext,
-  vscodeApi: StudioVscodeApi
+  vscodeApi: StudioVscodeApi,
+  options: RegisterArchitectureStudioCommandsOptions = {}
 ): void {
   const outputChannel = vscodeApi.window.createOutputChannel(architectureStudioOutputChannelName);
+  const services = options.services ?? options.createServices?.(outputChannel) ?? {};
   context.subscriptions.push(outputChannel);
 
   for (const route of studioCommandRoutes) {
     const registration = vscodeApi.commands.registerCommand(
       route.id,
-      createCommandExecutor(route, vscodeApi.window, outputChannel)
+      createCommandExecutor(route, vscodeApi.window, outputChannel, services)
     );
 
     context.subscriptions.push(registration);

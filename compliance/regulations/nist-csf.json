@@ -1,0 +1,28 @@
+{
+  "id": "nist-csf",
+  "title": "NIST Cybersecurity Framework",
+  "category": "Security",
+  "jurisdiction": "US",
+  "summary": "Operationally sensitive systems need identify, protect, detect, respond, and recover controls.",
+  "required_controls": [
+    "incident-response",
+    "network-segmentation",
+    "monitoring-alerting",
+    "security-testing"
+  ],
+  "data_types": [
+    "Personal"
+  ],
+  "applicability": {
+    "system_characteristics": [
+      "critical-infrastructure",
+      "regulated-operations"
+    ],
+    "detected_technologies": [],
+    "sensitive_data_categories": []
+  },
+  "metadata": {
+    "family": "security",
+    "source": "seed"
+  }
+}

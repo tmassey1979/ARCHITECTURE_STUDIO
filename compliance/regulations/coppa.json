@@ -1,0 +1,26 @@
+{
+  "id": "coppa",
+  "title": "COPPA",
+  "category": "Privacy",
+  "jurisdiction": "US",
+  "summary": "Child-directed services require parental consent and stronger handling controls.",
+  "required_controls": [
+    "access-control",
+    "consent-management"
+  ],
+  "data_types": [
+    "ChildData",
+    "Personal"
+  ],
+  "applicability": {
+    "system_characteristics": [
+      "kids-app"
+    ],
+    "detected_technologies": [],
+    "sensitive_data_categories": []
+  },
+  "metadata": {
+    "family": "privacy",
+    "source": "seed"
+  }
+}

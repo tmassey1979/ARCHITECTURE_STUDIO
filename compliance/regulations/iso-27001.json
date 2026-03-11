@@ -1,0 +1,28 @@
+{
+  "id": "iso-27001",
+  "title": "ISO 27001",
+  "category": "Security",
+  "jurisdiction": "Global",
+  "summary": "Information security management systems require documented control coverage and operational discipline.",
+  "required_controls": [
+    "audit-logging",
+    "secrets-management",
+    "security-testing",
+    "vendor-risk-review"
+  ],
+  "data_types": [
+    "Personal"
+  ],
+  "applicability": {
+    "system_characteristics": [
+      "enterprise-platform",
+      "multi-tenant"
+    ],
+    "detected_technologies": [],
+    "sensitive_data_categories": []
+  },
+  "metadata": {
+    "family": "security",
+    "source": "seed"
+  }
+}

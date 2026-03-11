@@ -1,0 +1,28 @@
+{
+  "id": "pci-dss",
+  "title": "PCI DSS",
+  "category": "Financial",
+  "jurisdiction": "Global",
+  "summary": "Payment systems require stronger access, segmentation, encryption, and verification controls.",
+  "required_controls": [
+    "encryption-at-rest",
+    "network-segmentation",
+    "access-control",
+    "security-testing"
+  ],
+  "data_types": [
+    "Financial"
+  ],
+  "applicability": {
+    "system_characteristics": [
+      "payments",
+      "billing-platform"
+    ],
+    "detected_technologies": [],
+    "sensitive_data_categories": []
+  },
+  "metadata": {
+    "family": "financial",
+    "source": "seed"
+  }
+}

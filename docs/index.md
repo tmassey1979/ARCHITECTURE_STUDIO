@@ -9,6 +9,7 @@ Architecture Studio is a VS Code extension for architecture generation, reposito
 - [Release And Publishing](./developer/release-and-publishing.md)
 - [Architecture Reasoning](./user/architecture-reasoning.md)
 - [Compliance Validation](./user/compliance-validation.md)
+- [Regulation Library](./user/regulation-library.md)
 - [Repository Analysis](./user/repository-analysis.md)
 
 ## What This Site Should Become

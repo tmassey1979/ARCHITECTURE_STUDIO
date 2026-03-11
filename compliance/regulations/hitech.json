@@ -1,0 +1,28 @@
+{
+  "id": "hitech",
+  "title": "HITECH",
+  "category": "Healthcare",
+  "jurisdiction": "US",
+  "summary": "Digital health systems need enhanced breach-response, auditability, and safeguard coverage.",
+  "required_controls": [
+    "audit-logging",
+    "encryption-at-rest",
+    "incident-response",
+    "secrets-management"
+  ],
+  "data_types": [
+    "Health"
+  ],
+  "applicability": {
+    "system_characteristics": [
+      "health-integration",
+      "healthcare-saas"
+    ],
+    "detected_technologies": [],
+    "sensitive_data_categories": []
+  },
+  "metadata": {
+    "family": "healthcare",
+    "source": "seed"
+  }
+}

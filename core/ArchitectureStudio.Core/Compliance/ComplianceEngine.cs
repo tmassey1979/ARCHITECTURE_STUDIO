@@ -26,7 +26,7 @@ public sealed class ComplianceEngine
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
         var applicableRegulations = _catalog.Regulations
-            .Where(regulation => IsApplicable(regulation.Applicability, matchedSystemCharacteristics, matchedTechnologies, matchedSensitiveDataCategories))
+            .Where(regulation => IsApplicable(regulation, matchedSystemCharacteristics, matchedTechnologies, matchedSensitiveDataCategories))
             .OrderBy(static regulation => regulation.Title, StringComparer.Ordinal)
             .ThenBy(static regulation => regulation.Id, StringComparer.Ordinal)
             .ToArray();
@@ -95,14 +95,14 @@ public sealed class ComplianceEngine
     }
 
     private static bool IsApplicable(
-        ComplianceApplicability applicability,
+        ComplianceRegulationDefinition regulation,
         IReadOnlySet<string> systemCharacteristics,
         IReadOnlySet<string> technologies,
         IReadOnlySet<SensitiveDataCategory> sensitiveDataCategories)
     {
-        return Matches(applicability.SystemCharacteristics, systemCharacteristics)
-            || Matches(applicability.DetectedTechnologies, technologies)
-            || applicability.SensitiveDataCategories.Any(sensitiveDataCategories.Contains);
+        return Matches(regulation.Applicability.SystemCharacteristics, systemCharacteristics)
+            || Matches(regulation.Applicability.DetectedTechnologies, technologies)
+            || regulation.DataTypes.Any(sensitiveDataCategories.Contains);
     }
 
     private static bool Matches(IReadOnlyList<string> expectedValues, IReadOnlySet<string> actualValues)

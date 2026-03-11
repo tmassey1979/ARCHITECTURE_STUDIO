@@ -2,8 +2,8 @@
 
 This folder stores control-library datasets and validation schemas.
 
-Current seed content:
+Current library content:
 
-- `seed-controls.json` contains the baseline control definitions used by the first compliance engine implementation
+- `library.json` contains the baseline control taxonomy consumed directly by the compliance engine
 
-Later stories should expand this library rather than moving control metadata into code.
+Add new controls here rather than moving control metadata into code.

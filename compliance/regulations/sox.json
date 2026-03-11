@@ -1,0 +1,28 @@
+{
+  "id": "sox",
+  "title": "SOX",
+  "category": "Financial",
+  "jurisdiction": "US",
+  "summary": "Financial reporting systems need strong change control, access governance, and traceability.",
+  "required_controls": [
+    "audit-logging",
+    "role-based-access-control",
+    "data-retention",
+    "monitoring-alerting"
+  ],
+  "data_types": [
+    "Financial"
+  ],
+  "applicability": {
+    "system_characteristics": [
+      "public-company",
+      "finance-platform"
+    ],
+    "detected_technologies": [],
+    "sensitive_data_categories": []
+  },
+  "metadata": {
+    "family": "financial",
+    "source": "seed"
+  }
+}

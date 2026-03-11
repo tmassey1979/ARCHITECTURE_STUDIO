@@ -6,22 +6,22 @@ Issue `#8` adds the first explainable compliance engine for Architecture Studio.
 
 The story delivers:
 
-- a seed compliance catalog under `compliance/`
+- a data-driven compliance catalog under `compliance/`
 - a C# compliance catalog loader and scoring engine
 - shared compliance summary contracts
 - a workspace-aware `Validate Regulations` command boundary
 - dashboard support for score cards such as `HIPAA 72%`
 
-## Seed Catalog
+## Catalog
 
-The current seed catalog lives in:
+The current catalog lives in:
 
-- `compliance/controls/seed-controls.json`
-- `compliance/regulations/seed-regulations.json`
+- `compliance/controls/library.json`
+- `compliance/regulations/*.json`
 
-The catalog is intentionally data-driven so the later regulation-library story can expand coverage without rewriting the engine.
+The catalog is intentionally data-driven so library scope can expand without rewriting the engine.
 
-Current seeded frameworks and regulations include examples such as:
+Current regulation coverage includes examples such as:
 
 - HIPAA
 - GDPR
@@ -109,7 +109,6 @@ Issue `#8` is covered by:
 
 Later stories should extend this by:
 
-- expanding the regulation and control library depth
 - wiring real repository-analysis output into command execution
 - surfacing richer compliance drill-down views in the dashboard
 - exporting detailed compliance reports

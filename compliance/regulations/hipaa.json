@@ -1,0 +1,29 @@
+{
+  "id": "hipaa",
+  "title": "HIPAA",
+  "category": "Healthcare",
+  "jurisdiction": "US",
+  "summary": "Protected health information requires administrative, technical, and physical safeguards.",
+  "required_controls": [
+    "encryption-at-rest",
+    "audit-logging",
+    "access-control",
+    "incident-response"
+  ],
+  "data_types": [
+    "Health"
+  ],
+  "applicability": {
+    "system_characteristics": [
+      "patient-portal"
+    ],
+    "detected_technologies": [
+      "aspnet-core"
+    ],
+    "sensitive_data_categories": []
+  },
+  "metadata": {
+    "family": "healthcare",
+    "source": "seed"
+  }
+}

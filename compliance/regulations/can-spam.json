@@ -1,0 +1,26 @@
+{
+  "id": "can-spam",
+  "title": "CAN-SPAM",
+  "category": "Communications",
+  "jurisdiction": "US",
+  "summary": "Email communication programs need consent handling, traceability, and retention support.",
+  "required_controls": [
+    "consent-management",
+    "audit-logging",
+    "data-retention"
+  ],
+  "data_types": [
+    "Personal"
+  ],
+  "applicability": {
+    "system_characteristics": [
+      "email-marketing"
+    ],
+    "detected_technologies": [],
+    "sensitive_data_categories": []
+  },
+  "metadata": {
+    "family": "communications",
+    "source": "seed"
+  }
+}

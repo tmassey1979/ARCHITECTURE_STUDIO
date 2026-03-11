@@ -1,0 +1,121 @@
+[
+  {
+    "id": "access-control",
+    "title": "Access Control",
+    "summary": "Restrict access to protected functionality and data.",
+    "remediation_title": "Implement access control",
+    "remediation_summary": "Add role-aware authorization checks and ensure protected operations require authenticated access."
+  },
+  {
+    "id": "audit-logging",
+    "title": "Audit Logging",
+    "summary": "Track security-relevant access and configuration changes.",
+    "remediation_title": "Implement audit logging",
+    "remediation_summary": "Capture auditable records for sensitive access, privileged operations, and configuration changes."
+  },
+  {
+    "id": "backup-recovery",
+    "title": "Backup And Recovery",
+    "summary": "Protect service continuity with tested backup and recovery workflows.",
+    "remediation_title": "Add backup and recovery controls",
+    "remediation_summary": "Create tested backup schedules, recovery objectives, and restoration runbooks."
+  },
+  {
+    "id": "consent-management",
+    "title": "Consent Management",
+    "summary": "Record and honor user consent requirements.",
+    "remediation_title": "Implement consent management",
+    "remediation_summary": "Store consent decisions, expose user review paths, and block processing that lacks a valid consent basis."
+  },
+  {
+    "id": "data-loss-prevention",
+    "title": "Data Loss Prevention",
+    "summary": "Reduce accidental or unauthorized data exfiltration paths.",
+    "remediation_title": "Implement data loss prevention",
+    "remediation_summary": "Add egress controls, data-classification-aware policies, and alerting for high-risk transfers."
+  },
+  {
+    "id": "data-retention",
+    "title": "Data Retention",
+    "summary": "Apply retention and deletion rules to regulated data.",
+    "remediation_title": "Implement retention controls",
+    "remediation_summary": "Define retention windows, automate deletion workflows, and document retention policy enforcement."
+  },
+  {
+    "id": "encryption-at-rest",
+    "title": "Encryption At Rest",
+    "summary": "Protect regulated data in persistent storage.",
+    "remediation_title": "Enable encryption at rest",
+    "remediation_summary": "Use managed encryption features or application-level encryption for regulated data stores and backups."
+  },
+  {
+    "id": "encryption-in-transit",
+    "title": "Encryption In Transit",
+    "summary": "Protect regulated data over network boundaries.",
+    "remediation_title": "Enable encryption in transit",
+    "remediation_summary": "Use TLS and certificate management for external and internal service communication paths."
+  },
+  {
+    "id": "incident-response",
+    "title": "Incident Response",
+    "summary": "Prepare escalation and breach handling workflows.",
+    "remediation_title": "Establish incident response",
+    "remediation_summary": "Create documented response playbooks, escalation paths, and evidence collection procedures."
+  },
+  {
+    "id": "key-management",
+    "title": "Key Management",
+    "summary": "Protect cryptographic keys used by regulated systems.",
+    "remediation_title": "Implement key management",
+    "remediation_summary": "Use managed key storage, rotation policies, and access restrictions for encryption material."
+  },
+  {
+    "id": "monitoring-alerting",
+    "title": "Monitoring And Alerting",
+    "summary": "Detect operational and security anomalies quickly.",
+    "remediation_title": "Add monitoring and alerting",
+    "remediation_summary": "Emit actionable telemetry, define alert thresholds, and route incidents to on-call owners."
+  },
+  {
+    "id": "network-segmentation",
+    "title": "Network Segmentation",
+    "summary": "Limit lateral movement and isolate sensitive zones.",
+    "remediation_title": "Implement network segmentation",
+    "remediation_summary": "Separate trusted and untrusted zones, restrict east-west traffic, and document ingress and egress policies."
+  },
+  {
+    "id": "role-based-access-control",
+    "title": "Role-Based Access Control",
+    "summary": "Grant permissions according to user roles and least privilege.",
+    "remediation_title": "Implement role-based access control",
+    "remediation_summary": "Define roles, map permissions to business responsibilities, and remove broad shared privileges."
+  },
+  {
+    "id": "secrets-management",
+    "title": "Secrets Management",
+    "summary": "Store and rotate secrets outside source control.",
+    "remediation_title": "Implement secrets management",
+    "remediation_summary": "Move secrets into managed storage, add rotation policies, and block inline credentials in configuration."
+  },
+  {
+    "id": "security-testing",
+    "title": "Security Testing",
+    "summary": "Validate security posture through repeatable testing.",
+    "remediation_title": "Add security testing",
+    "remediation_summary": "Run repeatable security checks in CI and track remediation for detected weaknesses."
+  },
+  {
+    "id": "vendor-risk-review",
+    "title": "Vendor Risk Review",
+    "summary": "Assess external providers that handle regulated data or critical processes.",
+    "remediation_title": "Add vendor risk review",
+    "remediation_summary": "Document provider controls, contract obligations, and reassessment triggers for third-party services."
+  },
+  {
+    "id": "vulnerability-management",
+    "title": "Vulnerability Management",
+    "summary": "Track and remediate known vulnerabilities in a repeatable way.",
+    "remediation_title": "Implement vulnerability management",
+    "remediation_summary": "Establish patch SLAs, scanning cadence, and ownership for high-risk findings."
+  }
+]

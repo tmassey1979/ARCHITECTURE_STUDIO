@@ -1,0 +1,27 @@
+{
+  "id": "ccpa",
+  "title": "CCPA",
+  "category": "Privacy",
+  "jurisdiction": "US-CA",
+  "summary": "California consumer systems need disclosure, retention, and consent-aware controls.",
+  "required_controls": [
+    "audit-logging",
+    "consent-management",
+    "data-retention"
+  ],
+  "data_types": [
+    "Personal"
+  ],
+  "applicability": {
+    "system_characteristics": [
+      "consumer-app",
+      "california-market"
+    ],
+    "detected_technologies": [],
+    "sensitive_data_categories": []
+  },
+  "metadata": {
+    "family": "privacy",
+    "source": "seed"
+  }
+}

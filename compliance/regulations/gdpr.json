@@ -1,0 +1,27 @@
+{
+  "id": "gdpr",
+  "title": "GDPR",
+  "category": "Privacy",
+  "jurisdiction": "EU",
+  "summary": "Personal data processing requires clear legal basis, retention controls, and user-rights support.",
+  "required_controls": [
+    "audit-logging",
+    "consent-management",
+    "data-retention"
+  ],
+  "data_types": [
+    "Personal"
+  ],
+  "applicability": {
+    "system_characteristics": [
+      "public-web",
+      "eu-market"
+    ],
+    "detected_technologies": [],
+    "sensitive_data_categories": []
+  },
+  "metadata": {
+    "family": "privacy",
+    "source": "seed"
+  }
+}

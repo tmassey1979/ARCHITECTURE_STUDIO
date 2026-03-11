@@ -1,0 +1,29 @@
+{
+  "id": "soc2",
+  "title": "SOC 2",
+  "category": "Security",
+  "jurisdiction": "Global",
+  "summary": "Operational systems need repeatable security controls, testing, and auditability.",
+  "required_controls": [
+    "audit-logging",
+    "access-control",
+    "security-testing"
+  ],
+  "data_types": [
+    "Personal"
+  ],
+  "applicability": {
+    "system_characteristics": [
+      "saas"
+    ],
+    "detected_technologies": [
+      "github-actions",
+      "jenkins"
+    ],
+    "sensitive_data_categories": []
+  },
+  "metadata": {
+    "family": "security",
+    "source": "seed"
+  }
+}

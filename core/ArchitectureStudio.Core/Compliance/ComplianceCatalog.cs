@@ -10,6 +10,7 @@ public sealed class ComplianceCatalog
 
     private static readonly JsonSerializerOptions SerializerOptions = new(JsonSerializerDefaults.Web)
     {
+        PropertyNameCaseInsensitive = true,
         ReadCommentHandling = JsonCommentHandling.Skip
     };
 
@@ -60,6 +61,8 @@ public sealed class ComplianceCatalog
             .ThenBy(static regulation => regulation.Id, StringComparer.Ordinal)
             .ToArray();
 
+        ValidateCatalog(controls, regulations);
+
         return new ComplianceCatalog(
             controls.ToDictionary(static control => control.Id, StringComparer.OrdinalIgnoreCase),
             regulations);
@@ -67,15 +70,61 @@ public sealed class ComplianceCatalog
 
     private static IReadOnlyList<ComplianceControlDefinition> ReadControls(string path)
     {
-        using var stream = File.OpenRead(path);
-        return JsonSerializer.Deserialize<IReadOnlyList<ComplianceControlDefinition>>(stream, SerializerOptions)
-            ?? [];
+        return ReadJsonValues<ComplianceControlDefinition>(path);
     }
 
     private static IReadOnlyList<ComplianceRegulationDefinition> ReadRegulations(string path)
     {
+        return ReadJsonValues<ComplianceRegulationDefinition>(path);
+    }
+
+    private static IReadOnlyList<T> ReadJsonValues<T>(string path)
+    {
         using var stream = File.OpenRead(path);
-        return JsonSerializer.Deserialize<IReadOnlyList<ComplianceRegulationDefinition>>(stream, SerializerOptions)
-            ?? [];
+        using var document = JsonDocument.Parse(stream);
+
+        return document.RootElement.ValueKind switch
+        {
+            JsonValueKind.Array => document.RootElement.Deserialize<IReadOnlyList<T>>(SerializerOptions) ?? [],
+            JsonValueKind.Object => document.RootElement.Deserialize<T>(SerializerOptions) is { } value ? [value] : [],
+            _ => []
+        };
+    }
+
+    private static void ValidateCatalog(
+        IReadOnlyList<ComplianceControlDefinition> controls,
+        IReadOnlyList<ComplianceRegulationDefinition> regulations)
+    {
+        foreach (var control in controls)
+        {
+            if (string.IsNullOrWhiteSpace(control.Id)
+                || string.IsNullOrWhiteSpace(control.Title)
+                || string.IsNullOrWhiteSpace(control.RemediationTitle)
+                || string.IsNullOrWhiteSpace(control.RemediationSummary))
+            {
+                throw new InvalidOperationException("Compliance control library contains an invalid control definition.");
+            }
+        }
+
+        var controlIds = controls.Select(static control => control.Id).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        foreach (var regulation in regulations)
+        {
+            if (string.IsNullOrWhiteSpace(regulation.Id)
+                || string.IsNullOrWhiteSpace(regulation.Jurisdiction)
+                || regulation.RequiredControls.Count == 0
+                || regulation.DataTypes.Count == 0)
+            {
+                throw new InvalidOperationException($"Compliance regulation '{regulation.Id}' is missing required schema fields.");
+            }
+
+            foreach (var controlId in regulation.RequiredControls)
+            {
+                if (!controlIds.Contains(controlId))
+                {
+                    throw new InvalidOperationException(
+                        $"Compliance regulation '{regulation.Id}' references unknown control '{controlId}'.");
+                }
+            }
+        }
     }
 }

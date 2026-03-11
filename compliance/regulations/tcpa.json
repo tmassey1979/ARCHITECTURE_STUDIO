@@ -1,0 +1,26 @@
+{
+  "id": "tcpa",
+  "title": "TCPA",
+  "category": "Communications",
+  "jurisdiction": "US",
+  "summary": "SMS communication programs need opt-in controls, recordkeeping, and suppression handling.",
+  "required_controls": [
+    "consent-management",
+    "audit-logging",
+    "data-retention"
+  ],
+  "data_types": [
+    "Personal"
+  ],
+  "applicability": {
+    "system_characteristics": [
+      "sms-marketing"
+    ],
+    "detected_technologies": [],
+    "sensitive_data_categories": []
+  },
+  "metadata": {
+    "family": "communications",
+    "source": "seed"
+  }
+}

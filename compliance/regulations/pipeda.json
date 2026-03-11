@@ -1,0 +1,26 @@
+{
+  "id": "pipeda",
+  "title": "PIPEDA",
+  "category": "Privacy",
+  "jurisdiction": "CA",
+  "summary": "Canadian personal-data systems need accountable consent, retention, and safeguard controls.",
+  "required_controls": [
+    "consent-management",
+    "data-retention",
+    "encryption-at-rest"
+  ],
+  "data_types": [
+    "Personal"
+  ],
+  "applicability": {
+    "system_characteristics": [
+      "canada-market"
+    ],
+    "detected_technologies": [],
+    "sensitive_data_categories": []
+  },
+  "metadata": {
+    "family": "privacy",
+    "source": "seed"
+  }
+}

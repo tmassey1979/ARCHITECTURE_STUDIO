@@ -18,7 +18,7 @@ export default (async ({ host, output, services }) => {
   const reportArtifacts = reportResult?.reportArtifacts ?? [];
 
   output.appendLine(`[Architecture Studio] Report artifacts: ${reportArtifacts.length}`);
-  output.appendLine(`[Architecture Studio] PDF fallback: ${reportResult?.pdfFallbackUsed ? "enabled" : "disabled"}`);
+  output.appendLine(`[Architecture Studio] PDF export: ${reportResult?.pdfFallbackUsed ? "fallback" : "generated"}`);
 
   await host.showInformationMessage(
     `Generated ${reportArtifacts.length} report artifacts for ${workspacePath}.`

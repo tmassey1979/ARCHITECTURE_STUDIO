@@ -3,7 +3,7 @@ namespace ArchitectureStudio.Core.Tests;
 public sealed class ReportGenerationEngineTests
 {
     [Fact]
-    public void Report_generation_creates_required_export_formats_named_docs_and_pdf_fallback()
+    public void Report_generation_creates_required_export_formats_named_docs_and_a_pdf_artifact()
     {
         var engine = new ReportGenerationEngine();
         var request = new ReportGenerationRequest(
@@ -43,25 +43,32 @@ public sealed class ReportGenerationEngineTests
             "reports/security-policy.md",
             "reports/incident-response.md",
             "reports/architecture.md",
-            "reports/pdf-fallback.md"
+            "reports/architecture-report.pdf"
         })
         {
             Assert.Contains(requiredPath, paths);
         }
 
         Assert.Contains(result.ReportArtifacts, artifact => artifact.Format == ArtifactFormat.Markdown);
+        Assert.Contains(result.ReportArtifacts, artifact => artifact.Format == ArtifactFormat.Pdf);
         Assert.Contains(result.ReportArtifacts, artifact => artifact.Format == ArtifactFormat.Json);
         Assert.Contains(result.ReportArtifacts, artifact => artifact.Format == ArtifactFormat.Sarif);
-        Assert.True(result.PdfFallbackUsed);
+        Assert.False(result.PdfFallbackUsed);
 
         var jsonReport = result.Files.Single(file => file.RelativePath == "reports/compliance-report.json").Content;
         var sarifReport = result.Files.Single(file => file.RelativePath == "reports/findings.sarif").Content;
+        var pdfReport = result.Files.Single(file => file.RelativePath == "reports/architecture-report.pdf").Content;
 
         Assert.Contains("\"scorePercentage\": 72", jsonReport, StringComparison.Ordinal);
         Assert.Contains("\"remediation\"", jsonReport, StringComparison.Ordinal);
         Assert.Contains("\"evidence\"", jsonReport, StringComparison.Ordinal);
         Assert.Contains("\"level\": \"warning\"", sarifReport, StringComparison.Ordinal);
         Assert.Contains("Implement audit logging", sarifReport, StringComparison.Ordinal);
+        Assert.Contains("%PDF-1.4", pdfReport, StringComparison.Ordinal);
+        Assert.Contains("Architecture Studio Architecture Report", pdfReport, StringComparison.Ordinal);
+        Assert.Contains("HIPAA: 72%", pdfReport, StringComparison.Ordinal);
+        Assert.Contains("HIPAA missing control: Audit Logging", pdfReport, StringComparison.Ordinal);
+        Assert.Contains("src/Web/appsettings.json", pdfReport, StringComparison.Ordinal);
     }
 
     [Fact]

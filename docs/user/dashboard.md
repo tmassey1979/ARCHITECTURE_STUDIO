@@ -12,15 +12,18 @@ The dashboard currently includes:
 - Reports
 - Repository Analysis
 
+![Live dashboard workspace summary](../assets/dashboard/live-dashboard-fintech.svg)
+
 ## What You Can Expect
 
-The shell is designed to grow with the rest of the plugin. Early versions may show placeholder data in some sections while the deeper engines are still being implemented, but the layout, command routing, and section model are stable.
+The dashboard now builds its state from the active workspace instead of sample content. When a folder is open, the cards and detail panels reflect live engine output for architecture, standards, compliance, reports, and repository analysis. When no folder is open, the dashboard stays explicit and tells you to open a workspace instead of silently showing stale or fake values.
 
 Each section is intended to give you:
 
 - a quick summary of current status
 - a focused list of details to review
 - action buttons that route back into the matching extension command
+- deterministic refresh behavior when you reopen the panel or trigger a dashboard action
 
 ## Why It Matters
 
@@ -36,4 +39,11 @@ The compliance section can now render score cards in the same style the product 
 
 ## Current Status
 
-The current dashboard story delivers the shell, message bridge, and packaged assets. Repository analysis is now backed by a real workspace-aware command, while rich screenshots and deeper engine-backed dashboard visuals will continue to land in downstream stories.
+The current dashboard story now delivers:
+
+- the packaged webview shell and typed message bridge
+- live workspace-backed section content
+- explicit no-workspace and no-data empty states
+- refresh after dashboard-triggered commands
+
+Use the sample fintech fixture or your own workspace to see the live cards and evidence panels populate.

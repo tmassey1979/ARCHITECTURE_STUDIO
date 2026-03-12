@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { ArchitectureStudioDashboardController } from "../../src/dashboard/dashboardController";
+import { createEmptySharedContractPayload, createSampleSharedContractPayload, createDashboardState } from "../../src/dashboard/dashboardState";
 
 type Disposable = { dispose(): void };
 
@@ -149,6 +150,7 @@ test("dashboard controller uses the typed message bridge and cleans up listeners
     type: "dashboard.runCommand",
     commandId: "architectureStudio.composeStandards"
   });
+  await new Promise((resolve) => setImmediate(resolve));
 
   assert.equal(firstPanel.webview.postedMessages.length, 1);
   assert.deepEqual(firstPanel.webview.postedMessages[0], {
@@ -166,4 +168,77 @@ test("dashboard controller uses the typed message bridge and cleans up listeners
   assert.equal(createdPanels.length, 2);
   assert.notEqual(createdPanels[1], firstPanel);
   assert.ok(outputLines.some((line) => line.includes("dashboard.runCommand")));
+});
+
+test("dashboard controller refreshes live state after a dashboard-triggered command", async () => {
+  let currentState = createDashboardState(
+    createSampleSharedContractPayload({
+      complianceSummaries: [
+        {
+          regulationId: "pci-dss",
+          regulationTitle: "PCI DSS",
+          scorePercentage: 60,
+          coveredControls: 3,
+          totalControls: 5
+        }
+      ]
+    }),
+    {
+      workspaceLabel: "fintech-platform"
+    }
+  );
+  const createdPanels: FakePanel[] = [];
+
+  const controller = new ArchitectureStudioDashboardController({
+    extensionUri: {
+      toString() {
+        return "extension:/root";
+      }
+    },
+    getState: async () => currentState,
+    output: {
+      appendLine() {}
+    },
+    commands: {
+      async executeCommand() {
+        currentState = createDashboardState(createEmptySharedContractPayload(), {
+          workspaceLabel: "fintech-platform",
+          subtitle: "Live workspace summary for fintech-platform."
+        });
+      }
+    },
+    uri: {
+      joinPath(base: { toString(): string }, ...paths: string[]) {
+        return {
+          toString() {
+            return [base.toString(), ...paths].join("/");
+          }
+        };
+      }
+    },
+    window: {
+      createWebviewPanel() {
+        const panel = new FakePanel();
+        createdPanels.push(panel);
+        return panel;
+      }
+    },
+    viewColumn: 1,
+    nonceFactory: () => "nonce-test"
+  });
+
+  await controller.show();
+  const panel = createdPanels[0];
+
+  panel.webview.emit({
+    type: "dashboard.runCommand",
+    commandId: "architectureStudio.generateReports"
+  });
+  await new Promise((resolve) => setImmediate(resolve));
+
+  assert.equal(panel.webview.postedMessages.length, 1);
+  assert.equal(
+    (panel.webview.postedMessages[0] as { state: { subtitle: string } }).state.subtitle,
+    "Live workspace summary for fintech-platform."
+  );
 });

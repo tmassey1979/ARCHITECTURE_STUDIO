@@ -114,6 +114,7 @@ test("createStudioCommandServices delegates workspace-aware operations to the co
   await services.runReportGeneration?.("C:/workspace/sample");
   const aiContext = await services.getAiInstructionContext?.("C:/workspace/sample");
   await services.runAiInstructionGeneration?.(aiContext!);
+  const dashboardState = await services.getDashboardState?.();
 
   assert.deepEqual(invokedCommands, [
     "analyze:C:/workspace/sample",
@@ -124,6 +125,17 @@ test("createStudioCommandServices delegates workspace-aware operations to the co
     "project:react",
     "reports:C:/workspace/sample",
     "ai-context:C:/workspace/sample",
+    "ai:Architecture Studio",
+    "analyze:C:/workspace/sample",
+    "standards:C:/workspace/sample",
+    "architecture:C:/workspace/sample",
+    "compliance:C:/workspace/sample",
+    "reports:C:/workspace/sample",
+    "selection:C:/workspace/sample",
+    "ai-context:C:/workspace/sample",
+    "project:react",
     "ai:Architecture Studio"
   ]);
+  assert.ok(dashboardState);
+  assert.equal(dashboardState.subtitle, "Live workspace summary for sample.");
 });

@@ -11,7 +11,7 @@ This document defines the stable command entry points exposed by the VS Code ext
 
 | Command ID | Title | Handler Module | Current Behavior |
 | --- | --- | --- | --- |
-| `architectureStudio.openDashboard` | `Architecture Studio: Open Dashboard` | `./handlers/openDashboardHandler` | Routes through the centralized command runtime and shows scaffolded placeholder output |
+| `architectureStudio.openDashboard` | `Architecture Studio: Open Dashboard` | `./handlers/openDashboardHandler` | Routes through the centralized command runtime and opens the live workspace-backed dashboard surface |
 | `architectureStudio.composeStandards` | `Architecture Studio: Compose Standards` | `./handlers/composeStandardsHandler` | Resolves the active workspace, invokes the C# standards-composition path through the core CLI bridge, and reports the composed-standard count |
 | `architectureStudio.analyzeRepository` | `Architecture Studio: Analyze Repository` | `./handlers/analyzeRepositoryHandler` | Resolves the active workspace, invokes the repository-analysis service boundary, and reports structured result counts |
 | `architectureStudio.validateRegulations` | `Architecture Studio: Validate Regulations` | `./handlers/validateRegulationsHandler` | Resolves the active workspace, invokes the compliance service boundary, and reports regulation score summaries plus finding counts |

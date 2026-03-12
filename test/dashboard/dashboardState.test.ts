@@ -3,12 +3,15 @@ import test from "node:test";
 
 import {
   createDashboardState,
-  createPlaceholderSharedContractPayload,
+  createEmptySharedContractPayload,
+  createSampleSharedContractPayload,
   isDashboardWebviewMessage
 } from "../../src/dashboard/dashboardState";
 
-test("dashboard state exposes the required top-level sections with placeholder contract-backed content", () => {
-  const state = createDashboardState();
+test("dashboard state exposes the required top-level sections with explicit empty-state content", () => {
+  const state = createDashboardState(createEmptySharedContractPayload(), {
+    hasWorkspace: false
+  });
 
   assert.deepEqual(
     state.sections.map((section) => section.title),
@@ -21,15 +24,15 @@ test("dashboard state exposes the required top-level sections with placeholder c
   assert.ok(compliance);
   assert.ok(repositoryAnalysis);
   assert.ok(compliance.cards.length > 0, "Expected compliance summary cards.");
-  assert.ok(compliance.panels.some((panel) => panel.items.length > 0), "Expected compliance finding panels.");
+  assert.ok(compliance.panels.some((panel) => panel.items.some((item) => item.includes("Open a workspace folder"))));
   assert.ok(
-    repositoryAnalysis.panels.some((panel) => panel.items.length > 0),
-    "Expected repository analysis placeholder panels."
+    repositoryAnalysis.panels.some((panel) => panel.items.some((item) => item.includes("Open a workspace folder"))),
+    "Expected explicit repository-analysis empty-state panels."
   );
 });
 
 test("dashboard state can project live shared-contract payloads into compliance and report sections", () => {
-  const payload = createPlaceholderSharedContractPayload({
+  const payload = createSampleSharedContractPayload({
     complianceSummaries: [
       {
         regulationId: "hipaa",
@@ -54,7 +57,10 @@ test("dashboard state can project live shared-contract payloads into compliance 
       }
     ]
   });
-  const state = createDashboardState(payload);
+  const state = createDashboardState(payload, {
+    hasWorkspace: true,
+    workspaceLabel: "fintech-platform"
+  });
   const compliance = state.sections.find((section) => section.id === "compliance");
   const reports = state.sections.find((section) => section.id === "reports");
 
@@ -66,7 +72,9 @@ test("dashboard state can project live shared-contract payloads into compliance 
 });
 
 test("dashboard state can surface external package load status in a user-visible panel", () => {
-  const state = createDashboardState(undefined, {
+  const state = createDashboardState(createSampleSharedContractPayload(), {
+    hasWorkspace: true,
+    workspaceLabel: "fintech-platform",
     externalPackageStatuses: [
       {
         packageId: "aws-architecture-pack",

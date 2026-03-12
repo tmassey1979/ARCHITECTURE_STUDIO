@@ -1,3 +1,4 @@
+import type { RepositoryAnalysisResult } from "../analysis/repositoryAnalysis";
 import type {
   ComplianceSummary,
   FindingDefinition,
@@ -50,6 +51,10 @@ export type DashboardState = {
 
 export type DashboardStateOptions = {
   readonly externalPackageStatuses?: readonly ExternalPackageLoadStatus[];
+  readonly hasWorkspace?: boolean;
+  readonly repositoryAnalysis?: RepositoryAnalysisResult;
+  readonly subtitle?: string;
+  readonly workspaceLabel?: string;
 };
 
 export type DashboardHostMessage = {
@@ -66,7 +71,34 @@ export type DashboardWebviewMessage =
       readonly commandId: string;
     };
 
-const placeholderPayload: SharedContractPayload = {
+const emptyRepositoryAnalysis: RepositoryAnalysisResult = {
+  signals: [],
+  sensitiveData: []
+};
+
+const emptyProjectSelection: ProjectSelectionProfile = {
+  frontend: "Not analyzed",
+  backend: "Not analyzed",
+  architecturePattern: "Not analyzed",
+  ciCd: [],
+  infrastructure: [],
+  complianceTargets: []
+};
+
+const emptyPayload: SharedContractPayload = {
+  standards: [],
+  regulations: [],
+  controls: [],
+  graphNodes: [],
+  graphEdges: [],
+  findings: [],
+  complianceSummaries: [],
+  reports: [],
+  generatedArtifacts: [],
+  projectSelection: emptyProjectSelection
+};
+
+const samplePayload: SharedContractPayload = {
   standards: [
     {
       id: "std-arch-layering",
@@ -136,7 +168,7 @@ const placeholderPayload: SharedContractPayload = {
   findings: [
     {
       id: "finding-secret-scan",
-      title: "Secrets scanning placeholder finding",
+      title: "Secrets scanning sample finding",
       summary: "Repository analysis should validate that committed configuration is scrubbed of credentials.",
       severity: "High",
       risk: "Medium",
@@ -148,7 +180,7 @@ const placeholderPayload: SharedContractPayload = {
     },
     {
       id: "finding-control-gap",
-      title: "Control mapping placeholder finding",
+      title: "Control mapping sample finding",
       summary: "Compliance summaries should show when required controls are only partially covered.",
       severity: "Medium",
       risk: "Medium",
@@ -214,37 +246,39 @@ const placeholderPayload: SharedContractPayload = {
 };
 
 function mergeProjectSelection(
+  base: ProjectSelectionProfile,
   selection?: Partial<ProjectSelectionProfile>
 ): ProjectSelectionProfile {
   if (!selection) {
-    return placeholderPayload.projectSelection;
+    return base;
   }
 
   return {
-    ...placeholderPayload.projectSelection,
+    ...base,
     ...selection,
-    ciCd: selection.ciCd ?? placeholderPayload.projectSelection.ciCd,
-    infrastructure: selection.infrastructure ?? placeholderPayload.projectSelection.infrastructure,
-    complianceTargets: selection.complianceTargets ?? placeholderPayload.projectSelection.complianceTargets
+    ciCd: selection.ciCd ?? base.ciCd,
+    infrastructure: selection.infrastructure ?? base.infrastructure,
+    complianceTargets: selection.complianceTargets ?? base.complianceTargets
   };
 }
 
-export function createPlaceholderSharedContractPayload(
-  overrides: Partial<SharedContractPayload> = {}
+function mergeSharedContractPayload(
+  base: SharedContractPayload,
+  overrides: Partial<SharedContractPayload>
 ): SharedContractPayload {
   return {
-    ...placeholderPayload,
+    ...base,
     ...overrides,
-    standards: overrides.standards ?? placeholderPayload.standards,
-    regulations: overrides.regulations ?? placeholderPayload.regulations,
-    controls: overrides.controls ?? placeholderPayload.controls,
-    graphNodes: overrides.graphNodes ?? placeholderPayload.graphNodes,
-    graphEdges: overrides.graphEdges ?? placeholderPayload.graphEdges,
-    complianceSummaries: overrides.complianceSummaries ?? placeholderPayload.complianceSummaries,
-    findings: overrides.findings ?? placeholderPayload.findings,
-    reports: overrides.reports ?? placeholderPayload.reports,
-    generatedArtifacts: overrides.generatedArtifacts ?? placeholderPayload.generatedArtifacts,
-    projectSelection: mergeProjectSelection(overrides.projectSelection)
+    standards: overrides.standards ?? base.standards,
+    regulations: overrides.regulations ?? base.regulations,
+    controls: overrides.controls ?? base.controls,
+    graphNodes: overrides.graphNodes ?? base.graphNodes,
+    graphEdges: overrides.graphEdges ?? base.graphEdges,
+    complianceSummaries: overrides.complianceSummaries ?? base.complianceSummaries,
+    findings: overrides.findings ?? base.findings,
+    reports: overrides.reports ?? base.reports,
+    generatedArtifacts: overrides.generatedArtifacts ?? base.generatedArtifacts,
+    projectSelection: mergeProjectSelection(base.projectSelection, overrides.projectSelection)
   };
 }
 
@@ -252,15 +286,36 @@ function countEvidence(findings: readonly FindingDefinition[]): number {
   return findings.reduce((total, finding) => total + (finding.evidence?.length ?? 0), 0);
 }
 
-function severityCount(findings: readonly FindingDefinition[], severity: FindingDefinition["severity"]): number {
-  return findings.filter((finding) => finding.severity === severity).length;
+function joinValues(values: readonly string[], fallback: string): string {
+  return values.length > 0 ? values.join(", ") : fallback;
+}
+
+function withFallbackItems(items: readonly string[], fallback: string): readonly string[] {
+  return items.length > 0 ? items : [fallback];
+}
+
+function confidencePercentage(value: number): string {
+  return `${Math.round(value * 100)}%`;
+}
+
+function createWorkspaceFallbackMessage(hasWorkspace: boolean, emptyWorkspaceMessage: string): string {
+  return hasWorkspace ? emptyWorkspaceMessage : "Open a workspace folder to load live Architecture Studio data.";
 }
 
 function createArchitectureSection(
   graphNodes: readonly GraphNodeDefinition[],
   graphEdges: readonly GraphEdgeDefinition[],
-  selection: ProjectSelectionProfile
+  selection: ProjectSelectionProfile,
+  hasWorkspace: boolean
 ): DashboardSection {
+  const deliveryStackItems = hasWorkspace
+    ? [
+        `Frontend: ${selection.frontend}`,
+        `Backend: ${selection.backend}`,
+        `Infrastructure: ${joinValues(selection.infrastructure, "None detected")}`
+      ]
+    : [createWorkspaceFallbackMessage(false, "No delivery stack data is available for the current workspace.")];
+
   return {
     id: "architecture",
     title: "Architecture",
@@ -269,35 +324,36 @@ function createArchitectureSection(
       {
         title: "Graph Nodes",
         value: String(graphNodes.length),
-        detail: "Technologies, patterns, and controls currently represented.",
-        tone: "neutral"
+        detail: hasWorkspace ? "Technologies and patterns detected for the active workspace." : "Open a workspace to load graph data.",
+        tone: graphNodes.length > 0 ? "positive" : "warning"
       },
       {
         title: "Graph Edges",
         value: String(graphEdges.length),
-        detail: "Known compatibility and dependency relationships.",
-        tone: "positive"
+        detail: hasWorkspace ? "Compatibility, requirement, and recommendation links." : "Workspace-driven graph links appear here.",
+        tone: graphEdges.length > 0 ? "positive" : "warning"
       },
       {
         title: "Target Pattern",
         value: selection.architecturePattern,
-        detail: `${selection.frontend} with ${selection.backend}.`,
-        tone: "neutral"
+        detail: hasWorkspace
+          ? `${selection.frontend} with ${selection.backend}.`
+          : "Open a workspace folder to infer the target architecture pattern.",
+        tone: hasWorkspace ? "neutral" : "warning"
       }
     ],
     panels: [
       {
         title: "Primary Components",
-        items: graphNodes.map((node) => `${node.label} (${node.category})`),
+        items: withFallbackItems(
+          graphNodes.map((node) => `${node.label} (${node.category})`),
+          createWorkspaceFallbackMessage(hasWorkspace, "No architecture components were inferred for the current workspace.")
+        ),
         commandId: "architectureStudio.generateArchitecture"
       },
       {
         title: "Delivery Stack",
-        items: [
-          `Frontend: ${selection.frontend}`,
-          `Backend: ${selection.backend}`,
-          `Infrastructure: ${selection.infrastructure.join(", ")}`
-        ],
+        items: deliveryStackItems,
         commandId: "architectureStudio.generateProject"
       }
     ]
@@ -307,11 +363,12 @@ function createArchitectureSection(
 function createStandardsSection(
   standards: readonly StandardDefinition[],
   selection: ProjectSelectionProfile,
-  externalPackageStatuses: readonly ExternalPackageLoadStatus[]
+  externalPackageStatuses: readonly ExternalPackageLoadStatus[],
+  hasWorkspace: boolean
 ): DashboardSection {
   const externalPackCount = externalPackageStatuses.length;
   const externalPackItems =
-    externalPackageStatuses.length > 0
+    externalPackCount > 0
       ? externalPackageStatuses.map((status) => {
           const contributionKinds =
             status.contributionKinds.length > 0 ? ` [${status.contributionKinds.join(", ")}]` : "";
@@ -322,19 +379,22 @@ function createStandardsSection(
   return {
     id: "standards",
     title: "Standards",
-    description: "Track the baseline standards package that should inform architecture and generation decisions.",
+    description: "Track the standards that inform architecture, delivery, and compliance decisions for the workspace.",
     cards: [
       {
         title: "Active Standards",
         value: String(standards.length),
-        detail: "Curated standards available to compose into solution guidance.",
-        tone: "positive"
+        detail: hasWorkspace ? "Curated standards selected for the current workspace." : "Open a workspace to compose standards.",
+        tone: standards.length > 0 ? "positive" : "warning"
       },
       {
         title: "Compliance Targets",
         value: String(selection.complianceTargets.length),
-        detail: selection.complianceTargets.join(", "),
-        tone: "neutral"
+        detail: joinValues(
+          selection.complianceTargets,
+          hasWorkspace ? "No compliance targets inferred yet." : "Workspace inference will surface compliance targets here."
+        ),
+        tone: selection.complianceTargets.length > 0 ? "neutral" : "warning"
       },
       {
         title: "External Packs",
@@ -349,12 +409,17 @@ function createStandardsSection(
     panels: [
       {
         title: "Current Standard Set",
-        items: standards.map((standard) => `${standard.title}: ${standard.summary}`),
+        items: withFallbackItems(
+          standards.map((standard) => `${standard.title}: ${standard.summary}`),
+          createWorkspaceFallbackMessage(hasWorkspace, "No standards were composed for the current workspace.")
+        ),
         commandId: "architectureStudio.composeStandards"
       },
       {
         title: "External Package Status",
-        items: externalPackItems,
+        items: hasWorkspace
+          ? externalPackItems
+          : [createWorkspaceFallbackMessage(false, "No external packages discovered yet.")],
         commandId: "architectureStudio.composeStandards"
       }
     ]
@@ -364,7 +429,8 @@ function createStandardsSection(
 function createComplianceSection(
   complianceSummaries: readonly ComplianceSummary[],
   findings: readonly FindingDefinition[],
-  generatedArtifacts: readonly GeneratedArtifact[]
+  generatedArtifacts: readonly GeneratedArtifact[],
+  hasWorkspace: boolean
 ): DashboardSection {
   const summaryCards =
     complianceSummaries.length > 0
@@ -381,16 +447,16 @@ function createComplianceSection(
         }))
       : [
           {
-            title: "Critical Findings",
-            value: String(severityCount(findings, "Critical")),
-            detail: "Immediate attention items in the current analysis set.",
-            tone: "critical" as const
+            title: "Applicable Regulations",
+            value: "0",
+            detail: hasWorkspace ? "No regulations were inferred for the current workspace." : "Open a workspace to evaluate regulations.",
+            tone: "warning" as const
           },
           {
-            title: "High Findings",
-            value: String(severityCount(findings, "High")),
-            detail: "Important issues that should be remediated early in delivery.",
-            tone: "warning" as const
+            title: "Findings",
+            value: String(findings.length),
+            detail: hasWorkspace ? "Compliance and architecture findings currently in scope." : "Workspace findings will appear here.",
+            tone: findings.length > 0 ? ("warning" as const) : ("neutral" as const)
           }
         ];
 
@@ -403,19 +469,25 @@ function createComplianceSection(
       {
         title: "Generated Guidance",
         value: String(generatedArtifacts.length),
-        detail: "Artifacts that can support remediation and downstream automation.",
-        tone: "positive"
+        detail: hasWorkspace ? "Artifacts available for remediation and downstream automation." : "Generated guidance appears after workspace analysis.",
+        tone: generatedArtifacts.length > 0 ? "positive" : "warning"
       }
     ],
     panels: [
       {
         title: "Active Findings",
-        items: findings.map((finding) => `${finding.title}: ${finding.summary}`),
+        items: withFallbackItems(
+          findings.map((finding) => `${finding.title}: ${finding.summary}`),
+          createWorkspaceFallbackMessage(hasWorkspace, "No compliance findings were generated for the current workspace.")
+        ),
         commandId: "architectureStudio.validateRegulations"
       },
       {
         title: "Remediation Focus",
-        items: findings.map((finding) => `${finding.remediation.title}: ${finding.remediation.summary}`),
+        items: withFallbackItems(
+          findings.map((finding) => `${finding.remediation.title}: ${finding.remediation.summary}`),
+          createWorkspaceFallbackMessage(hasWorkspace, "No remediation actions are currently required for the workspace snapshot.")
+        ),
         commandId: "architectureStudio.validateRegulations"
       }
     ]
@@ -424,93 +496,148 @@ function createComplianceSection(
 
 function createReportsSection(
   reports: readonly ReportArtifact[],
-  generatedArtifacts: readonly GeneratedArtifact[]
+  generatedArtifacts: readonly GeneratedArtifact[],
+  hasWorkspace: boolean
 ): DashboardSection {
   return {
     id: "reports",
     title: "Reports",
-    description: "Show the reports and generated outputs that the extension will surface or publish.",
+    description: "Show the reports and generated outputs that the extension can surface or publish for the workspace.",
     cards: [
       {
         title: "Reports",
         value: String(reports.length),
-        detail: "Versioned report artifacts currently mapped in the shared contracts.",
-        tone: "neutral"
+        detail: hasWorkspace ? "Report artifacts available from the current workspace snapshot." : "Open a workspace to generate live report artifacts.",
+        tone: reports.length > 0 ? "positive" : "warning"
       },
       {
         title: "Generated Outputs",
         value: String(generatedArtifacts.length),
-        detail: "Project, documentation, and AI instruction assets ready for downstream flows.",
-        tone: "positive"
+        detail: hasWorkspace ? "Project, documentation, AI, and report deliverables in scope." : "Workspace-driven deliverables appear here after analysis.",
+        tone: generatedArtifacts.length > 0 ? "positive" : "warning"
       }
     ],
     panels: [
       {
         title: "Available Reports",
-        items: reports.map((report) => `${report.title} (${report.format}) -> ${report.relativePath}`),
+        items: withFallbackItems(
+          reports.map((report) => `${report.title} (${report.format}) -> ${report.relativePath}`),
+          createWorkspaceFallbackMessage(hasWorkspace, "No report artifacts were generated for the current workspace.")
+        ),
         commandId: "architectureStudio.generateReports"
       },
       {
         title: "Generated Deliverables",
-        items: generatedArtifacts.map((artifact) => `${artifact.title} -> ${artifact.relativePath}`),
+        items: withFallbackItems(
+          generatedArtifacts.map((artifact) => `${artifact.title} -> ${artifact.relativePath}`),
+          createWorkspaceFallbackMessage(hasWorkspace, "No generated deliverables are available for the current workspace snapshot.")
+        ),
         commandId: "architectureStudio.generateAiInstructions"
       }
     ]
   };
 }
 
-function createRepositoryAnalysisSection(findings: readonly FindingDefinition[]): DashboardSection {
+function createRepositoryAnalysisSection(
+  repositoryAnalysis: RepositoryAnalysisResult,
+  findings: readonly FindingDefinition[],
+  hasWorkspace: boolean
+): DashboardSection {
   return {
     id: "repository-analysis",
     title: "Repository Analysis",
-    description: "Inspect repository findings, evidence, and placeholder analysis coverage from one dashboard surface.",
+    description: "Inspect detected technologies, sensitive-data signals, evidence, and review work from one dashboard surface.",
     cards: [
       {
-        title: "Findings",
-        value: String(findings.length),
-        detail: "Repository and compliance findings available to inspect.",
-        tone: "neutral"
+        title: "Detected Signals",
+        value: String(repositoryAnalysis.signals.length),
+        detail: hasWorkspace ? "Languages, frameworks, patterns, and delivery signals inferred from the workspace." : "Open a workspace to run repository analysis.",
+        tone: repositoryAnalysis.signals.length > 0 ? "positive" : "warning"
+      },
+      {
+        title: "Sensitive Data",
+        value: String(repositoryAnalysis.sensitiveData.length),
+        detail: hasWorkspace ? "Sensitive-data classifications inferred from repository evidence." : "Sensitive-data classifications appear after analysis.",
+        tone: repositoryAnalysis.sensitiveData.length > 0 ? "warning" : "neutral"
       },
       {
         title: "Evidence References",
         value: String(countEvidence(findings)),
-        detail: "Captured files and paths supporting the current findings.",
-        tone: "warning"
+        detail: hasWorkspace ? "Captured files and paths supporting the current findings." : "Finding evidence is populated after analysis.",
+        tone: countEvidence(findings) > 0 ? "warning" : "neutral"
       }
     ],
     panels: [
       {
-        title: "Evidence Trail",
-        items: findings.flatMap((finding) =>
-          (finding.evidence ?? []).map((evidence) => `${finding.title}: ${evidence}`)
+        title: "Detected Stack",
+        items: withFallbackItems(
+          repositoryAnalysis.signals.map(
+            (signal) => `${signal.label} (${signal.category}) - ${confidencePercentage(signal.confidence)} confidence`
+          ),
+          createWorkspaceFallbackMessage(hasWorkspace, "No repository technology signals were inferred for the current workspace.")
+        ),
+        commandId: "architectureStudio.analyzeRepository"
+      },
+      {
+        title: "Sensitive Data",
+        items: withFallbackItems(
+          repositoryAnalysis.sensitiveData.map((classification) => {
+            const evidence = classification.evidence[0] ?? "Repository evidence detected.";
+            return `${classification.category} data - ${evidence}`;
+          }),
+          createWorkspaceFallbackMessage(hasWorkspace, "No sensitive-data classifications were detected for the current workspace.")
         ),
         commandId: "architectureStudio.analyzeRepository"
       },
       {
         title: "Review Queue",
-        items: findings.map((finding) => `${finding.severity} - ${finding.title}`),
+        items: withFallbackItems(
+          findings.map((finding) => `${finding.severity} - ${finding.title}`),
+          createWorkspaceFallbackMessage(hasWorkspace, "No repository or compliance findings are waiting for review.")
+        ),
         commandId: "architectureStudio.analyzeRepository"
       }
     ]
   };
 }
 
+export function createEmptySharedContractPayload(
+  overrides: Partial<SharedContractPayload> = {}
+): SharedContractPayload {
+  return mergeSharedContractPayload(emptyPayload, overrides);
+}
+
+export function createSampleSharedContractPayload(
+  overrides: Partial<SharedContractPayload> = {}
+): SharedContractPayload {
+  return mergeSharedContractPayload(samplePayload, overrides);
+}
+
 export function createDashboardState(
-  payload: SharedContractPayload = createPlaceholderSharedContractPayload(),
+  payload: SharedContractPayload = createEmptySharedContractPayload(),
   options: DashboardStateOptions = {}
 ): DashboardState {
   const externalPackageStatuses = options.externalPackageStatuses ?? [];
+  const hasWorkspace = options.hasWorkspace ?? Boolean(options.workspaceLabel);
+  const repositoryAnalysis = options.repositoryAnalysis ?? emptyRepositoryAnalysis;
+  const subtitle =
+    options.subtitle
+    ?? (options.workspaceLabel
+      ? `Live workspace summary for ${options.workspaceLabel}.`
+      : hasWorkspace
+        ? "Live workspace summary for the active workspace."
+        : "Open a workspace folder to load live Architecture Studio data.");
 
   return {
     generatedAt: new Date().toISOString(),
     title: "Architecture Studio",
-    subtitle: "Architecture, standards, compliance, reporting, and repository analysis in one command surface.",
+    subtitle,
     sections: [
-      createArchitectureSection(payload.graphNodes, payload.graphEdges, payload.projectSelection),
-      createStandardsSection(payload.standards, payload.projectSelection, externalPackageStatuses),
-      createComplianceSection(payload.complianceSummaries, payload.findings, payload.generatedArtifacts),
-      createReportsSection(payload.reports, payload.generatedArtifacts),
-      createRepositoryAnalysisSection(payload.findings)
+      createArchitectureSection(payload.graphNodes, payload.graphEdges, payload.projectSelection, hasWorkspace),
+      createStandardsSection(payload.standards, payload.projectSelection, externalPackageStatuses, hasWorkspace),
+      createComplianceSection(payload.complianceSummaries, payload.findings, payload.generatedArtifacts, hasWorkspace),
+      createReportsSection(payload.reports, payload.generatedArtifacts, hasWorkspace),
+      createRepositoryAnalysisSection(repositoryAnalysis, payload.findings, hasWorkspace)
     ]
   };
 }

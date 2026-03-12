@@ -17,7 +17,7 @@ This document defines the stable command entry points exposed by the VS Code ext
 | `architectureStudio.validateRegulations` | `Architecture Studio: Validate Regulations` | `./handlers/validateRegulationsHandler` | Resolves the active workspace, invokes the compliance service boundary, and reports regulation score summaries plus finding counts |
 | `architectureStudio.generateArchitecture` | `Architecture Studio: Generate Architecture` | `./handlers/generateArchitectureHandler` | Resolves the active workspace, invokes the C# technology-graph and architecture-validation path through the core CLI bridge, and reports selected-node, recommendation, and finding counts |
 | `architectureStudio.generateProject` | `Architecture Studio: Generate Project` | `./handlers/generateProjectHandler` | Consumes a selected project profile, invokes the generation service boundary, and reports generated artifact counts plus the applied template set |
-| `architectureStudio.generateReports` | `Architecture Studio: Generate Reports` | `./handlers/generateReportsHandler` | Resolves the active workspace, invokes the report-generation service boundary, and reports export counts plus PDF fallback state |
+| `architectureStudio.generateReports` | `Architecture Studio: Generate Reports` | `./handlers/generateReportsHandler` | Resolves the active workspace, invokes the report-generation service boundary, and reports export counts plus PDF export status |
 | `architectureStudio.generateAiInstructions` | `Architecture Studio: Generate AI Instructions` | `./handlers/generateAiInstructionsHandler` | Resolves AI-instruction context, invokes the instruction-generation service boundary, and reports whether `AGENTS.md` plus related guidance were generated |
 
 ## Design Notes

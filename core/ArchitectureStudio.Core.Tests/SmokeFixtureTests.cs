@@ -31,8 +31,10 @@ public sealed class SmokeFixtureTests
                 Findings: compliance.Findings));
 
         var complianceJson = reports.Files.Single(file => file.RelativePath == "reports/compliance-report.json").Content;
+        var pdfReport = reports.Files.Single(file => file.RelativePath == "reports/architecture-report.pdf").Content;
         Assert.Contains("\"projectName\": \"Fintech Platform\"", complianceJson, StringComparison.Ordinal);
         Assert.Contains("\"regulationId\": \"pci-dss\"", complianceJson, StringComparison.OrdinalIgnoreCase);
         Assert.Contains(reports.Files, file => file.RelativePath == "reports/findings.sarif");
+        Assert.Contains("%PDF-1.4", pdfReport, StringComparison.Ordinal);
     }
 }

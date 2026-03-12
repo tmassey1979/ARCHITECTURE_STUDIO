@@ -9,6 +9,7 @@ Architecture Studio can now generate shareable reports and supporting documentat
 The current reporting engine supports:
 
 - Markdown
+- PDF
 - JSON
 - SARIF
 
@@ -27,7 +28,11 @@ The current documented export path is `reports/`.
 
 ## PDF Status
 
-PDF output is not implemented yet. Instead of failing report generation, the engine writes a documented fallback file under `reports/pdf-fallback.md` so the export flow stays usable.
+Architecture Studio now generates a real PDF artifact at:
+
+- `reports/architecture-report.pdf`
+
+The PDF is built from the same architecture, compliance summary, finding, evidence, and remediation content used in the other export formats.
 
 ## Why It Matters
 

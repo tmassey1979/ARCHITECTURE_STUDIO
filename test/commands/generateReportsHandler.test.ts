@@ -39,13 +39,19 @@ test("generateReports handler targets the active workspace and reports export co
         evaluatedWorkspacePath = workspacePath;
 
         return {
-          pdfFallbackUsed: true,
+          pdfFallbackUsed: false,
           reportArtifacts: [
             {
               id: "report-architecture-markdown",
               title: "Architecture Report",
               format: "Markdown",
               relativePath: "reports/architecture-report.md"
+            },
+            {
+              id: "report-architecture-pdf",
+              title: "Architecture Report PDF",
+              format: "Pdf",
+              relativePath: "reports/architecture-report.pdf"
             },
             {
               id: "report-compliance-json",
@@ -69,9 +75,9 @@ test("generateReports handler targets the active workspace and reports export co
   assert.equal(evaluatedWorkspacePath, "C:/code/Playground/ARCHITECTURE_STUDIO");
   assert.equal(errors.length, 0);
   assert.ok(outputLines.some((line) => line.includes("Target workspace: C:/code/Playground/ARCHITECTURE_STUDIO")));
-  assert.ok(outputLines.some((line) => line.includes("Report artifacts: 2")));
-  assert.ok(outputLines.some((line) => line.includes("PDF fallback: enabled")));
-  assert.ok(messages.some((line) => line.includes("Generated 2 report artifacts")));
+  assert.ok(outputLines.some((line) => line.includes("Report artifacts: 3")));
+  assert.ok(outputLines.some((line) => line.includes("PDF export: generated")));
+  assert.ok(messages.some((line) => line.includes("Generated 3 report artifacts")));
 });
 
 test("generateReports handler shows an error when no workspace is open", async () => {

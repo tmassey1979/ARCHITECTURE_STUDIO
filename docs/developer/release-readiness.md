@@ -46,6 +46,7 @@ It is used to validate an end-to-end path across:
 - repository analysis
 - compliance evaluation
 - report generation
+- PDF report export
 
 The smoke test is implemented in:
 

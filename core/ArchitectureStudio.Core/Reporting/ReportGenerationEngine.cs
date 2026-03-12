@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text;
 
 namespace ArchitectureStudio.Core;
 
@@ -50,15 +51,16 @@ public sealed class ReportGenerationEngine
                 Format: ArtifactFormat.Markdown,
                 Content: BuildArchitectureDocumentMarkdown(request)),
             new GeneratedReportFile(
-                RelativePath: $"{exportRoot}/pdf-fallback.md",
-                Format: ArtifactFormat.Markdown,
-                Content: BuildPdfFallbackMarkdown())
+                RelativePath: $"{exportRoot}/architecture-report.pdf",
+                Format: ArtifactFormat.Pdf,
+                Content: BuildPdfReport(request))
         }
         .OrderBy(static file => file.RelativePath, StringComparer.Ordinal)
         .ToArray();
 
         var reportArtifacts = files
             .Where(static file => file.RelativePath.EndsWith("architecture-report.md", StringComparison.OrdinalIgnoreCase)
+                || file.RelativePath.EndsWith("architecture-report.pdf", StringComparison.OrdinalIgnoreCase)
                 || file.RelativePath.EndsWith("compliance-report.json", StringComparison.OrdinalIgnoreCase)
                 || file.RelativePath.EndsWith("findings.sarif", StringComparison.OrdinalIgnoreCase))
             .Select(file => new ReportArtifact(
@@ -72,7 +74,7 @@ public sealed class ReportGenerationEngine
         return new ReportGenerationResult(
             ReportArtifacts: reportArtifacts,
             Files: files,
-            PdfFallbackUsed: true);
+            PdfFallbackUsed: false);
     }
 
     private static string BuildArchitectureMarkdown(ReportGenerationRequest request)
@@ -199,15 +201,202 @@ Project: {request.ProjectName}
 """;
     }
 
-    private static string BuildPdfFallbackMarkdown()
+    private static string BuildPdfReport(ReportGenerationRequest request)
     {
-        return """
-# PDF Fallback
+        var lines = BuildPdfLines(request);
+        return BuildPdfDocument(lines);
+    }
 
-PDF report generation is not implemented yet.
+    private static IReadOnlyList<string> BuildPdfLines(ReportGenerationRequest request)
+    {
+        var lines = new List<string>
+        {
+            $"{request.ProjectName} Architecture Report",
+            string.Empty,
+            "Compliance Score Summary"
+        };
 
-Use the generated Markdown reports as the documented fallback export path.
-""";
+        if (request.ComplianceSummaries.Count == 0)
+        {
+            lines.Add("- No compliance summaries were generated.");
+        }
+        else
+        {
+            lines.AddRange(request.ComplianceSummaries.Select(summary =>
+                $"- {summary.RegulationTitle}: {summary.ScorePercentage}% ({summary.CoveredControls}/{summary.TotalControls} controls)"));
+        }
+
+        lines.Add(string.Empty);
+        lines.Add("Findings");
+
+        if (request.Findings.Count == 0)
+        {
+            lines.Add("- No findings were generated.");
+        }
+        else
+        {
+            foreach (var finding in request.Findings)
+            {
+                lines.Add($"- {finding.Severity}: {finding.Title}");
+                lines.Add($"  Summary: {finding.Summary}");
+                lines.Add($"  Remediation: {finding.Remediation.Title} - {finding.Remediation.Summary}");
+                lines.Add(
+                    finding.Evidence is { Count: > 0 }
+                        ? $"  Evidence: {string.Join(", ", finding.Evidence)}"
+                        : "  Evidence: No evidence paths recorded.");
+            }
+        }
+
+        return lines;
+    }
+
+    private static string BuildPdfDocument(IReadOnlyList<string> lines)
+    {
+        const int pageHeight = 792;
+        const int topMargin = 742;
+        const int lineHeight = 16;
+        const int maxLinesPerPage = 40;
+
+        var pagedLines = lines
+            .Chunk(maxLinesPerPage)
+            .Select(static page => page.ToArray())
+            .ToArray();
+
+        if (pagedLines.Length == 0)
+        {
+            pagedLines = [["Architecture Studio Report"]];
+        }
+
+        var objects = new List<string>();
+        var pageObjectNumbers = new List<int>();
+        var nextObjectNumber = 4;
+
+        foreach (var page in pagedLines)
+        {
+            var pageObjectNumber = nextObjectNumber++;
+            var contentObjectNumber = nextObjectNumber++;
+            var contentStream = BuildPdfContentStream(page, topMargin, lineHeight);
+
+            objects.Add(
+                $$"""
+                {{pageObjectNumber}} 0 obj
+                << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 {{pageHeight}}] /Resources << /Font << /F1 3 0 R >> >> /Contents {{contentObjectNumber}} 0 R >>
+                endobj
+                """
+            );
+            objects.Add(
+                $$"""
+                {{contentObjectNumber}} 0 obj
+                << /Length {{contentStream.Length}} >>
+                stream
+                {{contentStream}}
+                endstream
+                endobj
+                """
+            );
+
+            pageObjectNumbers.Add(pageObjectNumber);
+        }
+
+        var pagesObject =
+            $$"""
+            2 0 obj
+            << /Type /Pages /Count {{pageObjectNumbers.Count}} /Kids [{{string.Join(" ", pageObjectNumbers.Select(static number => $"{number} 0 R"))}}] >>
+            endobj
+            """;
+
+        objects.Insert(0, pagesObject);
+        objects.Insert(0, """
+            1 0 obj
+            << /Type /Catalog /Pages 2 0 R >>
+            endobj
+            """);
+        objects.Insert(2, """
+            3 0 obj
+            << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+            endobj
+            """);
+
+        var builder = new StringBuilder();
+        builder.Append("%PDF-1.4\n");
+
+        var xrefOffsets = new List<int> { 0 };
+        foreach (var pdfObject in objects)
+        {
+            xrefOffsets.Add(builder.Length);
+            builder.Append(pdfObject);
+            builder.Append('\n');
+        }
+
+        var xrefStart = builder.Length;
+        builder.Append("xref\n");
+        builder.Append($"0 {xrefOffsets.Count}\n");
+        builder.Append("0000000000 65535 f \n");
+
+        foreach (var offset in xrefOffsets.Skip(1))
+        {
+            builder.Append($"{offset:D10} 00000 n \n");
+        }
+
+        builder.Append("trailer\n");
+        builder.Append($"<< /Size {xrefOffsets.Count} /Root 1 0 R >>\n");
+        builder.Append("startxref\n");
+        builder.Append(xrefStart);
+        builder.Append("\n%%EOF");
+
+        return builder.ToString();
+    }
+
+    private static string BuildPdfContentStream(IReadOnlyList<string> lines, int topMargin, int lineHeight)
+    {
+        var builder = new StringBuilder();
+        builder.Append("BT\n");
+        builder.Append("/F1 12 Tf\n");
+        builder.Append($"{lineHeight} TL\n");
+        builder.Append($"50 {topMargin} Td\n");
+
+        var firstLine = true;
+        foreach (var line in lines)
+        {
+            if (!firstLine)
+            {
+                builder.Append("T*\n");
+            }
+
+            builder.Append('(');
+            builder.Append(EscapePdfText(line));
+            builder.Append(") Tj\n");
+            firstLine = false;
+        }
+
+        builder.Append("ET");
+        return builder.ToString();
+    }
+
+    private static string EscapePdfText(string value)
+    {
+        var builder = new StringBuilder(value.Length);
+
+        foreach (var character in value)
+        {
+            switch (character)
+            {
+                case '\\':
+                    builder.Append("\\\\");
+                    break;
+                case '(':
+                    builder.Append("\\(");
+                    break;
+                case ')':
+                    builder.Append("\\)");
+                    break;
+                default:
+                    builder.Append(character is >= ' ' and <= '~' ? character : '?');
+                    break;
+            }
+        }
+
+        return builder.ToString();
     }
 
     private static string MapSarifLevel(SeverityLevel severity)

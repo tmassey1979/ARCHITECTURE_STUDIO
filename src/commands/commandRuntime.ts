@@ -4,6 +4,10 @@ import type { ComplianceEvaluationResult } from "../compliance/complianceEvaluat
 import type { ProjectGenerationResult } from "../generators/projectGeneration";
 import type { ProjectSelectionProfile } from "../contracts/sharedContracts";
 import type { ReportGenerationResult } from "../reports/reportGeneration";
+import type {
+  AiInstructionGenerationRequest,
+  AiInstructionGenerationResult
+} from "../ai/aiInstructionGeneration";
 
 export interface StudioCommandHost {
   showInformationMessage(message: string): PromiseLike<unknown> | unknown;
@@ -24,6 +28,12 @@ export interface StudioCommandServices {
     selection: ProjectSelectionProfile
   ): Promise<ProjectGenerationResult> | ProjectGenerationResult;
   runReportGeneration?(workspacePath: string): Promise<ReportGenerationResult> | ReportGenerationResult;
+  getAiInstructionContext?(
+    workspacePath?: string
+  ): Promise<AiInstructionGenerationRequest | undefined> | AiInstructionGenerationRequest | undefined;
+  runAiInstructionGeneration?(
+    request: AiInstructionGenerationRequest
+  ): Promise<AiInstructionGenerationResult> | AiInstructionGenerationResult;
 }
 
 export interface StudioCommandExecutionContext {

@@ -26,6 +26,7 @@ Documentation in this section should:
 Key documents:
 
 - [Architecture Reasoning](./architecture-reasoning.md)
+- [AI Instructions](./ai-instructions.md)
 - [Compliance Validation](./compliance-validation.md)
 - [Dashboard](./dashboard.md)
 - [Project Generation](./project-generation.md)

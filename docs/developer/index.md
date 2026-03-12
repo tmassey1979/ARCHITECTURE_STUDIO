@@ -18,6 +18,7 @@ Target content:
 Key documents:
 
 - [Command Surface](./command-surface.md)
+- [AI Instructions](./ai-instructions.md)
 - [Compliance Engine](./compliance-engine.md)
 - [Compliance Library](./compliance-library.md)
 - [Dashboard Webview](./dashboard-webview.md)

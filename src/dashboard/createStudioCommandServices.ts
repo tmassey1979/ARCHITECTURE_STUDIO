@@ -5,6 +5,7 @@ import {
   createArchitectureStudioCoreCli,
   type ArchitectureStudioCoreCli
 } from "../core/architectureStudioCoreCli";
+import { createLiveDashboardState } from "./dashboardData";
 
 export type DashboardServiceFactoryContext = {
   readonly commands: DashboardCommandsApi;
@@ -39,18 +40,25 @@ export function createStudioCommandServices({
           output
         })
       : undefined);
+  let services: StudioCommandServices;
   const dashboard = new ArchitectureStudioDashboardController({
     commands,
     extensionUri,
+    getState() {
+      return createLiveDashboardState(services);
+    },
     output,
     uri,
     viewColumn,
     window
   });
 
-  return {
+  services = {
     async showDashboard() {
       await dashboard.show();
+    },
+    async getDashboardState() {
+      return createLiveDashboardState(services);
     },
     getWorkspaceFolder() {
       return workspace.getFirstWorkspaceFolderPath();
@@ -88,4 +96,6 @@ export function createStudioCommandServices({
         }
       : {})
   };
+
+  return services;
 }

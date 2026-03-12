@@ -10,6 +10,7 @@ import type {
   AiInstructionGenerationRequest,
   AiInstructionGenerationResult
 } from "../ai/aiInstructionGeneration";
+import type { DashboardState } from "../dashboard/dashboardState";
 
 export interface StudioCommandHost {
   showInformationMessage(message: string): PromiseLike<unknown> | unknown;
@@ -22,6 +23,7 @@ export interface StudioCommandOutput {
 
 export interface StudioCommandServices {
   showDashboard?(): Promise<void> | void;
+  getDashboardState?(): Promise<DashboardState> | DashboardState;
   getWorkspaceFolder?(): Promise<string | undefined> | string | undefined;
   runStandardsComposition?(workspacePath: string): Promise<ComposedStandardsResult> | ComposedStandardsResult;
   runRepositoryAnalysis?(workspacePath: string): Promise<RepositoryAnalysisResult> | RepositoryAnalysisResult;

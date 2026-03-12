@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="960" viewBox="0 0 1440 960" role="img" aria-labelledby="title desc">
+  <title id="title">Architecture Studio live dashboard workspace summary</title>
+  <desc id="desc">Illustrated screenshot of the Architecture Studio dashboard showing a live fintech workspace summary with architecture, standards, compliance, reports, and repository analysis sections.</desc>
+  <rect width="1440" height="960" fill="#f5efe6"/>
+  <rect x="40" y="40" width="1360" height="880" rx="28" fill="#fffaf3" stroke="#d7c4aa" stroke-width="3"/>
+  <rect x="84" y="84" width="1272" height="132" rx="24" fill="#183153"/>
+  <text x="124" y="138" fill="#f6efe2" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="700">Architecture Studio Dashboard</text>
+  <text x="124" y="178" fill="#ffffff" font-family="'Segoe UI', Arial, sans-serif" font-size="42" font-weight="700">Architecture Studio</text>
+  <text x="124" y="212" fill="#d9e7ff" font-family="'Segoe UI', Arial, sans-serif" font-size="24">Live workspace summary for fintech-platform.</text>
+  <rect x="1098" y="108" width="212" height="84" rx="18" fill="#274a76"/>
+  <text x="1124" y="140" fill="#c8daf7" font-family="'Segoe UI', Arial, sans-serif" font-size="16" font-weight="600">Last generated</text>
+  <text x="1124" y="174" fill="#ffffff" font-family="'Segoe UI', Arial, sans-serif" font-size="22" font-weight="700">2026-03-11T23:55Z</text>
+
+  <g font-family="'Segoe UI', Arial, sans-serif">
+    <rect x="84" y="252" width="612" height="268" rx="22" fill="#fef7ee" stroke="#d8c5ab" stroke-width="2"/>
+    <text x="112" y="294" fill="#946d37" font-size="16" font-weight="700">Architecture</text>
+    <text x="112" y="326" fill="#2a2116" font-size="24" font-weight="700">React + ASP.NET Core</text>
+    <rect x="112" y="352" width="160" height="94" rx="18" fill="#ffffff" stroke="#d8c5ab"/>
+    <text x="130" y="384" fill="#7a6548" font-size="14" font-weight="600">Graph Nodes</text>
+    <text x="130" y="424" fill="#183153" font-size="34" font-weight="700">2</text>
+    <rect x="290" y="352" width="160" height="94" rx="18" fill="#ffffff" stroke="#d8c5ab"/>
+    <text x="308" y="384" fill="#7a6548" font-size="14" font-weight="600">Graph Edges</text>
+    <text x="308" y="424" fill="#183153" font-size="34" font-weight="700">2</text>
+    <rect x="468" y="352" width="196" height="94" rx="18" fill="#ffffff" stroke="#d8c5ab"/>
+    <text x="486" y="384" fill="#7a6548" font-size="14" font-weight="600">Target Pattern</text>
+    <text x="486" y="424" fill="#183153" font-size="24" font-weight="700">clean-architecture</text>
+    <rect x="112" y="462" width="552" height="40" rx="12" fill="#fffdf8" stroke="#d8c5ab"/>
+    <text x="130" y="487" fill="#2a2116" font-size="18">Primary Components: React (Framework), ASP.NET Core (Framework)</text>
+
+    <rect x="744" y="252" width="612" height="268" rx="22" fill="#fef7ee" stroke="#d8c5ab" stroke-width="2"/>
+    <text x="772" y="294" fill="#946d37" font-size="16" font-weight="700">Standards</text>
+    <text x="772" y="326" fill="#2a2116" font-size="24" font-weight="700">Workspace-backed standards selection</text>
+    <rect x="772" y="352" width="170" height="94" rx="18" fill="#ffffff" stroke="#d8c5ab"/>
+    <text x="790" y="384" fill="#7a6548" font-size="14" font-weight="600">Active Standards</text>
+    <text x="790" y="424" fill="#0c7a43" font-size="34" font-weight="700">1</text>
+    <rect x="960" y="352" width="170" height="94" rx="18" fill="#ffffff" stroke="#d8c5ab"/>
+    <text x="978" y="384" fill="#7a6548" font-size="14" font-weight="600">Compliance Targets</text>
+    <text x="978" y="424" fill="#183153" font-size="34" font-weight="700">1</text>
+    <rect x="1148" y="352" width="180" height="94" rx="18" fill="#ffffff" stroke="#d8c5ab"/>
+    <text x="1166" y="384" fill="#7a6548" font-size="14" font-weight="600">External Packs</text>
+    <text x="1166" y="424" fill="#b26a00" font-size="34" font-weight="700">0</text>
+    <rect x="772" y="462" width="556" height="40" rx="12" fill="#fffdf8" stroke="#d8c5ab"/>
+    <text x="790" y="487" fill="#2a2116" font-size="18">Current Standard Set: React Frontend Standard</text>
+
+    <rect x="84" y="548" width="612" height="268" rx="22" fill="#fef7ee" stroke="#d8c5ab" stroke-width="2"/>
+    <text x="112" y="590" fill="#946d37" font-size="16" font-weight="700">Compliance</text>
+    <text x="112" y="622" fill="#2a2116" font-size="24" font-weight="700">PCI DSS findings and remediation</text>
+    <rect x="112" y="648" width="170" height="94" rx="18" fill="#ffffff" stroke="#d8c5ab"/>
+    <text x="130" y="680" fill="#7a6548" font-size="14" font-weight="600">PCI DSS</text>
+    <text x="130" y="720" fill="#a14b2a" font-size="34" font-weight="700">60%</text>
+    <rect x="300" y="648" width="170" height="94" rx="18" fill="#ffffff" stroke="#d8c5ab"/>
+    <text x="318" y="680" fill="#7a6548" font-size="14" font-weight="600">Generated Guidance</text>
+    <text x="318" y="720" fill="#0c7a43" font-size="34" font-weight="700">3</text>
+    <rect x="112" y="758" width="552" height="40" rx="12" fill="#fffdf8" stroke="#d8c5ab"/>
+    <text x="130" y="783" fill="#2a2116" font-size="18">Audit logging gap: Capture payment authorization and admin actions.</text>
+
+    <rect x="744" y="548" width="612" height="268" rx="22" fill="#fef7ee" stroke="#d8c5ab" stroke-width="2"/>
+    <text x="772" y="590" fill="#946d37" font-size="16" font-weight="700">Reports and Repository Analysis</text>
+    <text x="772" y="622" fill="#2a2116" font-size="24" font-weight="700">Generated artifacts and evidence trail</text>
+    <rect x="772" y="648" width="170" height="94" rx="18" fill="#ffffff" stroke="#d8c5ab"/>
+    <text x="790" y="680" fill="#7a6548" font-size="14" font-weight="600">Reports</text>
+    <text x="790" y="720" fill="#183153" font-size="34" font-weight="700">1</text>
+    <rect x="960" y="648" width="170" height="94" rx="18" fill="#ffffff" stroke="#d8c5ab"/>
+    <text x="978" y="680" fill="#7a6548" font-size="14" font-weight="600">Detected Signals</text>
+    <text x="978" y="720" fill="#183153" font-size="34" font-weight="700">2</text>
+    <rect x="1148" y="648" width="180" height="94" rx="18" fill="#ffffff" stroke="#d8c5ab"/>
+    <text x="1166" y="680" fill="#7a6548" font-size="14" font-weight="600">Sensitive Data</text>
+    <text x="1166" y="720" fill="#a14b2a" font-size="34" font-weight="700">1</text>
+    <rect x="772" y="758" width="556" height="40" rx="12" fill="#fffdf8" stroke="#d8c5ab"/>
+    <text x="790" y="783" fill="#2a2116" font-size="18">Deliverables: AGENTS.md, docs/README.md, reports/architecture-report.md</text>
+  </g>
+</svg>

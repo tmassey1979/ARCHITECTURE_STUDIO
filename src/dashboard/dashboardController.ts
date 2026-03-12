@@ -38,7 +38,7 @@ export interface DashboardCommandsApi {
 type ArchitectureStudioDashboardControllerOptions = {
   readonly commands: DashboardCommandsApi;
   readonly extensionUri: DashboardResourceUri;
-  readonly getState?: () => DashboardState;
+  readonly getState?: () => Promise<DashboardState> | DashboardState;
   readonly nonceFactory?: () => string;
   readonly output: StudioCommandOutput;
   readonly uri: DashboardUriApi;
@@ -49,6 +49,7 @@ type ArchitectureStudioDashboardControllerOptions = {
 export class ArchitectureStudioDashboardController {
   private activePanel?: DashboardPanel;
   private activePanelDisposables: DashboardDisposable[] = [];
+  private stateVersion = 0;
 
   public constructor(private readonly options: ArchitectureStudioDashboardControllerOptions) {}
 
@@ -70,9 +71,9 @@ export class ArchitectureStudioDashboardController {
         retainContextWhenHidden: true
       }
     );
-    const state = this.getState();
 
     this.activePanel = panel;
+    const state = await this.getState();
     panel.webview.html = renderDashboardHtml({
       extensionUri: this.options.extensionUri,
       nonce: this.createNonce(),
@@ -96,8 +97,8 @@ export class ArchitectureStudioDashboardController {
     return this.options.nonceFactory?.() ?? Math.random().toString(36).slice(2);
   }
 
-  private getState(): DashboardState {
-    return this.options.getState?.() ?? createDashboardState();
+  private async getState(): Promise<DashboardState> {
+    return (await this.options.getState?.()) ?? createDashboardState();
   }
 
   private async handleMessage(panel: DashboardPanel, message: unknown): Promise<void> {
@@ -120,12 +121,20 @@ export class ArchitectureStudioDashboardController {
           `[Architecture Studio] Dashboard message received: dashboard.runCommand -> ${message.commandId}`
         );
         await this.options.commands.executeCommand?.(message.commandId);
+        await this.postState(panel);
         break;
     }
   }
 
   private async postState(panel: DashboardPanel): Promise<void> {
-    await panel.webview.postMessage(createDashboardStateMessage(this.getState()));
+    const requestedVersion = ++this.stateVersion;
+    const state = await this.getState();
+
+    if (this.activePanel !== panel || requestedVersion !== this.stateVersion) {
+      return;
+    }
+
+    await panel.webview.postMessage(createDashboardStateMessage(state));
   }
 
   private releasePanel(panel: DashboardPanel): void {

@@ -1,6 +1,4 @@
 import type { StudioCommandOutput, StudioCommandServices } from "../commands/commandRuntime";
-import { ArchitectureStudioDashboardController, type DashboardCommandsApi, type DashboardWindowApi } from "./dashboardController";
-import type { DashboardResourceUri, DashboardUriApi } from "./dashboardHtml";
 import {
   createArchitectureStudioCoreCli,
   type ArchitectureStudioCoreCli
@@ -8,28 +6,20 @@ import {
 import { createLiveDashboardState } from "./dashboardData";
 
 export type DashboardServiceFactoryContext = {
-  readonly commands: DashboardCommandsApi;
   readonly coreCli?: ArchitectureStudioCoreCli;
   readonly extensionPath?: string;
-  readonly extensionUri: DashboardResourceUri;
   readonly output: StudioCommandOutput;
-  readonly uri: DashboardUriApi;
-  readonly viewColumn: unknown;
-  readonly window: DashboardWindowApi;
+  readonly showDashboard?: () => Promise<void> | void;
   readonly workspace: {
     getFirstWorkspaceFolderPath(): string | undefined;
   };
 };
 
 export function createStudioCommandServices({
-  commands,
   coreCli: providedCoreCli,
   extensionPath,
-  extensionUri,
   output,
-  uri,
-  viewColumn,
-  window,
+  showDashboard,
   workspace
 }: DashboardServiceFactoryContext): StudioCommandServices {
   const coreCli =
@@ -41,22 +31,9 @@ export function createStudioCommandServices({
         })
       : undefined);
   let services: StudioCommandServices;
-  const dashboard = new ArchitectureStudioDashboardController({
-    commands,
-    extensionUri,
-    getState() {
-      return createLiveDashboardState(services);
-    },
-    output,
-    uri,
-    viewColumn,
-    window
-  });
 
   services = {
-    async showDashboard() {
-      await dashboard.show();
-    },
+    ...(showDashboard ? { showDashboard } : {}),
     async getDashboardState() {
       return createLiveDashboardState(services);
     },

@@ -12,9 +12,10 @@ The dashboard webview is the first shared UI shell for Architecture Studio. It g
 
 ## Host And Client Boundary
 
-The extension host owns panel lifecycle and data projection:
+The extension host owns sidebar-view lifecycle and data projection:
 
-- `src/dashboard/dashboardController.ts` manages the single active panel, reopen behavior, and typed message routing
+- `src/dashboard/dashboardSidebarProvider.ts` manages the contributed sidebar webview, focus behavior, visibility refresh, and typed message routing
+- `src/dashboard/registerDashboardSidebar.ts` wires the provider into the contributed `architectureStudio.dashboardView`
 - `src/dashboard/dashboardData.ts` aggregates the live workspace snapshot from the existing command-service engine calls
 - `src/dashboard/dashboardState.ts` projects shared-contract payloads into a dashboard-oriented DTO
 - `src/dashboard/dashboardHtml.ts` renders the initial HTML shell and references the packaged assets
@@ -39,11 +40,12 @@ The bridge is intentionally small. The webview consumes DTOs only and does not k
 
 ## Lifecycle Rules
 
-- only one dashboard panel is active at a time
-- reopening reveals the existing panel instead of creating duplicates
-- disposing the panel clears the message and dispose subscriptions so handlers do not accumulate
-- the controller can post refreshed state when the panel is revealed again
-- dashboard-triggered commands refresh the state after execution so the panel does not keep stale data
+- the dashboard is hosted in a contributed Activity Bar container rather than a free-floating editor panel
+- only one contributed dashboard view is active at a time
+- `Architecture Studio: Open Dashboard` focuses the contributed sidebar view
+- disposing the view clears message and visibility subscriptions so handlers do not accumulate
+- the provider can post refreshed state when the view is shown again
+- dashboard-triggered commands refresh the state after execution so the view does not keep stale data
 - async state refreshes are versioned so older responses do not overwrite newer ones
 
 ## Live Snapshot Model
@@ -71,9 +73,11 @@ Illustrated screenshot asset:
 
 The dashboard test surface now covers:
 
+- manifest contribution for the Activity Bar container and sidebar view
+- sidebar-provider registration wiring
 - required dashboard sections
 - live workspace snapshot projection
 - explicit no-workspace empty states
 - typed message validation
-- panel reuse, dispose/reopen behavior, and post-command refresh
+- sidebar focus, dispose/reopen behavior, and post-command refresh
 - packaged asset and documentation presence

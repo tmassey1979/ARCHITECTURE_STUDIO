@@ -34,6 +34,7 @@ export const architectureStudioOutputChannelName = "Architecture Studio";
 export interface RegisterArchitectureStudioCommandsOptions {
   readonly services?: StudioCommandServices;
   readonly createServices?: (outputChannel: StudioOutputChannel) => StudioCommandServices;
+  readonly outputChannel?: StudioOutputChannel;
 }
 
 export function registerArchitectureStudioCommands(
@@ -41,7 +42,7 @@ export function registerArchitectureStudioCommands(
   vscodeApi: StudioVscodeApi,
   options: RegisterArchitectureStudioCommandsOptions = {}
 ): void {
-  const outputChannel = vscodeApi.window.createOutputChannel(architectureStudioOutputChannelName);
+  const outputChannel = options.outputChannel ?? vscodeApi.window.createOutputChannel(architectureStudioOutputChannelName);
   const services = options.services ?? options.createServices?.(outputChannel) ?? {};
   context.subscriptions.push(outputChannel);
 

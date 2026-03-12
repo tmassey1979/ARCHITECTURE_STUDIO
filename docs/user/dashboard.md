@@ -2,7 +2,7 @@
 
 ## What It Is
 
-The Architecture Studio dashboard is the main workspace surface for the extension. It brings the most important project views together in one place so you do not have to bounce between separate commands just to understand current status.
+The Architecture Studio dashboard is the main workspace surface for the extension. It now lives in the VS Code Activity Bar as its own `Architecture Studio` sidebar entry, so you can keep the tool open like any other first-class workspace view.
 
 The dashboard currently includes:
 
@@ -23,7 +23,7 @@ Each section is intended to give you:
 - a quick summary of current status
 - a focused list of details to review
 - action buttons that route back into the matching extension command
-- deterministic refresh behavior when you reopen the panel or trigger a dashboard action
+- deterministic refresh behavior when you reopen the sidebar or trigger a dashboard action
 
 ## Why It Matters
 
@@ -41,9 +41,10 @@ The compliance section can now render score cards in the same style the product 
 
 The current dashboard story now delivers:
 
+- an Activity Bar entry and sidebar-hosted dashboard view
 - the packaged webview shell and typed message bridge
 - live workspace-backed section content
 - explicit no-workspace and no-data empty states
 - refresh after dashboard-triggered commands
 
-Use the sample fintech fixture or your own workspace to see the live cards and evidence panels populate.
+Use the `Architecture Studio` item in the left sidebar, then run `Architecture Studio: Open Dashboard` any time you want VS Code to focus that view for you. Use the sample fintech fixture or your own workspace to see the live cards and evidence panels populate.

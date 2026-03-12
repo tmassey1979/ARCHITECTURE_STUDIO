@@ -19,6 +19,8 @@ The extension uses two launch modes:
 
 The Node side chooses packaged mode first and falls back to the source-project mode when the published host is not present.
 
+The CLI itself now uses `System.CommandLine`, which gives the published host structured help output, required-option validation, and stable command routing for automation.
+
 ## Why This Exists
 
 This keeps:
@@ -46,6 +48,34 @@ The CLI currently exposes:
 Workspace-driven commands accept `--workspace <path>`.
 
 Request-driven commands read JSON from standard input.
+
+## Command-Line Examples
+
+Show help:
+
+```powershell
+dotnet core-host/ArchitectureStudio.Cli.dll --help
+```
+
+Run a workspace command:
+
+```powershell
+dotnet core-host/ArchitectureStudio.Cli.dll validate-regulations --workspace fixtures/sample-workspaces/fintech-platform
+```
+
+Run a standard-input command:
+
+```powershell
+Get-Content ai-request.json | dotnet core-host/ArchitectureStudio.Cli.dll generate-ai-instructions
+```
+
+Automation contract:
+
+- success returns exit code `0`
+- parse or validation failures return a non-zero exit code
+- successful command results are written as JSON to standard output
+- parser and execution errors are written to standard error
+- standard-input commands normalize UTF-8 BOM-prefixed JSON so common shell pipelines keep working
 
 ## Workspace Orchestration
 

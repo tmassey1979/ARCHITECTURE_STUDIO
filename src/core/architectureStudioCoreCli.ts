@@ -135,10 +135,6 @@ async function invokeCoreCli<TResult>(
     args.push("--workspace", options.workspacePath);
   }
 
-  if (options.stdinJson) {
-    args.push("--stdin");
-  }
-
   output?.appendLine(`[Architecture Studio] Core CLI command: ${commandName}`);
   const result = await runProcess({
     command: launchPlan.command,

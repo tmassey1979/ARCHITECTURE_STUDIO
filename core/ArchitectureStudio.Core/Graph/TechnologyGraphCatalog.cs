@@ -18,37 +18,65 @@ public sealed class TechnologyGraphCatalog
 
     public static TechnologyGraphCatalog CreateDefault()
     {
+        return StudioRuntimeCatalogFactory.CreateDefault().TechnologyGraphCatalog;
+    }
+
+    internal static TechnologyGraphCatalog CreateBuiltIn()
+    {
         var datasetDirectory = Path.Combine(AppContext.BaseDirectory, RelativeDatasetDirectory);
         if (!Directory.Exists(datasetDirectory))
         {
             throw new InvalidOperationException($"Graph dataset directory '{datasetDirectory}' was not found.");
         }
 
-        var deserializer = new DeserializerBuilder()
-            .WithNamingConvention(UnderscoredNamingConvention.Instance)
-            .IgnoreUnmatchedProperties()
-            .Build();
-
         var yamlFiles = Directory.GetFiles(datasetDirectory, "*.yml", SearchOption.TopDirectoryOnly)
             .OrderBy(static path => path, StringComparer.Ordinal)
             .ToArray();
 
-        var datasetNodes = yamlFiles
-            .SelectMany(path =>
-            {
-                using var reader = File.OpenText(path);
-                var document = deserializer.Deserialize<TechnologyGraphDatasetDocument>(reader);
-                return document.Nodes ?? [];
-            })
-            .ToArray();
+        return new TechnologyGraphCatalog(LoadGraph(yamlFiles));
+    }
 
-        var nodes = datasetNodes
-            .Select(static node => new GraphNodeDefinition(node.Id, node.Label, node.Category))
+    internal TechnologyGraphCatalog WithExternalPackage(ExternalPackage package)
+    {
+        if (package.Contributions.GraphDatasets.Count == 0)
+        {
+            return this;
+        }
+
+        var externalGraph = LoadGraph(package.Contributions.GraphDatasets.Select(static reference => reference.FullPath));
+        var nodes = _graph.Nodes
+            .Concat(externalGraph.Nodes)
+            .GroupBy(static node => node.Id, StringComparer.OrdinalIgnoreCase)
+            .Select(static group => group.Last())
             .OrderBy(static node => node.Category)
             .ThenBy(static node => node.Label, StringComparer.Ordinal)
             .ThenBy(static node => node.Id, StringComparer.Ordinal)
             .ToArray();
+        var edges = _graph.Edges
+            .Concat(externalGraph.Edges)
+            .Distinct()
+            .OrderBy(static edge => edge.SourceId, StringComparer.Ordinal)
+            .ThenBy(static edge => edge.TargetId, StringComparer.Ordinal)
+            .ThenBy(static edge => edge.Relationship)
+            .ToArray();
 
+        return new TechnologyGraphCatalog(new TechnologyGraph(nodes, edges));
+    }
+
+    private static TechnologyGraph LoadGraph(IEnumerable<string> yamlFiles)
+    {
+        var datasetNodes = yamlFiles
+            .SelectMany(ReadDatasetNodes)
+            .ToArray();
+
+        var nodes = datasetNodes
+            .Select(static node => new GraphNodeDefinition(node.Id, node.Label, node.Category))
+            .GroupBy(static node => node.Id, StringComparer.OrdinalIgnoreCase)
+            .Select(static group => group.Last())
+            .OrderBy(static node => node.Category)
+            .ThenBy(static node => node.Label, StringComparer.Ordinal)
+            .ThenBy(static node => node.Id, StringComparer.Ordinal)
+            .ToArray();
         var edges = datasetNodes
             .SelectMany(CreateEdges)
             .Distinct()
@@ -57,7 +85,19 @@ public sealed class TechnologyGraphCatalog
             .ThenBy(static edge => edge.Relationship)
             .ToArray();
 
-        return new TechnologyGraphCatalog(new TechnologyGraph(nodes, edges));
+        return new TechnologyGraph(nodes, edges);
+    }
+
+    private static IReadOnlyList<TechnologyGraphDatasetNode> ReadDatasetNodes(string path)
+    {
+        var deserializer = new DeserializerBuilder()
+            .WithNamingConvention(UnderscoredNamingConvention.Instance)
+            .IgnoreUnmatchedProperties()
+            .Build();
+
+        using var reader = File.OpenText(path);
+        var document = deserializer.Deserialize<TechnologyGraphDatasetDocument>(reader);
+        return document.Nodes ?? [];
     }
 
     private static IEnumerable<GraphEdgeDefinition> CreateEdges(TechnologyGraphDatasetNode node)

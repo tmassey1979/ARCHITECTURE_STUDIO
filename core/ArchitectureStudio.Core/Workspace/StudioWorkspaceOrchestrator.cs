@@ -40,12 +40,14 @@ public sealed class StudioWorkspaceOrchestrator
 
     public static StudioWorkspaceOrchestrator CreateDefault()
     {
+        var runtimeCatalogs = StudioRuntimeCatalogFactory.CreateDefault();
+
         return new StudioWorkspaceOrchestrator(
             new RepositoryAnalysisEngine(),
-            new StandardsCompositionEngine(StandardsCatalog.CreateDefault()),
-            new TechnologyGraphEngine(TechnologyGraphCatalog.CreateDefault()),
-            new ComplianceEngine(ComplianceCatalog.CreateDefault()),
-            new ProjectGenerationEngine(ProjectTemplateCatalog.CreateDefault()),
+            new StandardsCompositionEngine(runtimeCatalogs.StandardsCatalog),
+            new TechnologyGraphEngine(runtimeCatalogs.TechnologyGraphCatalog),
+            new ComplianceEngine(runtimeCatalogs.ComplianceCatalog),
+            new ProjectGenerationEngine(runtimeCatalogs.ProjectTemplateCatalog),
             new ReportGenerationEngine(),
             new AiInstructionGenerationEngine());
     }

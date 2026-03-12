@@ -9,6 +9,7 @@ import type {
   SharedContractPayload,
   StandardDefinition
 } from "../contracts/sharedContracts";
+import type { ExternalPackageLoadStatus } from "../plugins/externalPackages";
 
 export type DashboardSectionId =
   | "architecture"
@@ -45,6 +46,10 @@ export type DashboardState = {
   readonly title: string;
   readonly subtitle: string;
   readonly sections: readonly DashboardSection[];
+};
+
+export type DashboardStateOptions = {
+  readonly externalPackageStatuses?: readonly ExternalPackageLoadStatus[];
 };
 
 export type DashboardHostMessage = {
@@ -301,8 +306,19 @@ function createArchitectureSection(
 
 function createStandardsSection(
   standards: readonly StandardDefinition[],
-  selection: ProjectSelectionProfile
+  selection: ProjectSelectionProfile,
+  externalPackageStatuses: readonly ExternalPackageLoadStatus[]
 ): DashboardSection {
+  const externalPackCount = externalPackageStatuses.length;
+  const externalPackItems =
+    externalPackageStatuses.length > 0
+      ? externalPackageStatuses.map((status) => {
+          const contributionKinds =
+            status.contributionKinds.length > 0 ? ` [${status.contributionKinds.join(", ")}]` : "";
+          return `${status.packageId} - ${status.status}: ${status.message}${contributionKinds}`;
+        })
+      : ["No external packages discovered yet."];
+
   return {
     id: "standards",
     title: "Standards",
@@ -319,12 +335,26 @@ function createStandardsSection(
         value: String(selection.complianceTargets.length),
         detail: selection.complianceTargets.join(", "),
         tone: "neutral"
+      },
+      {
+        title: "External Packs",
+        value: String(externalPackCount),
+        detail:
+          externalPackCount > 0
+            ? "Package load status is surfaced directly in the standards workspace."
+            : "No external standards packages have been discovered yet.",
+        tone: externalPackCount > 0 ? "neutral" : "warning"
       }
     ],
     panels: [
       {
         title: "Current Standard Set",
         items: standards.map((standard) => `${standard.title}: ${standard.summary}`),
+        commandId: "architectureStudio.composeStandards"
+      },
+      {
+        title: "External Package Status",
+        items: externalPackItems,
         commandId: "architectureStudio.composeStandards"
       }
     ]
@@ -465,14 +495,19 @@ function createRepositoryAnalysisSection(findings: readonly FindingDefinition[])
   };
 }
 
-export function createDashboardState(payload: SharedContractPayload = createPlaceholderSharedContractPayload()): DashboardState {
+export function createDashboardState(
+  payload: SharedContractPayload = createPlaceholderSharedContractPayload(),
+  options: DashboardStateOptions = {}
+): DashboardState {
+  const externalPackageStatuses = options.externalPackageStatuses ?? [];
+
   return {
     generatedAt: new Date().toISOString(),
     title: "Architecture Studio",
     subtitle: "Architecture, standards, compliance, reporting, and repository analysis in one command surface.",
     sections: [
       createArchitectureSection(payload.graphNodes, payload.graphEdges, payload.projectSelection),
-      createStandardsSection(payload.standards, payload.projectSelection),
+      createStandardsSection(payload.standards, payload.projectSelection, externalPackageStatuses),
       createComplianceSection(payload.complianceSummaries, payload.findings, payload.generatedArtifacts),
       createReportsSection(payload.reports, payload.generatedArtifacts),
       createRepositoryAnalysisSection(payload.findings)

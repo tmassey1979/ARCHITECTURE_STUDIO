@@ -1,0 +1,11 @@
+{
+  "id": "aws-architecture-pack",
+  "version": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "displayName": "AWS Architecture Pack",
+  "contributions": {
+    "standardsPackages": ["standards/aws-standards.json"],
+    "templates": ["templates/aws-reference-stack.json"],
+    "graphDatasets": ["graph/aws-services.yml"]
+  }
+}

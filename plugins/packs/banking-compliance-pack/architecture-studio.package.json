@@ -1,0 +1,10 @@
+{
+  "id": "banking-compliance-pack",
+  "version": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "displayName": "Banking Compliance Pack",
+  "contributions": {
+    "controls": ["controls/banking-controls.json"],
+    "regulations": ["regulations/banking-resilience.json"]
+  }
+}

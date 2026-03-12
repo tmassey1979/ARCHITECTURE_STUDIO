@@ -1,0 +1,14 @@
+{
+  "id": "infra-aws-reference-stack",
+  "selection_key": "infrastructure",
+  "selection_values": ["aws"],
+  "description": "Reference infrastructure template for AWS-first solutions.",
+  "files": [
+    {
+      "relative_path": "infra/aws/README.md",
+      "artifact_kind": "Infrastructure",
+      "title": "AWS Reference Stack",
+      "content": "# AWS Reference Stack\\n\\nProvision VPC, compute, data, and observability layers through reviewed infrastructure as code."
+    }
+  ]
+}

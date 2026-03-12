@@ -1,0 +1,20 @@
+{
+  "id": "aws-architecture-pack",
+  "version": "1.0.0",
+  "sourcePath": "plugins/packs/aws-architecture-pack/standards/aws-standards.json",
+  "standards": [
+    {
+      "definition": {
+        "id": "aws-well-architected",
+        "title": "AWS Well-Architected Review",
+        "category": "Architecture",
+        "summary": "Review workloads against operational excellence, security, reliability, performance, cost, and sustainability guidance.",
+        "tags": ["aws", "cloud", "architecture"]
+      },
+      "appliesToCategories": ["Architecture", "Security"],
+      "appliesToSelections": ["aws", "well-architected"],
+      "appliesToTags": ["aws", "cloud"],
+      "sourceTitle": "AWS Architecture Pack"
+    }
+  ]
+}

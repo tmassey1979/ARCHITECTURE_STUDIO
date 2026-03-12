@@ -1,0 +1,14 @@
+{
+  "id": "project-kafka-eventing",
+  "selection_key": "architecturePattern",
+  "selection_values": ["event-driven"],
+  "description": "Reference template for Kafka-backed event-driven systems.",
+  "files": [
+    {
+      "relative_path": "docs/eventing/kafka-topology.md",
+      "artifact_kind": "Documentation",
+      "title": "Kafka Topology",
+      "content": "# Kafka Topology\\n\\nUse topics, consumers, and dead-letter handling to keep event-driven flows observable and recoverable."
+    }
+  ]
+}

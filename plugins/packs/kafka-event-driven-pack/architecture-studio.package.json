@@ -1,0 +1,10 @@
+{
+  "id": "kafka-event-driven-pack",
+  "version": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "displayName": "Kafka Event Driven Pack",
+  "contributions": {
+    "templates": ["templates/kafka-eventing.json"],
+    "graphDatasets": ["graph/kafka-topology.yml"]
+  }
+}

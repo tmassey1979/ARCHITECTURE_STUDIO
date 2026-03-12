@@ -65,6 +65,31 @@ test("dashboard state can project live shared-contract payloads into compliance 
   assert.ok(reports.panels.some((panel) => panel.items.some((item) => item.includes(payload.reports[0].title))));
 });
 
+test("dashboard state can surface external package load status in a user-visible panel", () => {
+  const state = createDashboardState(undefined, {
+    externalPackageStatuses: [
+      {
+        packageId: "aws-architecture-pack",
+        status: "Loaded",
+        message: "Loaded standards, templates, and graph contributions.",
+        contributionKinds: ["Standards", "Templates", "Graph"]
+      },
+      {
+        packageId: "banking-compliance-pack",
+        status: "Invalid",
+        message: "controls/missing.json was not found.",
+        contributionKinds: ["Compliance"]
+      }
+    ]
+  });
+  const standards = state.sections.find((section) => section.id === "standards");
+
+  assert.ok(standards);
+  assert.ok(standards.cards.some((card) => card.title === "External Packs" && card.value === "2"));
+  assert.ok(standards.panels.some((panel) => panel.items.some((item) => item.includes("aws-architecture-pack"))));
+  assert.ok(standards.panels.some((panel) => panel.items.some((item) => item.includes("banking-compliance-pack"))));
+});
+
 test("dashboard webview message guard accepts only supported typed messages", () => {
   assert.equal(isDashboardWebviewMessage({ type: "dashboard.ready" }), true);
   assert.equal(

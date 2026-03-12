@@ -22,4 +22,8 @@
     <ProjectReference Include="..\ArchitectureStudio.Core\ArchitectureStudio.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\..\plugins\packs\**\*.*" Link="Plugins\Packs\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>

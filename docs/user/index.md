@@ -29,6 +29,7 @@ Key documents:
 - [AI Instructions](./ai-instructions.md)
 - [Compliance Validation](./compliance-validation.md)
 - [Dashboard](./dashboard.md)
+- [External Packages](./external-packages.md)
 - [Project Generation](./project-generation.md)
 - [Regulation Library](./regulation-library.md)
 - [Repository Analysis](./repository-analysis.md)

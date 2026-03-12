@@ -1,0 +1,9 @@
+[
+  {
+    "id": "segregation-of-duties",
+    "title": "Segregation Of Duties",
+    "summary": "Separate approval and execution responsibilities for privileged banking workflows.",
+    "remediation_title": "Implement segregation of duties",
+    "remediation_summary": "Split privileged approvals, settlement execution, and audit review across distinct identities and workflow gates."
+  }
+]

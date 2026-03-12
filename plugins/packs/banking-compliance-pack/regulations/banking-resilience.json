@@ -1,0 +1,25 @@
+{
+  "id": "operational-resilience",
+  "title": "Operational Resilience",
+  "category": "Financial",
+  "jurisdiction": "Global",
+  "summary": "Banking workloads require operational resilience, controlled change, and privileged access separation.",
+  "required_controls": [
+    "segregation-of-duties"
+  ],
+  "data_types": [
+    "Financial"
+  ],
+  "applicability": {
+    "system_characteristics": [
+      "payments",
+      "banking"
+    ],
+    "detected_technologies": [
+      "kafka"
+    ],
+    "sensitive_data_categories": [
+      "Financial"
+    ]
+  }
+}

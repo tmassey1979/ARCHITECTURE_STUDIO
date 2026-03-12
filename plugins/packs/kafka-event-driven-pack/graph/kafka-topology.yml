@@ -1,0 +1,10 @@
+nodes:
+  - id: kafka
+    label: Apache Kafka
+    category: Technology
+    pairs_with: ["schema-registry", "prometheus"]
+
+  - id: schema-registry
+    label: Schema Registry
+    category: Technology
+    recommended_with: ["kafka"]

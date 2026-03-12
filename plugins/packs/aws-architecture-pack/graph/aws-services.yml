@@ -1,0 +1,10 @@
+nodes:
+  - id: aws-lambda
+    label: AWS Lambda
+    category: Technology
+    recommended_with: ["aws", "cloudwatch"]
+
+  - id: cloudwatch
+    label: Amazon CloudWatch
+    category: Technology
+    pairs_with: ["aws-lambda", "aws"]

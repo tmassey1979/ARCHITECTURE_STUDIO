@@ -18,6 +18,12 @@
   "engines": {
     "vscode": "^1.95.0"
   },
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true,
+      "description": "Architecture Studio supports Restricted Mode for local dashboard and analysis workflows without requiring workspace trust."
+    }
+  },
   "categories": [
     "Other"
   ],

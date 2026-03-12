@@ -48,3 +48,15 @@ The current dashboard story now delivers:
 - refresh after dashboard-triggered commands
 
 Use the `Architecture Studio` item in the left sidebar, then run `Architecture Studio: Open Dashboard` any time you want VS Code to focus that view for you. Use the sample fintech fixture or your own workspace to see the live cards and evidence panels populate.
+
+## Restricted Mode And Workspace Trust
+
+Architecture Studio now declares support for VS Code Restricted Mode. If your folder opens as untrusted, the `Architecture Studio` Activity Bar item and dashboard should still load because the extension only uses its own packaged engine binaries and reads local workspace files for analysis.
+
+If VS Code is still showing the workspace as restricted or hiding the view, use these checks:
+
+1. Run `Developer: Reload Window`.
+2. Run `Workspaces: Manage Workspace Trust`.
+3. Confirm the installed `Architecture Studio` extension version is the latest packaged build.
+
+Trust the workspace only if you want VS Code to remove the global Restricted Mode banner for that folder. The Architecture Studio sidebar itself should no longer require that trust decision just to open.

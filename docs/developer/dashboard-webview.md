@@ -48,6 +48,10 @@ The bridge is intentionally small. The webview consumes DTOs only and does not k
 - dashboard-triggered commands refresh the state after execution so the view does not keep stale data
 - async state refreshes are versioned so older responses do not overwrite newer ones
 
+## Workspace Trust
+
+The extension manifest now declares `capabilities.untrustedWorkspaces.supported: true` so the contributed Activity Bar view can activate in VS Code Restricted Mode. This is safe for the current product boundary because the extension executes only packaged binaries and reads workspace files locally; it does not execute workspace-provided code as part of dashboard activation.
+
 ## Live Snapshot Model
 
 The live dashboard snapshot is assembled in TypeScript as a thin orchestration layer over the C# engines:

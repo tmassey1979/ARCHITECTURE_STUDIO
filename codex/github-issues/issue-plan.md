@@ -51,3 +51,17 @@ Implementation defaults for the whole backlog:
 - `Feature #6` must cover the large curated technology graph dataset described in `codex/data.md`, including broad category coverage and relationship authoring at the stated scale.
 - `Feature #9` must cover the expanded regulation dataset and control taxonomy from `codex/data.md`, including privacy-law coverage beyond the baseline `studio.md` list.
 - `Feature #10` must cover the template dataset scale from `codex/data.md`, including 20+ architecture and delivery variants rather than a single starter template.
+
+## Post-Epic Gap Audit Follow-Up Stories
+
+The first delivery pass left a small set of explicit codex gaps in the implementation. These stories should stay in the backlog until the matching placeholder or fallback behavior is removed from the shipped product.
+
+16. `Feature: Expand the .NET CLI automation surface for command-line parity`
+17. `Feature: Replace placeholder dashboard projections with live workspace-backed data`
+18. `Feature: Implement PDF export for report generation`
+
+### Follow-Up Notes
+
+- `CLI parity` covers the automation requirement now tracked in GitHub issue `#20`. The current repo contains a working CLI host, but the follow-up story keeps the backlog aligned with the requirement that all core workflows be usable for automation outside VS Code.
+- `Live dashboard data` is required because the current dashboard still advertises placeholder-backed sections instead of a fully workspace-backed projection.
+- `PDF export` remains open because the report engine still emits `reports/pdf-fallback.md` instead of a real PDF artifact.

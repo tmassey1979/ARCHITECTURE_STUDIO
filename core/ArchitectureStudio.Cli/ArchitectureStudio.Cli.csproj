@@ -11,4 +11,8 @@
     <ProjectReference Include="..\ArchitectureStudio.Core\ArchitectureStudio.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.CommandLine" Version="2.0.4" />
+  </ItemGroup>
+
 </Project>

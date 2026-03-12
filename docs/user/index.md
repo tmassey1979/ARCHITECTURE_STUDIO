@@ -25,6 +25,7 @@ Documentation in this section should:
 
 Key documents:
 
+- [Automation CLI](./automation-cli.md)
 - [Architecture Reasoning](./architecture-reasoning.md)
 - [AI Instructions](./ai-instructions.md)
 - [Compliance Validation](./compliance-validation.md)

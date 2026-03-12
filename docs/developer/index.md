@@ -17,11 +17,11 @@ Target content:
 
 Key documents:
 
+- [Core CLI Bridge](./core-cli-bridge.md)
 - [Command Surface](./command-surface.md)
 - [AI Instructions](./ai-instructions.md)
 - [Compliance Engine](./compliance-engine.md)
 - [Compliance Library](./compliance-library.md)
-- [Core CLI Bridge](./core-cli-bridge.md)
 - [Dashboard Webview](./dashboard-webview.md)
 - [External Packages](./external-packages.md)
 - [Generation Engine](./generation-engine.md)

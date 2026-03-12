@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ArchitectureStudio.Cli\ArchitectureStudio.Cli.csproj" />
     <ProjectReference Include="..\ArchitectureStudio.Core\ArchitectureStudio.Core.csproj" />
   </ItemGroup>
 

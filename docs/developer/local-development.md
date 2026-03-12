@@ -57,3 +57,19 @@ The extension now uses a thin Node-to-.NET process boundary:
 - local development falls back to `dotnet run --project core/ArchitectureStudio.Cli`
 
 That means local command execution requires a working `dotnet` installation even though the VS Code shell itself is TypeScript.
+
+## CLI Validation
+
+The automation CLI can be exercised directly during local development:
+
+```powershell
+dotnet core/ArchitectureStudio.Cli/bin/Debug/net9.0/ArchitectureStudio.Cli.dll --help
+dotnet core/ArchitectureStudio.Cli/bin/Debug/net9.0/ArchitectureStudio.Cli.dll analyze-repository --workspace fixtures/sample-workspaces/fintech-platform
+```
+
+For packaged-host validation, build the host first and then run:
+
+```powershell
+npm run build:core-host
+dotnet core-host/ArchitectureStudio.Cli.dll generate-reports --workspace fixtures/sample-workspaces/fintech-platform
+```

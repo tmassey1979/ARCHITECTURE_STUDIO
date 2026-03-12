@@ -481,11 +481,84 @@ else {
     $epicIssue = Ensure-Issue -Repo $Repo -ExistingIssuesByTitle $existingIssuesByTitle -Spec $epicSpec
 }
 
+$followUpSpecs = @(
+    @{
+        Key = "cli-parity"
+        Title = "Feature: Expand the .NET CLI automation surface for command-line parity"
+        Labels = @("feature", "task")
+        Story = "As an automation engineer, I would like Architecture Studio to expose its core workflows through a first-class .NET CLI, so that CI jobs and external tools can use the platform without opening VS Code."
+        AcceptanceCriteria = @'
+- [ ] The .NET CLI exposes stable commands for repository analysis, standards composition, architecture evaluation, compliance validation, project generation, report generation, and AI-instruction generation.
+- [ ] CLI help text and argument parsing are handled by a structured console library rather than ad hoc positional parsing.
+- [ ] CLI commands return stable JSON payloads and non-zero exit codes on failure so automation tools can consume them reliably.
+- [ ] The packaged extension documentation explains how to invoke the CLI host directly for automation scenarios.
+- [ ] Smoke tests cover at least one packaged-host invocation path for each major workflow family.
+'@
+        DevNotes = @'
+- Build on the existing `ArchitectureStudio.Cli` host instead of creating a parallel automation entry point.
+- Keep the CLI contracts aligned to the shared contracts and the extension bridge so the same workflows remain available in both surfaces.
+- Prefer a well-supported .NET console library such as `System.CommandLine` for command registration, validation, and help text.
+- Treat dashboard-only UI concerns as out of scope; this story is about automation parity for the underlying engines.
+'@
+    }
+    @{
+        Key = "live-dashboard"
+        Title = "Feature: Replace placeholder dashboard projections with live workspace-backed data"
+        Labels = @("feature", "task")
+        Story = "As a VS Code user, I would like the Architecture Studio dashboard to reflect the active workspace instead of placeholder content, so that the dashboard is a trustworthy summary surface for architecture, standards, compliance, reports, and analysis."
+        AcceptanceCriteria = @'
+- [ ] Dashboard sections are populated from workspace-backed engine output instead of the placeholder payload in `src/dashboard/dashboardState.ts`.
+- [ ] Compliance score cards, findings, standards, graph summaries, report lists, and generated artifacts reflect the active workspace or an explicit empty state.
+- [ ] The dashboard refresh path is deterministic and avoids stale data when commands are rerun against the same workspace.
+- [ ] User and developer documentation include updated dashboard walkthroughs and screenshots for the live experience.
+- [ ] Tests cover the live projection path and the no-workspace or no-data empty-state path.
+'@
+        DevNotes = @'
+- Build on the existing webview shell and typed message bridge rather than replacing the dashboard architecture.
+- Keep TypeScript focused on projection and orchestration; the underlying data should continue to come from the C# engines where practical.
+- Remove or isolate the placeholder payload once the live projection path is complete so the shipped UX no longer implies unfinished functionality.
+- Coordinate with command handlers so the dashboard can reuse the same workspace-aware outputs already available through the extension commands.
+'@
+    }
+    @{
+        Key = "pdf-export"
+        Title = "Feature: Implement PDF export for report generation"
+        Labels = @("feature", "task")
+        Story = "As an engineering lead, I would like Architecture Studio reports exported as real PDF artifacts, so that architecture and compliance output can be shared in review and audit workflows that require portable documents."
+        AcceptanceCriteria = @'
+- [ ] Report generation emits a real PDF artifact alongside the existing Markdown, JSON, and SARIF outputs.
+- [ ] The PDF export path uses deterministic file naming under the documented reports export root.
+- [ ] PDF content includes the core architecture, compliance summary, findings, severity, evidence, and remediation sections already available in the other report formats.
+- [ ] Report-generation tests cover successful PDF creation and keep the non-PDF formats stable.
+- [ ] User and developer documentation describe PDF generation behavior, dependencies, and limitations.
+'@
+        DevNotes = @'
+- Replace the current `reports/pdf-fallback.md` behavior with a real PDF writer or a deterministic PDF rendering pipeline.
+- Preserve the current report contracts so adding PDF does not break existing Markdown, JSON, or SARIF consumers.
+- Prefer a solution that can run locally and in CI without hidden external services.
+- Keep the implementation explainable and testable; this should not become an opaque shell-out without coverage.
+'@
+    }
+)
+
+foreach ($spec in $followUpSpecs) {
+    $spec["Body"] = New-FeatureBody -Story $spec.Story -AcceptanceCriteria $spec.AcceptanceCriteria -DevNotes $spec.DevNotes
+}
+
+$createdFollowUps = foreach ($spec in $followUpSpecs) {
+    Ensure-Issue -Repo $Repo -ExistingIssuesByTitle $existingIssuesByTitle -Spec $spec
+}
+
 Write-Host ""
 Write-Host "Epic:"
 Write-Host $epicIssue.url
 Write-Host ""
 Write-Host "Child stories:"
 foreach ($issue in $createdChildren) {
+    Write-Host $issue.url
+}
+Write-Host ""
+Write-Host "Follow-up stories:"
+foreach ($issue in $createdFollowUps) {
     Write-Host $issue.url
 }

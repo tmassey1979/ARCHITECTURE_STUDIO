@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchitectureStudio.Core", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchitectureStudio.Core.Tests", "ArchitectureStudio.Core.Tests\ArchitectureStudio.Core.Tests.csproj", "{33C0C099-9FB1-42A0-9DFA-8C8CA45BB559}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchitectureStudio.Cli", "ArchitectureStudio.Cli\ArchitectureStudio.Cli.csproj", "{A98D665D-F554-4261-AA1B-4DE9ADB1D505}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,18 @@ Global
 		{33C0C099-9FB1-42A0-9DFA-8C8CA45BB559}.Release|x64.Build.0 = Release|Any CPU
 		{33C0C099-9FB1-42A0-9DFA-8C8CA45BB559}.Release|x86.ActiveCfg = Release|Any CPU
 		{33C0C099-9FB1-42A0-9DFA-8C8CA45BB559}.Release|x86.Build.0 = Release|Any CPU
+		{A98D665D-F554-4261-AA1B-4DE9ADB1D505}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A98D665D-F554-4261-AA1B-4DE9ADB1D505}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A98D665D-F554-4261-AA1B-4DE9ADB1D505}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A98D665D-F554-4261-AA1B-4DE9ADB1D505}.Debug|x64.Build.0 = Debug|Any CPU
+		{A98D665D-F554-4261-AA1B-4DE9ADB1D505}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A98D665D-F554-4261-AA1B-4DE9ADB1D505}.Debug|x86.Build.0 = Debug|Any CPU
+		{A98D665D-F554-4261-AA1B-4DE9ADB1D505}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A98D665D-F554-4261-AA1B-4DE9ADB1D505}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A98D665D-F554-4261-AA1B-4DE9ADB1D505}.Release|x64.ActiveCfg = Release|Any CPU
+		{A98D665D-F554-4261-AA1B-4DE9ADB1D505}.Release|x64.Build.0 = Release|Any CPU
+		{A98D665D-F554-4261-AA1B-4DE9ADB1D505}.Release|x86.ActiveCfg = Release|Any CPU
+		{A98D665D-F554-4261-AA1B-4DE9ADB1D505}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

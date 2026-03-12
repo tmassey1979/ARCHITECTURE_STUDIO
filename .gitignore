@@ -38,6 +38,7 @@ node_modules/
 dist/
 out/
 build/
+core-host/
 coverage/
 *.tsbuildinfo
 *.tgz

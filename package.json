@@ -78,9 +78,10 @@
   },
   "scripts": {
     "build": "npm run compile",
+    "build:core-host": "dotnet publish core/ArchitectureStudio.Cli/ArchitectureStudio.Cli.csproj -c Release -o core-host",
     "compile": "tsc -p tsconfig.json",
     "lint": "eslint .",
-    "package:extension": "vsce package",
+    "package:extension": "npm run build:core-host && vsce package",
     "test": "node --import tsx --test",
     "verify": "npm run lint && npm test && npm run build"
   },

@@ -67,9 +67,10 @@ The fixture is repository-only validation data and is excluded from the shipped 
 When the repo is green:
 
 1. Run `npm run package:extension`.
-2. Confirm the `.vsix` file is produced at the repository root.
-3. Validate that the package includes the compiled extension, datasets, docs-linked assets, and plugin sample packs.
-4. Attach or upload the generated `.vsix` through the release workflow when preparing a public release.
+2. Confirm the published core host exists under `core-host/`.
+3. Confirm the `.vsix` file is produced at the repository root.
+4. Validate that the package includes the compiled extension, the packaged C# host, datasets, docs-linked assets, and plugin sample packs.
+5. Attach or upload the generated `.vsix` through the release workflow when preparing a public release.
 
 ## CI Expectations
 
@@ -85,7 +86,7 @@ That keeps local and CI validation aligned.
 
 ## Known Limitations
 
-- The VS Code extension shell exists, but many commands still expose placeholder orchestration rather than full engine execution.
+- Packaged command execution depends on `dotnet` being available so the bundled `ArchitectureStudio.Cli.dll` can run.
 - Marketplace publishing still requires a valid `VSCE_PAT` secret and a ready publisher configuration.
 - GitHub Pages deployment still depends on repository settings enabling `GitHub Actions` as the Pages source.
 - Screenshot coverage in the docs is still incomplete and should expand as more command flows become interactive.

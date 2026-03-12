@@ -23,6 +23,7 @@ When the build environment is upgraded to .NET 10, the core projects can move fo
 - `npm run lint`
 - `npm test`
 - `npm run build`
+- `npm run build:core-host`
 - `npm run package:extension`
 - `dotnet test core/ArchitectureStudio.sln`
 
@@ -46,4 +47,13 @@ Recommended flow:
 
 ## Packaging
 
-Run `npm run package:extension` to produce a `.vsix` package once dependencies are installed and the TypeScript build is green.
+Run `npm run package:extension` to publish the C# CLI host into `core-host/` and then produce a `.vsix` package.
+
+## Core Engine Runtime
+
+The extension now uses a thin Node-to-.NET process boundary:
+
+- packaged extensions invoke `core-host/ArchitectureStudio.Cli.dll`
+- local development falls back to `dotnet run --project core/ArchitectureStudio.Cli`
+
+That means local command execution requires a working `dotnet` installation even though the VS Code shell itself is TypeScript.

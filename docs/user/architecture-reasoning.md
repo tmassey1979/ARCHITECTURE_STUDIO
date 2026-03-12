@@ -60,7 +60,7 @@ When these conditions are found, the engine produces findings with severity, ris
 
 ## What To Expect In The Extension
 
-This story delivers the engine and dataset foundation first. Full interactive UX for architecture reasoning will be layered in through later stories, including:
+The `Architecture Studio: Generate Architecture` command now evaluates the active workspace through the shipped graph and validation rules. Richer UX is still planned, including:
 
 - dashboard views for recommendations and conflicts
 - stack validation commands

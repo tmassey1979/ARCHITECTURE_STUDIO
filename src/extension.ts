@@ -11,13 +11,14 @@ export function activate(context: vscode.ExtensionContext): void {
       window: vscode.window
     },
     {
-      createServices: (outputChannel) =>
+        createServices: (outputChannel) =>
         createStudioCommandServices({
           commands: {
             executeCommand(commandId) {
               return vscode.commands.executeCommand(commandId);
             }
           },
+          extensionPath: context.extensionPath,
           extensionUri: context.extensionUri,
           output: outputChannel,
           uri: vscode.Uri,

@@ -4,6 +4,8 @@ import type { ComplianceEvaluationResult } from "../compliance/complianceEvaluat
 import type { ProjectGenerationResult } from "../generators/projectGeneration";
 import type { ProjectSelectionProfile } from "../contracts/sharedContracts";
 import type { ReportGenerationResult } from "../reports/reportGeneration";
+import type { ComposedStandardsResult } from "../standards/standardsComposition";
+import type { WorkspaceArchitectureEvaluationResult } from "../graph/technologyGraph";
 import type {
   AiInstructionGenerationRequest,
   AiInstructionGenerationResult
@@ -21,7 +23,11 @@ export interface StudioCommandOutput {
 export interface StudioCommandServices {
   showDashboard?(): Promise<void> | void;
   getWorkspaceFolder?(): Promise<string | undefined> | string | undefined;
+  runStandardsComposition?(workspacePath: string): Promise<ComposedStandardsResult> | ComposedStandardsResult;
   runRepositoryAnalysis?(workspacePath: string): Promise<RepositoryAnalysisResult> | RepositoryAnalysisResult;
+  runArchitectureEvaluation?(
+    workspacePath: string
+  ): Promise<WorkspaceArchitectureEvaluationResult> | WorkspaceArchitectureEvaluationResult;
   runComplianceEvaluation?(workspacePath: string): Promise<ComplianceEvaluationResult> | ComplianceEvaluationResult;
   getProjectSelection?(): Promise<ProjectSelectionProfile | undefined> | ProjectSelectionProfile | undefined;
   runProjectGeneration?(

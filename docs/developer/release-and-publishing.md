@@ -42,6 +42,7 @@ The repository includes a release workflow at `.github/workflows/release-extensi
 - installs dependencies
 - runs `dotnet test core/ArchitectureStudio.sln`
 - runs `npm run verify`
+- publishes the C# host into `core-host/`
 - packages a `.vsix`
 - attaches the `.vsix` to the GitHub release
 - publishes to the Visual Studio Marketplace when `VSCE_PAT` is configured

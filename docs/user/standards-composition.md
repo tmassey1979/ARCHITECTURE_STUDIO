@@ -39,4 +39,6 @@ The result also preserves source metadata and selection reasons so teams can und
 
 ## Current Status
 
-This story delivers the standards library seed data and deterministic composition engine. The user-facing command and richer UI integration will deepen as the downstream stories land.
+The `Architecture Studio: Compose Standards` command now resolves the active workspace and runs the deterministic standards-composition path against inferred project selections plus detected repository characteristics.
+
+Richer UI integration is still planned, but the command path is now backed by the real engine instead of placeholder output.

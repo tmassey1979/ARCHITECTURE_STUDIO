@@ -47,3 +47,8 @@ export type ArchitectureValidationRequest = {
 export type ArchitectureValidationResult = {
   readonly findings: readonly FindingDefinition[];
 };
+
+export type WorkspaceArchitectureEvaluationResult = {
+  readonly technologyEvaluation: TechnologyEvaluationResult;
+  readonly findings: readonly FindingDefinition[];
+};

@@ -22,6 +22,7 @@
     "Other"
   ],
   "activationEvents": [
+    "onView:architectureStudio.dashboardView",
     "onCommand:architectureStudio.openDashboard",
     "onCommand:architectureStudio.composeStandards",
     "onCommand:architectureStudio.analyzeRepository",
@@ -33,6 +34,24 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "architectureStudio",
+          "title": "Architecture Studio",
+          "icon": "media/architecture-studio.svg"
+        }
+      ]
+    },
+    "views": {
+      "architectureStudio": [
+        {
+          "id": "architectureStudio.dashboardView",
+          "name": "Dashboard",
+          "type": "webview"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "architectureStudio.openDashboard",

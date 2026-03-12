@@ -6,7 +6,6 @@ import { createStudioCommandServices } from "../../src/dashboard/createStudioCom
 test("createStudioCommandServices delegates workspace-aware operations to the core CLI bridge", async () => {
   const invokedCommands: string[] = [];
   const services = createStudioCommandServices({
-    commands: {},
     coreCli: {
       async analyzeRepository(workspacePath) {
         invokedCommands.push(`analyze:${workspacePath}`);
@@ -75,28 +74,8 @@ test("createStudioCommandServices delegates workspace-aware operations to the co
       }
     },
     extensionPath: "C:/code/Playground/ARCHITECTURE_STUDIO",
-    extensionUri: {
-      toString() {
-        return "file:///architecture-studio";
-      }
-    },
     output: {
       appendLine() {}
-    },
-    uri: {
-      joinPath(base, ...paths) {
-        return {
-          toString() {
-            return [base.toString(), ...paths].join("/");
-          }
-        };
-      }
-    },
-    viewColumn: 1,
-    window: {
-      createWebviewPanel() {
-        throw new Error("dashboard should not be created in this test");
-      }
     },
     workspace: {
       getFirstWorkspaceFolderPath() {

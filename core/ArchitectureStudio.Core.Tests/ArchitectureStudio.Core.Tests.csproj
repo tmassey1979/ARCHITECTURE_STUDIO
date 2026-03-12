@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <None Include="..\..\plugins\packs\**\*.*" Link="Plugins\Packs\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\fixtures\sample-workspaces\**\*.*" Link="Fixtures\SampleWorkspaces\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

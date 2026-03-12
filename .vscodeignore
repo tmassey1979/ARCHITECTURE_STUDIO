@@ -9,6 +9,7 @@ test/**
 core/**
 docs/**
 codex/**
+fixtures/**
 **/*.ts
 **/*.map
 eslint.config.mjs

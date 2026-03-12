@@ -4,8 +4,14 @@ on:
   pull_request:
     paths:
       - ".github/workflows/extension-ci.yml"
+      - "core/**"
       - "extension/**"
+      - "fixtures/**"
+      - "plugins/**"
       - "src/**"
+      - "standards/**"
+      - "templates/**"
+      - "test/**"
       - "package.json"
       - "package-lock.json"
       - "pnpm-lock.yaml"
@@ -17,8 +23,14 @@ on:
       - main
     paths:
       - ".github/workflows/extension-ci.yml"
+      - "core/**"
       - "extension/**"
+      - "fixtures/**"
+      - "plugins/**"
       - "src/**"
+      - "standards/**"
+      - "templates/**"
+      - "test/**"
       - "package.json"
       - "package-lock.json"
       - "pnpm-lock.yaml"
@@ -69,6 +81,12 @@ jobs:
         with:
           node-version: 22
 
+      - name: Setup .NET
+        if: steps.locate.outputs.found == 'true'
+        uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+
       - name: Enable Corepack
         if: steps.locate.outputs.found == 'true'
         run: corepack enable
@@ -106,23 +124,14 @@ jobs:
           }
           NODE
 
-      - name: Run lint
+      - name: Run .NET tests
         if: steps.locate.outputs.found == 'true'
-        working-directory: ${{ steps.locate.outputs.path }}
-        run: npm run lint --if-present
+        run: dotnet test core/ArchitectureStudio.sln
 
-      - name: Run tests
+      - name: Run shared verify command
         if: steps.locate.outputs.found == 'true'
         working-directory: ${{ steps.locate.outputs.path }}
-        run: npm test --if-present
-
-      - name: Build extension
-        if: steps.locate.outputs.found == 'true'
-        working-directory: ${{ steps.locate.outputs.path }}
-        shell: bash
-        run: |
-          npm run compile --if-present
-          npm run build --if-present
+        run: npm run verify
 
       - name: Package extension
         if: steps.locate.outputs.found == 'true'
@@ -131,8 +140,10 @@ jobs:
         shell: bash
         run: |
           mkdir -p "$GITHUB_WORKSPACE/artifacts"
+          PACKAGE_OUTPUT=$(node -p "const p=require('./package.json'); p.name + '-' + p.version + '.vsix'")
           VSIX_NAME=$(node -p "const p=require('./package.json'); (p.publisher || 'local') + '.' + p.name + '-' + p.version + '.vsix'")
-          npx @vscode/vsce package --out "$GITHUB_WORKSPACE/artifacts/$VSIX_NAME"
+          npm run package:extension
+          mv "$PACKAGE_OUTPUT" "$GITHUB_WORKSPACE/artifacts/$VSIX_NAME"
           echo "vsix_name=$VSIX_NAME" >> "$GITHUB_OUTPUT"
           echo "vsix_path=$GITHUB_WORKSPACE/artifacts/$VSIX_NAME" >> "$GITHUB_OUTPUT"
 

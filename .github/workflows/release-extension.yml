@@ -36,6 +36,11 @@ jobs:
         with:
           node-version: 22
 
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+
       - name: Enable Corepack
         run: corepack enable
 
@@ -86,20 +91,12 @@ jobs:
             exit 1
           fi
 
-      - name: Run lint
-        working-directory: ${{ steps.locate.outputs.path }}
-        run: npm run lint --if-present
+      - name: Run .NET tests
+        run: dotnet test core/ArchitectureStudio.sln
 
-      - name: Run tests
+      - name: Run shared verify command
         working-directory: ${{ steps.locate.outputs.path }}
-        run: npm test --if-present
-
-      - name: Build extension
-        working-directory: ${{ steps.locate.outputs.path }}
-        shell: bash
-        run: |
-          npm run compile --if-present
-          npm run build --if-present
+        run: npm run verify
 
       - name: Package VSIX
         id: package
@@ -107,8 +104,10 @@ jobs:
         shell: bash
         run: |
           mkdir -p "$GITHUB_WORKSPACE/artifacts"
+          PACKAGE_OUTPUT=$(node -p "const p=require('./package.json'); p.name + '-' + p.version + '.vsix'")
           VSIX_NAME=$(node -p "const p=require('./package.json'); p.publisher + '.' + p.name + '-' + p.version + '.vsix'")
-          npx @vscode/vsce package --out "$GITHUB_WORKSPACE/artifacts/$VSIX_NAME"
+          npm run package:extension
+          mv "$PACKAGE_OUTPUT" "$GITHUB_WORKSPACE/artifacts/$VSIX_NAME"
           echo "vsix_name=$VSIX_NAME" >> "$GITHUB_OUTPUT"
           echo "vsix_path=$GITHUB_WORKSPACE/artifacts/$VSIX_NAME" >> "$GITHUB_OUTPUT"
 

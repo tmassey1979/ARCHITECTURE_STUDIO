@@ -40,7 +40,8 @@ The repository includes a release workflow at `.github/workflows/release-extensi
 - checks out the code
 - locates the extension manifest from either the repo root or `extension/`
 - installs dependencies
-- runs lint, tests, and build scripts when present
+- runs `dotnet test core/ArchitectureStudio.sln`
+- runs `npm run verify`
 - packages a `.vsix`
 - attaches the `.vsix` to the GitHub release
 - publishes to the Visual Studio Marketplace when `VSCE_PAT` is configured
@@ -95,9 +96,12 @@ Publishing to the Visual Studio Marketplace is the step that makes the extension
 
 Current constraints:
 
-- the extension code and manifest do not exist yet in this repository
 - the Marketplace publisher and token must exist before public release
 - extensions using proposed APIs cannot be published publicly
+
+## Related Release Readiness Guidance
+
+For the day-to-day maintainer workflow, smoke fixture usage, debug loop, packaging checklist, and known limitations, see [Release Readiness](./release-readiness.md).
 
 ## Recommended Future Additions
 

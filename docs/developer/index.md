@@ -25,6 +25,7 @@ Key documents:
 - [External Packages](./external-packages.md)
 - [Generation Engine](./generation-engine.md)
 - [Release And Publishing](./release-and-publishing.md)
+- [Release Readiness](./release-readiness.md)
 - [Repository Analysis](./repository-analysis.md)
 - [Report Generation](./report-generation.md)
 - [Standards Engine](./standards-engine.md)

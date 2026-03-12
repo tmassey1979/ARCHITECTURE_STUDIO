@@ -29,6 +29,11 @@ public sealed class ProjectTemplateCatalog
 
     public static ProjectTemplateCatalog CreateDefault()
     {
+        return StudioRuntimeCatalogFactory.CreateDefault().ProjectTemplateCatalog;
+    }
+
+    internal static ProjectTemplateCatalog CreateBuiltIn()
+    {
         var templatesDirectory = Path.Combine(AppContext.BaseDirectory, RelativeTemplatesDirectory);
         if (!Directory.Exists(templatesDirectory))
         {
@@ -46,11 +51,33 @@ public sealed class ProjectTemplateCatalog
         return new ProjectTemplateCatalog(templates);
     }
 
+    internal ProjectTemplateCatalog WithExternalPackage(ExternalPackage package)
+    {
+        var templates = package.Contributions.Templates
+            .Select(reference => ReadTemplate(reference.FullPath))
+            .ToArray();
+
+        return WithTemplates(templates);
+    }
+
     private static ProjectTemplateDefinition ReadTemplate(string path)
     {
         using var stream = File.OpenRead(path);
         return JsonSerializer.Deserialize<ProjectTemplateDefinition>(stream, SerializerOptions)
             ?? throw new InvalidOperationException($"Template '{path}' could not be deserialized.");
+    }
+
+    private ProjectTemplateCatalog WithTemplates(IReadOnlyList<ProjectTemplateDefinition> templates)
+    {
+        var mergedTemplates = _templates
+            .Concat(templates)
+            .GroupBy(static template => template.Id, StringComparer.OrdinalIgnoreCase)
+            .Select(static group => group.Last())
+            .OrderBy(static template => template.Id, StringComparer.Ordinal)
+            .ToArray();
+
+        ValidateTemplates(mergedTemplates);
+        return new ProjectTemplateCatalog(mergedTemplates);
     }
 
     private static void ValidateTemplates(IReadOnlyList<ProjectTemplateDefinition> templates)

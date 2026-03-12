@@ -36,6 +36,11 @@ public sealed class ComplianceCatalog
 
     public static ComplianceCatalog CreateDefault()
     {
+        return StudioRuntimeCatalogFactory.CreateDefault().ComplianceCatalog;
+    }
+
+    internal static ComplianceCatalog CreateBuiltIn()
+    {
         var baseDirectory = AppContext.BaseDirectory;
         var controlsDirectory = Path.Combine(baseDirectory, RelativeControlsDirectory);
         var regulationsDirectory = Path.Combine(baseDirectory, RelativeRegulationsDirectory);
@@ -63,9 +68,19 @@ public sealed class ComplianceCatalog
 
         ValidateCatalog(controls, regulations);
 
-        return new ComplianceCatalog(
-            controls.ToDictionary(static control => control.Id, StringComparer.OrdinalIgnoreCase),
-            regulations);
+        return CreateCatalog(controls, regulations);
+    }
+
+    internal ComplianceCatalog WithExternalPackage(ExternalPackage package)
+    {
+        var controls = package.Contributions.Controls
+            .SelectMany(reference => ReadControls(reference.FullPath))
+            .ToArray();
+        var regulations = package.Contributions.Regulations
+            .SelectMany(reference => ReadRegulations(reference.FullPath))
+            .ToArray();
+
+        return WithDefinitions(controls, regulations);
     }
 
     private static IReadOnlyList<ComplianceControlDefinition> ReadControls(string path)
@@ -76,6 +91,28 @@ public sealed class ComplianceCatalog
     private static IReadOnlyList<ComplianceRegulationDefinition> ReadRegulations(string path)
     {
         return ReadJsonValues<ComplianceRegulationDefinition>(path);
+    }
+
+    private ComplianceCatalog WithDefinitions(
+        IReadOnlyList<ComplianceControlDefinition> controls,
+        IReadOnlyList<ComplianceRegulationDefinition> regulations)
+    {
+        var mergedControls = _controlsById
+            .Values
+            .Concat(controls)
+            .GroupBy(static control => control.Id, StringComparer.OrdinalIgnoreCase)
+            .Select(static group => group.Last())
+            .OrderBy(static control => control.Id, StringComparer.Ordinal)
+            .ToArray();
+        var mergedRegulations = _regulations
+            .Concat(regulations)
+            .GroupBy(static regulation => regulation.Id, StringComparer.OrdinalIgnoreCase)
+            .Select(static group => group.Last())
+            .OrderBy(static regulation => regulation.Title, StringComparer.Ordinal)
+            .ThenBy(static regulation => regulation.Id, StringComparer.Ordinal)
+            .ToArray();
+
+        return CreateCatalog(mergedControls, mergedRegulations);
     }
 
     private static IReadOnlyList<T> ReadJsonValues<T>(string path)
@@ -126,5 +163,16 @@ public sealed class ComplianceCatalog
                 }
             }
         }
+    }
+
+    private static ComplianceCatalog CreateCatalog(
+        IReadOnlyList<ComplianceControlDefinition> controls,
+        IReadOnlyList<ComplianceRegulationDefinition> regulations)
+    {
+        ValidateCatalog(controls, regulations);
+
+        return new ComplianceCatalog(
+            controls.ToDictionary(static control => control.Id, StringComparer.OrdinalIgnoreCase),
+            regulations);
     }
 }

@@ -81,7 +81,26 @@ When a package fails validation:
 
 ## Runtime Surface
 
-The dashboard standards section now surfaces package load status in a user-visible panel. That keeps discovery visible without requiring a debugger or hidden logs.
+Package discovery is now consumed by the default C# runtime, not just surfaced in the dashboard. Valid packs are merged into the active catalogs used by:
+
+- `StandardsCatalog.CreateDefault()`
+- `TechnologyGraphCatalog.CreateDefault()`
+- `ComplianceCatalog.CreateDefault()`
+- `ProjectTemplateCatalog.CreateDefault()`
+- `StudioWorkspaceOrchestrator.CreateDefault()`
+
+The runtime merge path is implemented in:
+
+- `core/ArchitectureStudio.Core/Runtime/StudioRuntimeCatalogFactory.cs`
+
+That means external package content now influences:
+
+- standards composition
+- architecture graph evaluation and recommendations
+- compliance regulation/control matching
+- project and infrastructure generation
+
+The dashboard standards section still surfaces package load status in a user-visible panel. That keeps discovery visible without requiring a debugger or hidden logs.
 
 Status contract:
 
@@ -100,6 +119,7 @@ Contribution kind summaries:
 The story is driven by:
 
 - `core/ArchitectureStudio.Core.Tests/ExternalPackageLoaderTests.cs`
+- `core/ArchitectureStudio.Core.Tests/ExternalPackageRuntimeIntegrationTests.cs`
 - `test/plugins/externalPackageArtifacts.test.ts`
 - `test/dashboard/dashboardState.test.ts`
 
@@ -108,5 +128,6 @@ These tests cover:
 - discovery of required sample packs
 - contribution point validation
 - graceful handling for invalid packages
+- runtime application of standards, graph, compliance, and template contributions
 - dashboard projection of package status
 - presence of docs and manifest artifacts

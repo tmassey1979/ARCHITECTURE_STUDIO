@@ -32,6 +32,13 @@ When packages are discovered, the dashboard `Standards` section shows:
 
 This makes it easy to tell whether a newly added package is ready before you rely on it in standards composition or generation flows.
 
+Once a package loads successfully, its contributions are used by the runtime automatically. That means external packs can change:
+
+- standards composed by `Architecture Studio: Compose Standards`
+- architecture recommendations produced by `Architecture Studio: Generate Architecture`
+- compliance summaries and findings produced by `Architecture Studio: Validate Regulations`
+- generated project outputs produced by `Architecture Studio: Generate Project`
+
 ## Sample Packs In This Repository
 
 The repository currently includes:
@@ -52,7 +59,8 @@ These examples show how to structure:
 2. Confirm the package includes `architecture-studio.package.json`.
 3. Verify every manifest path points to a real file inside that package folder.
 4. Open the dashboard and check the `External Package Status` panel.
-5. Fix any invalid-package message before depending on the new pack.
+5. Run the command flow that should use the pack, such as standards composition, compliance validation, architecture generation, or project generation.
+6. Fix any invalid-package message before depending on the new pack.
 
 ## Authoring Guidance
 

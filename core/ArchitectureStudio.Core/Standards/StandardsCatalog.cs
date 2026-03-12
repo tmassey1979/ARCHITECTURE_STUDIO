@@ -29,6 +29,11 @@ public sealed class StandardsCatalog
 
     public static StandardsCatalog CreateDefault()
     {
+        return StudioRuntimeCatalogFactory.CreateDefault().StandardsCatalog;
+    }
+
+    internal static StandardsCatalog CreateBuiltIn()
+    {
         var assembly = typeof(StandardsCatalog).Assembly;
         using var stream = assembly.GetManifestResourceStream(DefaultSeedResourceName)
             ?? throw new InvalidOperationException($"Embedded standards seed resource '{DefaultSeedResourceName}' was not found.");
@@ -45,5 +50,30 @@ public sealed class StandardsCatalog
             .ToArray();
 
         return new StandardsCatalog(packages);
+    }
+
+    internal StandardsCatalog WithPackages(IEnumerable<StandardsPackage> packages)
+    {
+        var catalog = this;
+
+        foreach (var package in packages)
+        {
+            catalog = catalog.WithPackage(package);
+        }
+
+        return catalog;
+    }
+
+    internal StandardsCatalog WithExternalPackage(ExternalPackage package)
+    {
+        var packages = package.Contributions.StandardsPackages
+            .Select(static reference =>
+            {
+                using var stream = File.OpenRead(reference.FullPath);
+                return StandardsJson.Deserialize<StandardsPackage>(stream);
+            })
+            .ToArray();
+
+        return WithPackages(packages);
     }
 }
